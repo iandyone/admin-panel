@@ -1,0 +1,46 @@
+services:
+  ui:
+    build:
+      context: .
+      dockerfile: services/admin-panel-ui/Dockerfile
+    container_name: admin-panel-ui
+    image: admin-panel-ui
+    ports:
+      - ${PORT_UI}:3000
+    networks:
+      - client-server
+  api:
+    build:
+      context: .
+      dockerfile: services/admin-panel-api/Dockerfile
+    image: admin-panel-api
+    container_name: admin-panel-api
+    ports:
+      - ${PORT_API}:8080
+    networks:
+      - client-server
+      - backend-internal
+    depends_on:
+      - postgres
+    restart: always
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres16
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - ${PORT_DB}:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - backend-internal
+    restart: always
+
+networks:
+  client-server:
+    driver: bridge
+  backend-internal:
+    driver: bridge
+
+volumes:
+  pgdata: {}

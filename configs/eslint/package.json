@@ -1,0 +1,15 @@
+{
+  "name": "@configs/eslint",
+  "version": "1.0.0",
+  "packageManager": "yarn@4.9.1",
+  "main": "eslint.config.mjs",
+  "files": [
+    "eslint.config.mjs"
+  ],
+  "peerDependencies": {
+    "eslint": "^9"
+  },
+  "devDependencies": {
+    "eslint-plugin-import": "^2.31.0"
+  }
+}
