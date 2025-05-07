@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  ui:
+    build:
+      context: .
+      dockerfile: services/admin-panel-ui/Dockerfile
+    container_name: admin-panel-ui
+    ports:
+      - 3000:3000
+    networks:
+      - admin-panel
+  api:
+    build:
+      context: .
+      dockerfile: services/admin-panel-api/Dockerfile
+    container_name: admin-panel-api
+    ports:
+      - 8080:8080
+    networks:
+      - admin-panel
+    # restart: always
+
+networks:
+  admin-panel:
+    driver: bridge

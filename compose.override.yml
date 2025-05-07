@@ -1,0 +1,13 @@
+services:
+  ui:
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    working_dir: /app/services/admin-panel-ui
+    command: sh -c "yarn install && yarn workspace @services/admin-panel-ui dev"
+  api:
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    working_dir: /app/services/admin-panel-api
+    command: sh -c "yarn install && yarn workspace @services/admin-panel-api start:dev"
