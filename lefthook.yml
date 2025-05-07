@@ -1,0 +1,8 @@
+pre-commit:
+  # parallel: true
+  commands:
+    check-scripts:
+      glob: "*.{js,ts,jsx,tsx,mts,mjs}"
+      run: yarn workspaces foreach --all --topological --parallel run lint
+    update-index:
+      run: git update-index --again
