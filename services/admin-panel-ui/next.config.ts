@@ -7,6 +7,15 @@ const nextConfig: NextConfig = {
       "next/navigation.js": "next/navigation",
     },
   },
+  redirects: async () => {
+    return [
+      {
+        source: "/",
+        destination: "/dashboard",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
