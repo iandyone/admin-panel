@@ -25,7 +25,7 @@ export const PageLayout = ({ children }: PropsWithChildren) => {
       branding={{ title: "Admin Panel" }}
     >
       <DashboardLayout defaultSidebarCollapsed>
-        <Container maxWidth={false} sx={{ pt: 2, pb: 2 }}>
+        <Container maxWidth={false} sx={{ pt: 2, pb: 2, height: '100%' }}>
           {children}
         </Container>
       </DashboardLayout>

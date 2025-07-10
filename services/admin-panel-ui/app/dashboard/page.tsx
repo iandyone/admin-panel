@@ -1,9 +1,9 @@
 import { Grid, Stack, Typography } from "@mui/material";
 
-import { OrdersChart } from '@/components/orders-chart';
 import { PeriodFilter } from "@/components/period-filter";
 import { Trending } from "@/components/trending";
 import { Card } from "@/components/ui/card";
+import { OrdersChart } from "@/components/ui/orders-chart";
 import { Showcase } from "@/components/ui/showcase";
 import { SHOWCASES_DATA } from "@/mocks";
 
@@ -14,7 +14,12 @@ export default function Page() {
         Overview
       </Typography>
 
-      <PeriodFilter />
+      <PeriodFilter
+        containerProps={{
+          spacing: { md: 3, xs: 2 },
+          columns: { md: 4, xs: 2 },
+        }}
+      />
 
       <Grid
         container
@@ -30,7 +35,7 @@ export default function Page() {
         ))}
       </Grid>
 
-      <Grid container spacing={{ md: 3, xs: 2 }} columns={{ md: 2, xs: 1 }}>
+      <Grid container columns={{ md: 2, xs: 1 }} spacing={{ md: 3, xs: 2 }}>
         <Grid size={1}>
           <Card>
             <OrdersChart />

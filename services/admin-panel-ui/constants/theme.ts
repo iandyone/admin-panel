@@ -7,8 +7,16 @@ export const lightPallette: ColorSystemOptions = {
     primary: {
       main: "#2b2b2b", // header text / borders
       light: "red",
-      dark: "#3572EF",
-      contrastText: "purple",
+      // dark: "#3572EF",
+      dark: "#0288d1",
+      contrastText: "#ce93d8",
+    },
+    secondary: {
+      main: "#fec387", // button bg
+      // main: "#e65100", // button bg
+      dark: "red", // button hover
+      light: "yellow",
+      contrastText: "#2b2b2b", // button text
     },
     success: {
       light: green[300],
@@ -20,21 +28,25 @@ export const lightPallette: ColorSystemOptions = {
       main: red[400],
       dark: red[800],
     },
-    secondary: {
-      main: "#f17800",
-      dark: "yellow",
-      light: "yellow",
-      contrastText: "yellow",
-    },
+
     text: {
       primary: "#2b2b2b", // texts
-      secondary: "#2b2b2baa", // placeholders
+      secondary: "#2b2b2baa", // placeholders / sort-arrow
+
+      // secondaryChannel: "#f5f6fa",
     },
     background: {
       default: "#fcfcfc",
       paper: "#f5f6fa",
     },
-    common: {},
+    action: {
+      selectedOpacity: 0.08,
+    },
+
+    common: {
+      white: "#f5f6fa",
+      black: "#71799B",
+    },
   },
 };
 

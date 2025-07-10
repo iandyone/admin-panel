@@ -114,4 +114,18 @@ export const customizedComponents: Components<Theme> = {
       }),
     },
   },
+
+  MuiTableSortLabel: {
+    styleOverrides: {
+      active: ({ theme }) => ({
+        color: theme.palette.primary.contrastText,
+      }),
+      iconDirectionAsc: ({ theme }) => ({
+        color: theme.palette.primary.contrastText,
+      }),
+      iconDirectionDesc: ({ theme }) => ({
+        color: theme.palette.primary.contrastText,
+      }),
+    },
+  },
 };

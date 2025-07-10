@@ -7,7 +7,7 @@ export const theme = createTheme({
   cssVariables: {
     colorSchemeSelector: "data-toolpad-color-scheme",
   },
-  
+
   colorSchemes: {
     light: lightPallette,
     dark: darkPallette,
