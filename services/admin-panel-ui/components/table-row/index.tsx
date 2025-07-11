@@ -1,35 +1,37 @@
 import {
   Button,
-  MenuItem,
   TableCell,
   TableRow,
   TableRowProps,
 } from "@mui/material";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import moment from "moment";
 import Image from "next/image";
-import { FC, useState } from "react";
+import { FC } from "react";
 
-import { OrderData } from "@/types";
-import { EOrderStatuses } from "@/types/orders";
+import { OrderData, UserData } from "@/types";
 
 interface Props extends TableRowProps {
-  orderData: OrderData;
+  data: OrderData | UserData;
 }
 
-export const OrdersTableRow: FC<Props> = ({
-  orderData: { customer, date, id, location, price, status, manager, order },
-  ...rowProps
-}) => {
-  const [currentStatus, setStatus] = useState(status);
+export const TableRowItem: FC<Props> = ({ data, ...rowProps }) => {
+  // const [currentStatus, setStatus] = useState(status);
 
-  const handleOnChangeStatus = ({ target: { value } }: SelectChangeEvent) => {
-    setStatus(value);
-  };
+  // const handleOnChangeStatus = ({ target: { value } }: SelectChangeEvent) => {
+  //   setStatus(value);
+  // };
+
+  console.group();
+  console.log(Object.values(data));
+  console.groupEnd();
 
   return (
-    <TableRow {...rowProps}>
-      <TableCell size="small">{id}</TableCell>
+    <TableRow hover {...rowProps}>
+      {Object.values(data).map((item) => (
+        <TableCell size="small" key={item}>
+          {item}
+        </TableCell>
+      ))}
+      {/* <TableCell size="small">{id}</TableCell>
       <TableCell size="small">{order}</TableCell>
       <TableCell size="small">${price}</TableCell>
       <TableCell size="small">{customer}</TableCell>
@@ -52,10 +54,10 @@ export const OrdersTableRow: FC<Props> = ({
             );
           })}
         </Select>
-      </TableCell>
+      </TableCell> */}
       <TableCell size="small">
         <Button variant="text" sx={{ width: "40px", minWidth: "auto" }}>
-          <Image alt="edit-icon" src={"/pen.svg"} width={20} height={20}/>
+          <Image alt="edit-icon" src={"/pen.svg"} width={20} height={20} />
         </Button>
       </TableCell>
     </TableRow>

@@ -1,0 +1,3 @@
+
+export const DEFAULT_ROWS_PER_PAGE = 15;
+export const ROWS_PER_PAGE_OPTIONS = [DEFAULT_ROWS_PER_PAGE, 25, 50];
