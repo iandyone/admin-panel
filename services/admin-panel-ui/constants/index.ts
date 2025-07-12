@@ -1,2 +1,11 @@
+export * from "./validations";
+export * from "./routing";
 export { lightPallette, darkPallette } from "./theme";
-export { DEFAULT_ROWS_PER_PAGE, ROWS_PER_PAGE_OPTIONS } from "./table";
+
+export {
+  DEFAULT_ROWS_PER_PAGE,
+  ROWS_PER_PAGE_OPTIONS,
+  ordersTableHeaderConfig,
+  usersTableHeaderConfig,
+  TRANDS,
+} from "./table";

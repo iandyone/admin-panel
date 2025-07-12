@@ -6,11 +6,11 @@ import { SparkLine } from "@/components/ui/spark-line";
 interface Props {
   title: string;
   value: ReactNode;
+  data?: number[];
   chip?: {
     isPositive: boolean;
     value: ReactNode;
   };
-  data?: number[];
 }
 
 export const Showcase: FC<Props> = ({ title, value, chip, data }) => {

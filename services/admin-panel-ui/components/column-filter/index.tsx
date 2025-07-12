@@ -18,7 +18,7 @@ interface Props {
   };
 }
 
-export const TableFilter: FC<Props> = ({
+export const ColumnFilter: FC<Props> = ({
   id,
   onClick,
   onClose,

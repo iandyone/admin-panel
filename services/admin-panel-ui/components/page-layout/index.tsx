@@ -8,13 +8,16 @@ import { DashboardLayout, Navigation } from "@toolpad/core";
 import { NextAppProvider } from "@toolpad/core/nextjs";
 import { PropsWithChildren } from "react";
 
+import { ERoutes } from '@/constants';
 import { theme } from "@/theme";
 
+const {DASHBOARD, ORDERS, USERS} = ERoutes
+
 const navigation: Navigation = [
-  { title: "Dashboard", segment: "dashboard", icon: <DashboardIcon /> },
-  { title: "Orders", segment: "orders", icon: <ShoppingCartIcon /> },
+  { title: "Dashboard", segment: DASHBOARD, icon: <DashboardIcon /> },
+  { title: "Orders", segment: ORDERS, icon: <ShoppingCartIcon /> },
   { kind: "divider" },
-  { title: "Users", segment: "users", icon: <PersonIcon /> },
+  { title: "Users", segment: USERS, icon: <PersonIcon /> },
 ];
 
 export const PageLayout = ({ children }: PropsWithChildren) => {

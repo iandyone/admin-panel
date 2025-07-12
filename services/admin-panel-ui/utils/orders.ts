@@ -11,7 +11,6 @@ export function getSortedOrdersData<T extends Record<string, any>>(
     const secondaryValue = b[key];
     let cmp = 0;
 
-    // Числа
     if (typeof primaryValue === "number") {
       cmp = primaryValue - secondaryValue;
     } else if (typeof primaryValue === "string") {

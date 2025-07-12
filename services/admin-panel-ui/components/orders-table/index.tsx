@@ -1,41 +1,20 @@
 "use client";
 
-import {
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableBody,
-  TablePagination,
-  Box,
-} from "@mui/material";
 import { FC, useMemo } from "react";
 
-import { TableRowItem } from "@/components/table-row";
-import { ROWS_PER_PAGE_OPTIONS } from "@/constants";
+import { DataGrid } from "@/components/data-grid";
+import { ordersTableHeaderConfig, ROWS_PER_PAGE_OPTIONS } from "@/constants";
 import { usePagination, useTable } from "@/hooks";
 import { ORDERS_DATA } from "@/mocks";
-import { HeaderData } from "@/types";
+import { DataGridConfig } from "@/types";
 import { getSortedOrdersData } from "@/utils";
 
 import styles from "./styles.module.css";
 
-const HEADERS: HeaderData[] = [
-  { title: "id", width: "5%", withFilter: false },
-  { title: "order", width: "30%" },
-  { title: "price", width: "7%" },
-  { title: "customer", width: "10%" },
-
-  { title: "location", width: "15%" },
-
-  { title: "date", width: "6%" },
-  { title: "manager", width: "15%" },
-  { title: "status", width: "15%" },
-  { title: "", width: "5%", hideSortIcon: true },
-];
-
 export const OrdersTable: FC = () => {
-  const { order, filter, headers } = useTable(HEADERS);
+  const { order, filter, headers } = useTable({
+    config: ordersTableHeaderConfig,
+  });
   const { page, rowsPerPage, handleOnChangePage, handleChangeRowsPerPage } =
     usePagination({ count: ORDERS_DATA.length });
 
@@ -50,33 +29,28 @@ export const OrdersTable: FC = () => {
       : visibleRows;
   }, [filter, order, page, rowsPerPage]);
 
-  return (
-    <Box>
-      <TableContainer className={styles.table}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>{headers}</TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((orderData, index) => (
-              <TableRowItem
-                key={orderData.id}
-                data={orderData}
-                selected={index % 2 !== 0}
-              />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        page={page}
-        component="div"
-        count={ORDERS_DATA.length}
-        rowsPerPage={rowsPerPage}
-        onPageChange={handleOnChangePage}
-        rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Box>
+  const config: DataGridConfig = useMemo(
+    () => ({
+      headers,
+      data,
+      pagination: {
+        page,
+        rowsPerPage,
+        count: ORDERS_DATA.length,
+        onPageChange: handleOnChangePage,
+        onRowsPerPageChange: handleChangeRowsPerPage,
+        rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
+      },
+    }),
+    [
+      data,
+      headers,
+      page,
+      rowsPerPage,
+      handleChangeRowsPerPage,
+      handleOnChangePage,
+    ],
   );
+
+  return <DataGrid config={config} tableClassName={styles.table} />;
 };

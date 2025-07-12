@@ -6,14 +6,26 @@ import {
   tableSortLabelClasses,
   useTheme,
 } from "@mui/material";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
-import { TableFilter } from "@/components/ui/table-filter";
+import { ColumnFilter } from "@/components/column-filter";
 import { HeaderData, SortOrder } from "@/types";
+
+interface Props {
+  config: HeaderData[];
+  withActionColumn?: boolean;
+}
 
 const DEFAULT_ORDER: SortOrder = "asc";
 
-export const useTable = (config: HeaderData[]) => {
+const ACTION_COLUMN_CONFIG = {
+  title: "",
+  withFilter: false,
+  width: "5%",
+  hideSortIcon: true,
+};
+
+export const useTable = ({ config, withActionColumn = true }: Props) => {
   // TODO: логика непустого фильтра
   const [flag, setFlag] = useState(false);
   const [filter, setFilter] = useState<string>("");
@@ -21,17 +33,21 @@ export const useTable = (config: HeaderData[]) => {
 
   const theme = useTheme();
 
-  const handleOnClickFilterButton = () => {
+  const handleOnClickColumnFilter = (filter: string) => {
     setFlag((v) => !v);
+    setFilter(filter);
   };
 
-  const headers = useMemo(() => {
-    const handleOnClickFilter = (filter: string) => {
-      setOrder(order === "asc" ? "desc" : "asc");
-      setFilter(filter);
-    };
+  const handleOnClickSortLabel = useCallback(() => {
+    setOrder(order === "asc" ? "desc" : "asc");
+  }, [order]);
 
-    return config.map(
+  const headers = useMemo(() => {
+    const headers = withActionColumn
+      ? config.concat([ACTION_COLUMN_CONFIG])
+      : config;
+
+    return headers.map(
       ({ title, width = "auto", hideSortIcon, withFilter = true }) => (
         <TableCell
           key={title}
@@ -55,7 +71,7 @@ export const useTable = (config: HeaderData[]) => {
             >
               <TableSortLabel
                 active={filter === title}
-                onClick={() => handleOnClickFilter(title)}
+                onClick={handleOnClickSortLabel}
                 direction={order}
                 sx={{
                   display: hideSortIcon ? "none" : "flex",
@@ -74,10 +90,10 @@ export const useTable = (config: HeaderData[]) => {
               </TableSortLabel>
 
               {withFilter && (
-                <TableFilter
+                <ColumnFilter
                   id="order-table-search-menu"
                   label={title}
-                  onClick={handleOnClickFilterButton}
+                  onClick={() => handleOnClickColumnFilter(title)}
                   iconColors={{
                     fill: theme.palette.common.white,
                     stroke: theme.palette.common.white,
@@ -92,7 +108,15 @@ export const useTable = (config: HeaderData[]) => {
         </TableCell>
       ),
     );
-  }, [config, filter, order, flag, theme]);
+  }, [
+    config,
+    filter,
+    order,
+    flag,
+    theme,
+    withActionColumn,
+    handleOnClickSortLabel,
+  ]);
 
   return {
     filter,
