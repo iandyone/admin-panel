@@ -1,11 +1,11 @@
-
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import type { Metadata } from "next";
-import "./globals.css";
 import { Inter } from "next/font/google";
 import { Suspense } from "react";
 
-import { PageLayout } from "../components/page-layout";
+import { AppProvider } from "../components/app-provider";
+
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Admin panel",
@@ -24,7 +24,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <AppRouterCacheProvider>
           <Suspense fallback={<div>Root layout loading...</div>}>
-            <PageLayout>{children}</PageLayout>
+            <AppProvider>{children}</AppProvider>
           </Suspense>
         </AppRouterCacheProvider>
       </body>
