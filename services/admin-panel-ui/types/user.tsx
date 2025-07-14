@@ -8,3 +8,9 @@ export interface UserData {
   isActive?: boolean;
   status?: string;
 }
+
+export enum EUserStatuses {
+  ADMIN = "admin",
+  MANAGER = "manager",
+  DELIVERY = "delivery",
+}

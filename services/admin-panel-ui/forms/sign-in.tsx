@@ -5,7 +5,7 @@ import { Form, Formik } from "formik";
 import { FC } from "react";
 
 import { InputField } from "@/components/ui/input-field";
-import { signInValidationSchema } from '@/validations/signinSchema';
+import { signInValidationSchema } from '@/validations/signin-schema';
 
 interface Props {
   handleOnSubmit: () => void;

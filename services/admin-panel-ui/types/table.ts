@@ -1,7 +1,9 @@
-import { JSX } from 'react';
+import { Dispatch, FC, JSX, SetStateAction } from "react";
 
-import { OrderData } from '@/types/orders';
-import { UserData } from '@/types/user';
+import { OrderData } from "@/types/orders";
+import { UserData } from "@/types/user";
+
+export type DataGridType = "orders" | "users";
 
 export interface HeaderData {
   title: string;
@@ -25,5 +27,10 @@ export interface DataGridConfig {
     onRowsPerPageChange: React.ChangeEventHandler<
       HTMLTextAreaElement | HTMLInputElement
     >;
+  };
+  modal?: {
+    isOpen: boolean;
+    setIsOpen: Dispatch<SetStateAction<boolean>>;
+    Component: FC;
   };
 }

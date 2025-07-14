@@ -3,7 +3,7 @@ import { OrderData, UserData } from "@/types";
 export const ORDERS_DATA: OrderData[] = [
   {
     id: 1,
-    order: "Margherita Pizza",
+    order: "Margherita Pizza, Cheeseburger, Tiramisu",
     price: 120.5,
     location: "New York, USA",
     customer: "Alice Johnson",

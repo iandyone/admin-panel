@@ -5,7 +5,7 @@ import {
   getMaxLengthErrorMessage,
   getMinLengthErrorMessage,
 } from "@/constants";
-import { signInValidationSchema } from "@/validations/signinSchema";
+import { signInValidationSchema } from "@/validations/signin-schema";
 
 const { REQUIRED } = EValidationMessages;
 

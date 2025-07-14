@@ -33,14 +33,17 @@ export const useTable = ({ config, withActionColumn = true }: Props) => {
 
   const theme = useTheme();
 
-  const handleOnClickColumnFilter = (filter: string) => {
+  const handleOnClickColumnFilter = () => {
     setFlag((v) => !v);
-    setFilter(filter);
   };
 
-  const handleOnClickSortLabel = useCallback(() => {
-    setOrder(order === "asc" ? "desc" : "asc");
-  }, [order]);
+  const handleOnClickSortLabel = useCallback(
+    (filter: string) => {
+      setOrder(order === "asc" ? "desc" : "asc");
+      setFilter(filter);
+    },
+    [order],
+  );
 
   const headers = useMemo(() => {
     const headers = withActionColumn
@@ -71,7 +74,7 @@ export const useTable = ({ config, withActionColumn = true }: Props) => {
             >
               <TableSortLabel
                 active={filter === title}
-                onClick={handleOnClickSortLabel}
+                onClick={() => handleOnClickSortLabel(title)}
                 direction={order}
                 sx={{
                   display: hideSortIcon ? "none" : "flex",
@@ -93,7 +96,7 @@ export const useTable = ({ config, withActionColumn = true }: Props) => {
                 <ColumnFilter
                   id="order-table-search-menu"
                   label={title}
-                  onClick={() => handleOnClickColumnFilter(title)}
+                  onClick={handleOnClickColumnFilter}
                   iconColors={{
                     fill: theme.palette.common.white,
                     stroke: theme.palette.common.white,

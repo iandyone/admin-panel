@@ -1,5 +1,5 @@
-import { HeaderData } from '@/types';
-import { TrendItem } from '@/types/dashboard';
+import { HeaderData } from "@/types";
+import { TrendItem } from "@/types/dashboard";
 
 export const DEFAULT_ROWS_PER_PAGE = 15;
 export const ROWS_PER_PAGE_OPTIONS = [DEFAULT_ROWS_PER_PAGE, 25, 50];
@@ -8,13 +8,12 @@ export const ordersTableHeaderConfig: HeaderData[] = [
   { title: "id", width: "5%", withFilter: false },
   { title: "order", width: "30%" },
   { title: "price", width: "7%" },
-  { title: "customer", width: "10%" },
   { title: "location", width: "15%" },
+  { title: "customer", width: "10%" },
   { title: "date", width: "6%" },
   { title: "manager", width: "15%" },
   { title: "status", width: "15%" },
 ];
-
 
 export const usersTableHeaderConfig: HeaderData[] = [
   { title: "id", width: "5%" },

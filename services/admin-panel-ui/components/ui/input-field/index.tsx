@@ -7,17 +7,25 @@ import { ErrorLabel } from "@/components/ui/error-label";
 interface Props {
   name: string;
   label?: string;
-  type: string;
+  type?: string;
   error: boolean;
+  size?: "small" | "medium";
 }
 
-export const InputField: FC<Props> = ({ name, label, type, error }) => {
+export const InputField: FC<Props> = ({
+  name,
+  label,
+  type,
+  size = "small",
+  error,
+}) => {
   return (
     <Stack direction="column">
       <Field
         name={name}
         label={label ?? name}
         type={type}
+        size={size}
         as={TextField}
         error={error}
       />

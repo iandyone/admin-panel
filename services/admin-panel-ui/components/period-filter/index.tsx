@@ -23,6 +23,7 @@ export const PeriodFilter: FC<Props> = ({ containerProps }) => {
               field: { clearable: true },
             }}
             label="Date from"
+            
           />
         </Grid>
         <Grid size={1}>

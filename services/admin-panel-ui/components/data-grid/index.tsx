@@ -10,13 +10,12 @@ import {
 import { FC } from "react";
 
 import { TableRowItem } from "@/components/table-row";
-import { DataGridConfig } from "@/types/table";
+import { DataGridConfig } from "@/types";
 
 interface Props {
   config: DataGridConfig;
   tableClassName?: string;
 }
-
 export const DataGrid: FC<Props> = ({
   config: { data, headers, pagination },
   tableClassName,
@@ -29,10 +28,10 @@ export const DataGrid: FC<Props> = ({
             <TableRow>{headers}</TableRow>
           </TableHead>
           <TableBody>
-            {data.map((user, index) => (
+            {data.map((rowData, index) => (
               <TableRowItem
-                key={user.id}
-                data={user}
+                key={rowData.id}
+                data={rowData}
                 selected={index % 2 !== 0}
               />
             ))}
