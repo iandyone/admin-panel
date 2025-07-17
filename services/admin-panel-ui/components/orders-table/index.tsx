@@ -22,8 +22,6 @@ export const OrdersTable: FC = () => {
     [orders, filters],
   );
 
-  console.log({ ordersData, orders });
-
   const { sortOrder, sortKey, headers } = useTable({
     config: ordersTableHeaderConfig,
   });
