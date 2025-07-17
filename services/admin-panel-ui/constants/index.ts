@@ -1,5 +1,7 @@
 export * from "./validations";
 export * from "./routing";
+export * from "./filters";
+
 export { lightPallette, darkPallette } from "./theme";
 
 export {

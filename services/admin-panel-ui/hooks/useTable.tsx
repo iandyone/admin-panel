@@ -9,17 +9,22 @@ import {
 import { useCallback, useMemo, useState } from "react";
 
 import { ColumnFilter } from "@/components/column-filter";
-import { HeaderData, SortOrder } from "@/types";
+import {
+  OrdersTableHeaderConfig,
+  SortOrder,
+  UsersTableHeaderConfig,
+} from "@/types";
+import { UsersFilter } from "@/types/orders";
 
 interface Props {
-  config: HeaderData[];
+  config: OrdersTableHeaderConfig | UsersTableHeaderConfig;
   withActionColumn?: boolean;
 }
 
 const DEFAULT_ORDER: SortOrder = "asc";
 
 const ACTION_COLUMN_CONFIG = {
-  title: "",
+  title: "" as keyof UsersFilter,
   withFilter: false,
   width: "5%",
   hideSortIcon: true,

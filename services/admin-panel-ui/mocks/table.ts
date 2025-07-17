@@ -4,7 +4,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 1,
     order: "Margherita Pizza, Cheeseburger, Tiramisu",
-    price: 120.5,
+    price: '120.5',
     location: "New York, USA",
     customer: "Alice Johnson",
     date: "2025-06-01T08:15:23Z",
@@ -14,7 +14,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 2,
     order: "Pepperoni Pizza",
-    price: 75.0,
+    price: '75.0',
     location: "London, UK",
     customer: "Bob Smith",
     date: "2025-06-01T09:47:10Z",
@@ -24,7 +24,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 3,
     order: "Spaghetti Carbonara",
-    price: 220.99,
+    price: '220.99',
     location: "Berlin, Germany",
     customer: "Charlie Kim",
     date: "2025-06-02T14:05:55Z",
@@ -34,7 +34,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 4,
     order: "Caesar Salad",
-    price: 305.2,
+    price: '305.2',
     location: "Tokyo, Japan",
     customer: "David Nguyen",
     date: "2025-06-02T16:22:33Z",
@@ -44,7 +44,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 5,
     order: "Greek Salad",
-    price: 15.0,
+    price: '15.0',
     location: "Minsk, Belarus",
     customer: "Eva Müller",
     date: "2025-06-03T10:30:00Z",
@@ -54,7 +54,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 6,
     order: "Cheeseburger",
-    price: 49.99,
+    price: '49.99',
     location: "Paris, France",
     customer: "Francis Garcia",
     date: "2025-06-03T12:15:42Z",
@@ -64,7 +64,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 7,
     order: "Veggie Burger",
-    price: 89.9,
+    price: '89.9',
     location: "Sydney, Australia",
     customer: "Giulia Rossi",
     date: "2025-06-04T09:00:00Z",
@@ -74,7 +74,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 8,
     order: "Club Sandwich",
-    price: 145.75,
+    price: '145.75',
     location: "Toronto, Canada",
     customer: "Hiroshi Tanaka",
     date: "2025-06-04T11:20:15Z",
@@ -84,7 +84,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 9,
     order: "Tuna Sandwich",
-    price: 19.99,
+    price: '19.99',
     location: "São Paulo, Brazil",
     customer: "Isabella Silva",
     date: "2025-06-05T13:45:00Z",
@@ -94,7 +94,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 10,
     order: "Cheesecake",
-    price: 52.0,
+    price: '52.0',
     location: "Moscow, Russia",
     customer: "Jack Brown",
     date: "2025-06-05T15:55:10Z",
@@ -104,7 +104,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 11,
     order: "Tiramisu",
-    price: 299.99,
+    price: '299.99',
     location: "Beijing, China",
     customer: "Karen Davis",
     date: "2025-06-06T08:08:08Z",
@@ -114,7 +114,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 12,
     order: "Chocolate Cake",
-    price: 11.5,
+    price: '11.5',
     location: "Delhi, India",
     customer: "Lars Svensson",
     date: "2025-06-06T18:30:00Z",
@@ -124,7 +124,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 13,
     order: "Apple Pie",
-    price: 249.0,
+    price: '249.0',
     location: "Seoul, South Korea",
     customer: "Maria Lopez",
     date: "2025-06-07T14:14:14Z",
@@ -134,7 +134,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 14,
     order: "French Toast",
-    price: 333.33,
+    price: '333.33',
     location: "Los Angeles, USA",
     customer: "Nina Petrova",
     date: "2025-06-08T09:09:09Z",
@@ -144,7 +144,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 15,
     order: "Pancake Stack",
-    price: 27.45,
+    price: '27.45',
     location: "Chicago, USA",
     customer: "Oscar Martinez",
     date: "2025-06-09T17:17:17Z",
@@ -154,7 +154,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 16,
     order: "Breakfast Set",
-    price: 98.6,
+    price: '98.6',
     location: "Madrid, Spain",
     customer: "Priya Singh",
     date: "2025-06-10T10:10:10Z",
@@ -164,7 +164,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 17,
     order: "Sushi Set",
-    price: 150.0,
+    price: '150.0',
     location: "Rome, Italy",
     customer: "Quentin Dupont",
     date: "2025-06-11T12:12:12Z",
@@ -174,7 +174,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 18,
     order: "Ramen",
-    price: 215.2,
+    price: '215.2',
     location: "Amsterdam, Netherlands",
     customer: "Ravi Patel",
     date: "2025-06-12T13:13:13Z",
@@ -184,7 +184,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 19,
     order: "Udon Noodle Soup",
-    price: 67.8,
+    price: '67.8',
     location: "Dubai, UAE",
     customer: "Sophia Lee",
     date: "2025-06-13T14:14:14Z",
@@ -194,7 +194,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 20,
     order: "Pad Thai",
-    price: 480.0,
+    price: '480.0',
     location: "Mexico City, Mexico",
     customer: "Tom Carter",
     date: "2025-06-14T15:15:15Z",
@@ -204,7 +204,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 21,
     order: "Chicken Curry",
-    price: 55.55,
+    price: '55.55',
     location: "Buenos Aires, Argentina",
     customer: "Uma Sharma",
     date: "2025-06-15T16:16:16Z",
@@ -214,7 +214,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 22,
     order: "Beef Steak",
-    price: 39.99,
+    price: '39.99',
     location: "Cape Town, South Africa",
     customer: "Victor Chen",
     date: "2025-06-16T17:17:17Z",
@@ -224,7 +224,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 23,
     order: "Grilled Salmon",
-    price: 400.0,
+    price: '400.0',
     location: "Zurich, Switzerland",
     customer: "Wang Wei",
     date: "2025-06-17T18:18:18Z",
@@ -234,7 +234,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 24,
     order: "Fish & Chips",
-    price: 210.1,
+    price: '210.1',
     location: "Stockholm, Sweden",
     customer: "Xavier Lopez",
     date: "2025-06-18T19:19:19Z",
@@ -244,7 +244,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 25,
     order: "Nachos",
-    price: 99.99,
+    price: '99.99',
     location: "Athens, Greece",
     customer: "Yara Ali",
     date: "2025-06-19T20:20:20Z",
@@ -254,7 +254,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 26,
     order: "Chicken Wings",
-    price: 18.75,
+    price: '18.75',
     location: "Istanbul, Turkey",
     customer: "Zoe Clark",
     date: "2025-06-20T21:21:21Z",
@@ -264,7 +264,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 27,
     order: "Onion Rings",
-    price: 130.25,
+    price: '130.25',
     location: "Melbourne, Australia",
     customer: "Alice Johnson",
     date: "2025-06-21T22:22:22Z",
@@ -274,7 +274,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 28,
     order: "French Fries",
-    price: 75.75,
+    price: '75.75',
     location: "Vancouver, Canada",
     customer: "Bob Smith",
     date: "2025-06-22T23:23:23Z",
@@ -284,7 +284,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 29,
     order: "Mozzarella Sticks",
-    price: 60.0,
+    price: '60.0',
     location: "Hong Kong, China",
     customer: "Charlie Kim",
     date: "2025-06-23T07:07:07Z",
@@ -294,7 +294,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 30,
     order: "Spring Rolls",
-    price: 305.3,
+    price: '305.3',
     location: "Kuala Lumpur, Malaysia",
     customer: "David Nguyen",
     date: "2025-06-24T06:06:06Z",
@@ -304,7 +304,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 31,
     order: "Nacho Platter",
-    price: 89.0,
+    price: '89.0',
     location: "Bangkok, Thailand",
     customer: "Eva Müller",
     date: "2025-06-25T05:05:05Z",
@@ -314,7 +314,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 32,
     order: "Margarita (drink)",
-    price: 45.45,
+    price: '45.45',
     location: "Jakarta, Indonesia",
     customer: "Francis Garcia",
     date: "2025-06-26T04:04:04Z",
@@ -324,7 +324,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 33,
     order: "Mojito",
-    price: 155.55,
+    price: '155.55',
     location: "Barcelona, Spain",
     customer: "Giulia Rossi",
     date: "2025-06-27T03:03:03Z",
@@ -334,7 +334,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 34,
     order: "Espresso",
-    price: 272.2,
+    price: '272.2',
     location: "Lisbon, Portugal",
     customer: "Hiroshi Tanaka",
     date: "2025-06-28T02:02:02Z",
@@ -344,7 +344,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 35,
     order: "Cappuccino",
-    price: 34.99,
+    price: '34.99',
     location: "Dublin, Ireland",
     customer: "Isabella Silva",
     date: "2025-06-29T01:01:01Z",
@@ -354,7 +354,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 36,
     order: "Latte",
-    price: 128.0,
+    price: '128.0',
     location: "Vienna, Austria",
     customer: "Jack Brown",
     date: "2025-07-01T08:08:08Z",
@@ -364,7 +364,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 37,
     order: "Green Tea",
-    price: 199.99,
+    price: '199.99',
     location: "Prague, Czech Republic",
     customer: "Karen Davis",
     date: "2025-07-02T09:09:09Z",
@@ -374,7 +374,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 38,
     order: "Iced Tea",
-    price: 33.33,
+    price: '33.33',
     location: "Budapest, Hungary",
     customer: "Lars Svensson",
     date: "2025-07-03T10:10:10Z",
@@ -384,7 +384,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 39,
     order: "Lemonade",
-    price: 175.75,
+    price: '175.75',
     location: "Warsaw, Poland",
     customer: "Maria Lopez",
     date: "2025-07-04T11:11:11Z",
@@ -394,7 +394,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 40,
     order: "Mango Smoothie",
-    price: 67.67,
+    price: '67.67',
     location: "Helsinki, Finland",
     customer: "Nina Petrova",
     date: "2025-07-05T12:12:12Z",
@@ -404,7 +404,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 41,
     order: "Orange Juice",
-    price: 220.22,
+    price: '220.22',
     location: "Oslo, Norway",
     customer: "Oscar Martinez",
     date: "2025-07-06T13:13:13Z",
@@ -414,7 +414,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 42,
     order: "Craft Beer",
-    price: 49.49,
+    price: '49.49',
     location: "Copenhagen, Denmark",
     customer: "Priya Singh",
     date: "2025-07-07T14:14:14Z",
@@ -424,7 +424,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 43,
     order: "Red Wine",
-    price: 272.72,
+    price: '272.72',
     location: "Antwerp, Belgium",
     customer: "Quentin Dupont",
     date: "2025-07-08T15:15:15Z",
@@ -434,7 +434,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 44,
     order: "White Wine",
-    price: 314.15,
+    price: '314.15',
     location: "Santiago, Chile",
     customer: "Ravi Patel",
     date: "2025-07-09T16:16:16Z",
@@ -444,7 +444,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 45,
     order: "Prosecco",
-    price: 88.88,
+    price: '88.88',
     location: "Lima, Peru",
     customer: "Sophia Lee",
     date: "2025-07-10T17:17:17Z",
@@ -454,7 +454,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 46,
     order: "Champagne",
-    price: 19.19,
+    price: '19.19',
     location: "Bogota, Colombia",
     customer: "Tom Carter",
     date: "2025-07-11T18:18:18Z",
@@ -464,7 +464,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 47,
     order: "Mineral Water",
-    price: 210.21,
+    price: '210.21',
     location: "Reykjavik, Iceland",
     customer: "Uma Sharma",
     date: "2025-07-12T19:19:19Z",
@@ -474,7 +474,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 48,
     order: "Sparkling Water",
-    price: 66.66,
+    price: '66.66',
     location: "Lagos, Nigeria",
     customer: "Victor Chen",
     date: "2025-07-13T20:20:20Z",
@@ -484,7 +484,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 49,
     order: "Chocolate Milkshake",
-    price: 150.15,
+    price: '150.15',
     location: "Cairo, Egypt",
     customer: "Wang Wei",
     date: "2025-07-14T21:21:21Z",
@@ -494,7 +494,7 @@ export const ORDERS_DATA: OrderData[] = [
   {
     id: 50,
     order: "Hot Chocolate",
-    price: 88.01,
+    price: '88.01',
     location: "Nairobi, Kenya",
     customer: "Xavier Lopez",
     date: "2025-07-15T22:22:22Z",

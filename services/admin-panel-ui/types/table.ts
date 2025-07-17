@@ -1,16 +1,27 @@
 import { Dispatch, FC, JSX, SetStateAction } from "react";
 
-import { OrderData } from "@/types/orders";
+import { OrderData, OrderFilters, UsersFilter } from "@/types/orders";
 import { UserData } from "@/types/user";
 
 export type DataGridType = "orders" | "users";
 
 export interface HeaderData {
-  title: string;
   width?: string | number;
   hideSortIcon?: boolean;
   withFilter?: boolean;
 }
+
+export type OrdersTableHeaderConfig = Array<
+  HeaderData & {
+    title: keyof OrderFilters | '';
+  }
+>;
+
+export type UsersTableHeaderConfig = Array<
+  HeaderData & {
+    title: keyof UsersFilter | '';
+  }
+>;
 
 export interface DataGridConfig {
   headers: JSX.Element[];

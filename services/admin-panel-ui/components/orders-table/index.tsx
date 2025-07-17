@@ -4,22 +4,25 @@ import { FC, useMemo } from "react";
 
 import { DataGrid } from "@/components/data-grid";
 import { ordersTableHeaderConfig, ROWS_PER_PAGE_OPTIONS } from "@/constants";
-import { usePagination, useTable } from "@/hooks";
-import { ORDERS_DATA } from "@/mocks";
+import { useAppSelector, usePagination, useTable } from "@/hooks";
+import { selectOrders } from "@/store";
 import { DataGridConfig } from "@/types";
 import { getSortedOrdersData } from "@/utils";
 
 import styles from "./styles.module.css";
 
 export const OrdersTable: FC = () => {
+  const orders = useAppSelector(selectOrders);
+
   const { order, filter, headers } = useTable({
     config: ordersTableHeaderConfig,
   });
+  
   const { page, rowsPerPage, handleOnChangePage, handleChangeRowsPerPage } =
-    usePagination({ count: ORDERS_DATA.length });
+    usePagination({ count: orders.length });
 
   const data = useMemo(() => {
-    const visibleRows = ORDERS_DATA.slice(
+    const visibleRows = orders.slice(
       page * rowsPerPage,
       page * rowsPerPage + rowsPerPage,
     );
@@ -27,7 +30,7 @@ export const OrdersTable: FC = () => {
     return order
       ? getSortedOrdersData(visibleRows, filter, order)
       : visibleRows;
-  }, [filter, order, page, rowsPerPage]);
+  }, [orders,filter, order, page, rowsPerPage]);
 
   const config: DataGridConfig = useMemo(
     () => ({
@@ -36,7 +39,7 @@ export const OrdersTable: FC = () => {
       pagination: {
         page,
         rowsPerPage,
-        count: ORDERS_DATA.length,
+        count: orders.length,
         onPageChange: handleOnChangePage,
         onRowsPerPageChange: handleChangeRowsPerPage,
         rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
@@ -44,6 +47,7 @@ export const OrdersTable: FC = () => {
     }),
     [
       data,
+      orders,
       headers,
       page,
       rowsPerPage,
