@@ -32,22 +32,17 @@ const ACTION_COLUMN_CONFIG = {
 
 export const useTable = ({ config, withActionColumn = true }: Props) => {
   // TODO: логика непустого фильтра
-  const [flag, setFlag] = useState(false);
-  const [filter, setFilter] = useState<string>("");
-  const [order, setOrder] = useState<SortOrder>(DEFAULT_ORDER);
+  const [sortKey, setSortKey] = useState<string>("");
+  const [sortOrder, setSortOrder] = useState<SortOrder>(DEFAULT_ORDER);
 
   const theme = useTheme();
 
-  const handleOnClickColumnFilter = () => {
-    setFlag((v) => !v);
-  };
-
   const handleOnClickSortLabel = useCallback(
     (filter: string) => {
-      setOrder(order === "asc" ? "desc" : "asc");
-      setFilter(filter);
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+      setSortKey(filter);
     },
-    [order],
+    [sortOrder],
   );
 
   const headers = useMemo(() => {
@@ -78,9 +73,9 @@ export const useTable = ({ config, withActionColumn = true }: Props) => {
               direction="row"
             >
               <TableSortLabel
-                active={filter === title}
+                active={sortKey === title}
                 onClick={() => handleOnClickSortLabel(title)}
-                direction={order}
+                direction={sortOrder}
                 sx={{
                   display: hideSortIcon ? "none" : "flex",
                   [`&.${tableSortLabelClasses.active}`]: {
@@ -98,18 +93,7 @@ export const useTable = ({ config, withActionColumn = true }: Props) => {
               </TableSortLabel>
 
               {withFilter && (
-                <ColumnFilter
-                  id="order-table-search-menu"
-                  label={title}
-                  onClick={handleOnClickColumnFilter}
-                  iconColors={{
-                    fill: theme.palette.common.white,
-                    stroke: theme.palette.common.white,
-                    primary: flag
-                      ? theme.palette.secondary.main
-                      : theme.palette.common.black,
-                  }}
-                />
+                <ColumnFilter id="order-table-search-menu" label={title} />
               )}
             </Stack>
           )}
@@ -118,17 +102,16 @@ export const useTable = ({ config, withActionColumn = true }: Props) => {
     );
   }, [
     config,
-    filter,
-    order,
-    flag,
+    sortKey,
+    sortOrder,
     theme,
     withActionColumn,
     handleOnClickSortLabel,
   ]);
 
   return {
-    filter,
+    sortKey,
     headers,
-    order,
+    sortOrder,
   };
 };

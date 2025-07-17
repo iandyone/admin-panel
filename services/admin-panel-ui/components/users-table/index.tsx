@@ -3,30 +3,39 @@
 import { FC, useMemo } from "react";
 
 import { DataGrid } from "@/components/data-grid";
-import { ROWS_PER_PAGE_OPTIONS, usersTableHeaderConfig } from "@/constants";
+import { usersTableHeaderConfig } from '@/config';
+import { ROWS_PER_PAGE_OPTIONS } from "@/constants";
 import { useAppSelector, usePagination, useTable } from "@/hooks";
-import { selectUsers } from "@/store";
+import { selectUsers, selectUsersFilter } from "@/store";
 import { DataGridConfig } from "@/types";
-import { getSortedOrdersData } from "@/utils";
+import { getFilteredUsersData, getSortedOrdersData } from "@/utils";
 
 import styles from "./styles.module.css";
 
 const USERS_PER_PAGE_OPTIONS = [5, 10, 15];
 
 export const UsersTable: FC = () => {
+  // TODO: получение отфильтрованного списка на стороне сервера
   const users = useAppSelector(selectUsers);
+  const filters = useAppSelector(selectUsersFilter);
 
-  const { order, filter, headers } = useTable({
+  const usersData = useMemo(
+    () => getFilteredUsersData(users, filters),
+    [users, filters],
+  );
+
+  const { sortOrder, sortKey, headers } = useTable({
     config: usersTableHeaderConfig,
   });
+
   const { page, rowsPerPage, handleOnChangePage, handleChangeRowsPerPage } =
     usePagination({
-      count: users.length,
+      count: usersData.length,
       rowsPerPageOptions: USERS_PER_PAGE_OPTIONS,
     });
 
   const data = useMemo(() => {
-    const visibleRows = users
+    const visibleRows = usersData
       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
       .map(({ isActive, ...rowData }) => {
         const result = {
@@ -37,10 +46,10 @@ export const UsersTable: FC = () => {
         return result;
       });
 
-    return order
-      ? getSortedOrdersData(visibleRows, filter, order)
+    return sortOrder
+      ? getSortedOrdersData(visibleRows, sortKey, sortOrder)
       : visibleRows;
-  }, [users, filter, order, page, rowsPerPage]);
+  }, [usersData, sortKey, sortOrder, page, rowsPerPage]);
 
   const config: DataGridConfig = useMemo(
     () => ({
@@ -49,7 +58,7 @@ export const UsersTable: FC = () => {
       pagination: {
         page,
         rowsPerPage,
-        count: users.length,
+        count: usersData.length,
         onPageChange: handleOnChangePage,
         onRowsPerPageChange: handleChangeRowsPerPage,
         rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,

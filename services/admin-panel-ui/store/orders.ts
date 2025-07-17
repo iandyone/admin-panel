@@ -5,7 +5,7 @@ import { ORDERS_DATA } from "@/mocks";
 import { OrderData } from "@/types";
 import { OrderFilters } from "@/types/orders";
 
-interface OrdersState {
+export interface OrdersState {
   orders: OrderData[];
   filters: OrderFilters;
 }
@@ -40,13 +40,22 @@ export const ordersSlice = createSlice({
     ) {
       state.filters[payload.key] = initialState.filters[payload.key];
     },
+
+    resetOrdersFiltersAll: (state) => {
+      state.filters = initialState.filters;
+    },
   },
 
   selectors: {
     selectOrders: (state) => state.orders,
+    selectOrdersFilter: (state) => state.filters,
   },
 });
 
-export const { setOrders, setOrdersFilter, resetOrdersFilter } =
-  ordersSlice.actions;
-export const { selectOrders } = ordersSlice.selectors;
+export const {
+  setOrders,
+  setOrdersFilter,
+  resetOrdersFilter,
+  resetOrdersFiltersAll,
+} = ordersSlice.actions;
+export const { selectOrders, selectOrdersFilter } = ordersSlice.selectors;

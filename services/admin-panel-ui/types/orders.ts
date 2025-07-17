@@ -1,3 +1,5 @@
+export type SortOrder = "desc" | "asc";
+
 export interface OrderData {
   id: number;
   date: string;
@@ -8,8 +10,6 @@ export interface OrderData {
   status: string;
   order: string;
 }
-
-export type SortOrder = "desc" | "asc";
 
 export enum EOrderStatuses {
   COMPLETED = "Completed",
@@ -22,7 +22,7 @@ export enum EOrderStatuses {
 }
 
 export interface OrderFilters {
-  id: number | null;
+  id: number;
   order: string;
   price: string;
   location: string;
@@ -33,7 +33,7 @@ export interface OrderFilters {
 }
 
 export interface UsersFilter {
-  id: number | null;
+  id: number;
   name: string;
   role: string;
   phone: string;

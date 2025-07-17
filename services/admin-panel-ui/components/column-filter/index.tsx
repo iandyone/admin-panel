@@ -1,15 +1,15 @@
 "use client";
 
-import { Button, Menu } from "@mui/material";
+import { Button, Menu, useTheme } from "@mui/material";
 import { ChangeEvent, FC, MouseEvent, useCallback, useState } from "react";
 
 import { SearchModal } from "@/components/ui/search-modal";
-import { useAppDispatch } from "@/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 import {
   resetOrdersFilter,
   resetUsersFilter,
-  setOrdersFilter,
-  setUsersFilter,
+  selectOrdersFilter,
+  selectUsersFilter,
 } from "@/store";
 import { FilterIcon } from "@/svg/filter-icon";
 import { OrderFilters, UsersFilter } from "@/types/orders";
@@ -18,81 +18,76 @@ import { isOrdersFilterLabel, isUsersFilterLabel } from "@/utils";
 interface Props {
   id: string;
   onClick?: () => void;
-  onClose?: () => void;
   label: keyof OrderFilters | keyof UsersFilter;
-  iconColors: {
-    fill?: string;
-    stroke?: string;
-    primary?: string;
-  };
 }
 
-export const ColumnFilter: FC<Props> = ({
-  id,
-  onClick,
-  onClose,
-  label,
-  iconColors: { fill, primary, stroke },
-}) => {
+export const ColumnFilter: FC<Props> = ({ id, onClick, label }) => {
   const dispatch = useAppDispatch();
   const [modalAnchor, setModalAnchor] = useState<HTMLElement | null>(null);
-  const [filter, setFilter] = useState("");
+
+  const ordersFilters = useAppSelector(selectOrdersFilter);
+  const usersFilters = useAppSelector(selectUsersFilter);
 
   const isOrdersFilter = isOrdersFilterLabel(label);
   const isUsersFilter = isUsersFilterLabel(label);
 
+  const [value, setValue] = useState(() => {
+    if (isUsersFilter) {
+      return usersFilters[label];
+    }
+
+    if (isOrdersFilter) {
+      return ordersFilters[label];
+    }
+
+    return "";
+  });
+
+  const theme = useTheme();
+
+  const handleOnChangeFilter = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    setValue(target.value);
+  };
+
   const handleOnCloseFilter = useCallback(() => {
     setModalAnchor(null);
 
-    if (onClose) {
-      onClose();
-    }
-  }, [onClose]);
-
-  const handleOnClickFilterButton = ({
-    currentTarget,
-  }: MouseEvent<HTMLButtonElement>) => {
-    setModalAnchor(currentTarget);
-
-    if (onClick) {
-      onClick();
-    }
-  };
-
-  const handleOnChangeFilter = ({ target }: ChangeEvent<HTMLInputElement>) => {
-    setFilter(target.value);
-  };
-
-  const handleOnClickApplyButton = useCallback(() => {
-    if (isOrdersFilter) {
-      dispatch(setOrdersFilter({ key: label, value: filter }));
-    }
-
     if (isUsersFilter) {
-      dispatch(setUsersFilter({ key: label, value: filter }));
+      setValue(usersFilters[label]);
     }
 
-    handleOnCloseFilter();
-  }, [
-    filter,
-    label,
-    isOrdersFilter,
-    isUsersFilter,
-    dispatch,
-    handleOnCloseFilter,
-  ]);
-
-  const handleOnClickResetButton = useCallback(() => {
     if (isOrdersFilter) {
-      dispatch(resetOrdersFilter({ key: label }));
+      setValue(ordersFilters[label]);
     }
+  }, [isOrdersFilter, isUsersFilter, label, ordersFilters, usersFilters]);
 
+  const handleOnClickFilterButton = useCallback(
+    ({ currentTarget }: MouseEvent<HTMLButtonElement>) => {
+      setModalAnchor(currentTarget);
+
+      if (onClick) {
+        onClick();
+      }
+    },
+    [onClick],
+  );
+
+  const onApply = useCallback(() => {
+    setModalAnchor(null);
+  }, []);
+
+  const onReset = useCallback(() => {
     if (isUsersFilter) {
       dispatch(resetUsersFilter({ key: label }));
     }
 
-    handleOnCloseFilter();
-  }, [label, isOrdersFilter, isUsersFilter, dispatch, handleOnCloseFilter]);
+    if (isOrdersFilter) {
+      dispatch(resetOrdersFilter({ key: label }));
+    }
+
+    setValue("");
+    setModalAnchor(null);
+  }, [label, dispatch, isOrdersFilter, isUsersFilter]);
 
   return (
     <>
@@ -100,7 +95,13 @@ export const ColumnFilter: FC<Props> = ({
         sx={{ minWidth: "auto", p: 0 }}
         onClick={handleOnClickFilterButton}
       >
-        <FilterIcon fill={fill} stroke={stroke} primary={primary} />
+        <FilterIcon
+          fill={theme.palette.common.white}
+          stroke={theme.palette.common.white}
+          primary={
+            value ? theme.palette.secondary.main : theme.palette.common.black
+          }
+        />
       </Button>
       <Menu
         id={id}
@@ -111,9 +112,10 @@ export const ColumnFilter: FC<Props> = ({
       >
         <SearchModal
           label={label}
-          onChange={handleOnChangeFilter}
-          onApply={handleOnClickApplyButton}
-          onReset={handleOnClickResetButton}
+          value={value}
+          setValue={handleOnChangeFilter}
+          onReset={onReset}
+          onApply={onApply}
         />
       </Menu>
     </>

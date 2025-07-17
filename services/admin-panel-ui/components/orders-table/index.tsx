@@ -3,34 +3,44 @@
 import { FC, useMemo } from "react";
 
 import { DataGrid } from "@/components/data-grid";
-import { ordersTableHeaderConfig, ROWS_PER_PAGE_OPTIONS } from "@/constants";
+import { ordersTableHeaderConfig } from "@/config";
+import { ROWS_PER_PAGE_OPTIONS } from "@/constants";
 import { useAppSelector, usePagination, useTable } from "@/hooks";
-import { selectOrders } from "@/store";
+import { selectOrders, selectOrdersFilter } from "@/store";
 import { DataGridConfig } from "@/types";
-import { getSortedOrdersData } from "@/utils";
+import { getFilteredOrdersData, getSortedOrdersData } from "@/utils";
 
 import styles from "./styles.module.css";
 
 export const OrdersTable: FC = () => {
+  // TODO: получение отфильтрованного списка на стороне сервера
   const orders = useAppSelector(selectOrders);
+  const filters = useAppSelector(selectOrdersFilter);
 
-  const { order, filter, headers } = useTable({
+  const ordersData = useMemo(
+    () => getFilteredOrdersData(orders, filters),
+    [orders, filters],
+  );
+
+  console.log({ ordersData, orders });
+
+  const { sortOrder, sortKey, headers } = useTable({
     config: ordersTableHeaderConfig,
   });
-  
+
   const { page, rowsPerPage, handleOnChangePage, handleChangeRowsPerPage } =
-    usePagination({ count: orders.length });
+    usePagination({ count: ordersData.length });
 
   const data = useMemo(() => {
-    const visibleRows = orders.slice(
+    const visibleRows = ordersData.slice(
       page * rowsPerPage,
       page * rowsPerPage + rowsPerPage,
     );
 
-    return order
-      ? getSortedOrdersData(visibleRows, filter, order)
+    return sortOrder
+      ? getSortedOrdersData(visibleRows, sortKey, sortOrder)
       : visibleRows;
-  }, [orders,filter, order, page, rowsPerPage]);
+  }, [ordersData, sortKey, sortOrder, page, rowsPerPage]);
 
   const config: DataGridConfig = useMemo(
     () => ({
@@ -39,7 +49,7 @@ export const OrdersTable: FC = () => {
       pagination: {
         page,
         rowsPerPage,
-        count: orders.length,
+        count: ordersData.length,
         onPageChange: handleOnChangePage,
         onRowsPerPageChange: handleChangeRowsPerPage,
         rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
@@ -47,8 +57,8 @@ export const OrdersTable: FC = () => {
     }),
     [
       data,
-      orders,
       headers,
+      ordersData,
       page,
       rowsPerPage,
       handleChangeRowsPerPage,

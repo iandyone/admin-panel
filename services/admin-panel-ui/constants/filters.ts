@@ -1,7 +1,7 @@
 import { OrderFilters, UsersFilter } from "@/types/orders";
 
 export const USERS_FILTERS_DEFAULT: UsersFilter = {
-  id: null,
+  id: 0,
   name: "",
   role: "",
   phone: "",
@@ -10,7 +10,7 @@ export const USERS_FILTERS_DEFAULT: UsersFilter = {
   status: "",
 };
 export const ORDERS_FILTERS: OrderFilters = {
-  id: null,
+  id: 0,
   order: "",
   price: "",
   location: "",

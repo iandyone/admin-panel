@@ -4,10 +4,4 @@ export * from "./filters";
 
 export { lightPallette, darkPallette } from "./theme";
 
-export {
-  DEFAULT_ROWS_PER_PAGE,
-  ROWS_PER_PAGE_OPTIONS,
-  ordersTableHeaderConfig,
-  usersTableHeaderConfig,
-  TRANDS,
-} from "./table";
+export { DEFAULT_ROWS_PER_PAGE, ROWS_PER_PAGE_OPTIONS, TRANDS } from "./table";
