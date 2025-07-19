@@ -1,17 +1,14 @@
 "use client";
 
-import {
-  Button,
-  Stack,
-  TextField,
-  StandardTextFieldProps,
-} from "@mui/material";
-import { FC } from "react";
+import { Button, Stack, TextField } from "@mui/material";
+import { ChangeEvent, FC, useState } from "react";
 
-import { useAppDispatch } from "@/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 import {
   resetOrdersFilter,
   resetUsersFilter,
+  selectOrdersFilter,
+  selectUsersFilter,
   setOrdersFilter,
   setUsersFilter,
 } from "@/store";
@@ -19,25 +16,37 @@ import { isOrdersFilterLabel, isUsersFilterLabel } from "@/utils";
 
 interface Props {
   label: string;
-  value: string | number;
-  setValue: StandardTextFieldProps["onChange"];
-  onReset: () => void;
-  onApply: () => void;
+  setIsActive: (flag: boolean) => void;
+  onClickControls: () => void;
 }
 
-export const SearchModal: FC<Props> = ({
-  value,
-  setValue,
+export const TextSearchModal: FC<Props> = ({
   label,
-  onReset,
-  onApply,
+  setIsActive,
+  onClickControls,
 }) => {
   const dispatch = useAppDispatch();
   const isOrdersFilter = isOrdersFilterLabel(label);
   const isUsersFilter = isUsersFilterLabel(label);
 
+  const ordersFilters = useAppSelector(selectOrdersFilter);
+  const usersFilters = useAppSelector(selectUsersFilter);
+
+  const [value, setValue] = useState(() => {
+    if (isUsersFilter) {
+      return usersFilters[label];
+    }
+
+    if (isOrdersFilter) {
+      return ordersFilters[label];
+    }
+
+    return "";
+  });
+
   const handleOnClickApplyButton = () => {
     if (isOrdersFilter) {
+      // set
       dispatch(setOrdersFilter({ key: label, value: value }));
     }
 
@@ -45,7 +54,8 @@ export const SearchModal: FC<Props> = ({
       dispatch(setUsersFilter({ key: label, value: value }));
     }
 
-    onApply();
+    setIsActive(Boolean(value));
+    onClickControls();
   };
 
   const handleOnClickResetButton = () => {
@@ -57,7 +67,13 @@ export const SearchModal: FC<Props> = ({
       dispatch(resetUsersFilter({ key: label }));
     }
 
-    onReset();
+    setIsActive(false);
+    setValue("");
+    onClickControls();
+  };
+
+  const handleOnChangeFilter = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    setValue(target.value);
   };
 
   return (
@@ -68,7 +84,7 @@ export const SearchModal: FC<Props> = ({
         label={`Search by ${label}`}
         variant="outlined"
         value={Boolean(value) ? value : ""}
-        onChange={setValue}
+        onChange={handleOnChangeFilter}
       />
 
       <Stack direction="row" justifyContent="space-between" alignItems="center">

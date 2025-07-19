@@ -1,19 +1,11 @@
 "use client";
 
 import { Button, Menu, useTheme } from "@mui/material";
-import { ChangeEvent, FC, MouseEvent, useCallback, useState } from "react";
+import { FC, MouseEvent, useCallback, useState } from "react";
 
-import { SearchModal } from "@/components/ui/search-modal";
-import { useAppDispatch, useAppSelector } from "@/hooks";
-import {
-  resetOrdersFilter,
-  resetUsersFilter,
-  selectOrdersFilter,
-  selectUsersFilter,
-} from "@/store";
+import { TextSearchModal } from "@/modals/text-search-modal";
 import { FilterIcon } from "@/svg/filter-icon";
 import { OrderFilters, UsersFilter } from "@/types/orders";
-import { isOrdersFilterLabel, isUsersFilterLabel } from "@/utils";
 
 interface Props {
   id: string;
@@ -22,44 +14,14 @@ interface Props {
 }
 
 export const ColumnFilter: FC<Props> = ({ id, onClick, label }) => {
-  const dispatch = useAppDispatch();
   const [modalAnchor, setModalAnchor] = useState<HTMLElement | null>(null);
-
-  const ordersFilters = useAppSelector(selectOrdersFilter);
-  const usersFilters = useAppSelector(selectUsersFilter);
-
-  const isOrdersFilter = isOrdersFilterLabel(label);
-  const isUsersFilter = isUsersFilterLabel(label);
-
-  const [value, setValue] = useState(() => {
-    if (isUsersFilter) {
-      return usersFilters[label];
-    }
-
-    if (isOrdersFilter) {
-      return ordersFilters[label];
-    }
-
-    return "";
-  });
+  const [isFilterActive, setIsFilterActive] = useState(false);
 
   const theme = useTheme();
 
-  const handleOnChangeFilter = ({ target }: ChangeEvent<HTMLInputElement>) => {
-    setValue(target.value);
-  };
-
-  const handleOnCloseFilter = useCallback(() => {
+  const handleOnCloseFilter = () => {
     setModalAnchor(null);
-
-    if (isUsersFilter) {
-      setValue(usersFilters[label]);
-    }
-
-    if (isOrdersFilter) {
-      setValue(ordersFilters[label]);
-    }
-  }, [isOrdersFilter, isUsersFilter, label, ordersFilters, usersFilters]);
+  };
 
   const handleOnClickFilterButton = useCallback(
     ({ currentTarget }: MouseEvent<HTMLButtonElement>) => {
@@ -72,23 +34,6 @@ export const ColumnFilter: FC<Props> = ({ id, onClick, label }) => {
     [onClick],
   );
 
-  const onApply = useCallback(() => {
-    setModalAnchor(null);
-  }, []);
-
-  const onReset = useCallback(() => {
-    if (isUsersFilter) {
-      dispatch(resetUsersFilter({ key: label }));
-    }
-
-    if (isOrdersFilter) {
-      dispatch(resetOrdersFilter({ key: label }));
-    }
-
-    setValue("");
-    setModalAnchor(null);
-  }, [label, dispatch, isOrdersFilter, isUsersFilter]);
-
   return (
     <>
       <Button
@@ -99,7 +44,9 @@ export const ColumnFilter: FC<Props> = ({ id, onClick, label }) => {
           fill={theme.palette.common.white}
           stroke={theme.palette.common.white}
           primary={
-            value ? theme.palette.secondary.main : theme.palette.common.black
+            isFilterActive
+              ? theme.palette.secondary.main
+              : theme.palette.common.black
           }
         />
       </Button>
@@ -110,12 +57,10 @@ export const ColumnFilter: FC<Props> = ({ id, onClick, label }) => {
         onClose={handleOnCloseFilter}
         anchorOrigin={{ horizontal: 0, vertical: 30 }}
       >
-        <SearchModal
+        <TextSearchModal
           label={label}
-          value={value}
-          setValue={handleOnChangeFilter}
-          onReset={onReset}
-          onApply={onApply}
+          onClickControls={handleOnCloseFilter}
+          setIsActive={setIsFilterActive}
         />
       </Menu>
     </>
