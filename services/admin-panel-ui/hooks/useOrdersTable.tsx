@@ -89,8 +89,8 @@ export const useOrdersTable = ({ config, withActionColumn = true }: Props) => {
               direction="row"
             >
               <TableSortLabel
-                active={sortKey === title}
-                onClick={() => handleOnClickSortLabel(title)}
+                active={sortKey === key}
+                onClick={() => handleOnClickSortLabel(key)}
                 direction={sortOrder}
                 sx={{
                   display: hideSortIcon ? "none" : "flex",
@@ -111,8 +111,8 @@ export const useOrdersTable = ({ config, withActionColumn = true }: Props) => {
               {withFilter && (
                 <ColumnFilter
                   id="orders-table-filter"
-                  title={title}
                   mode="orders"
+                  title={title}
                   dataKey={key as keyof OrderFilters}
                   getFilterValue={getFilterValue}
                   setFilterValue={setFilterValue}

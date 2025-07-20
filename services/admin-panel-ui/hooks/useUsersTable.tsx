@@ -89,8 +89,8 @@ export const useUsersTable = ({ config, withActionColumn = true }: Props) => {
               direction="row"
             >
               <TableSortLabel
-                active={sortKey === title}
-                onClick={() => handleOnClickSortLabel(title)}
+                active={sortKey === key}
+                onClick={() => handleOnClickSortLabel(key)}
                 direction={sortOrder}
                 sx={{
                   display: hideSortIcon ? "none" : "flex",
