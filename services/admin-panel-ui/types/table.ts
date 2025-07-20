@@ -47,6 +47,6 @@ export interface DataGridConfig {
   };
 }
 
-export type FilterGetter = (key: string) => string;
+export type FilterGetter = (key: string) => string | number;
 
-export type FilterSetter = (key: string, value: string) => void;
+export type FilterSetter = (key: string, value: string| number) => void;

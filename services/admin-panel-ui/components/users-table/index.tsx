@@ -7,13 +7,17 @@ import { usersTableHeaderConfig } from "@/config";
 import { ROWS_PER_PAGE_OPTIONS } from "@/constants";
 import { useAppSelector, usePagination, useUsersTable } from "@/hooks";
 import { selectUsers, selectUsersFilter } from "@/store";
-import { DataGridConfig, EUserStatuses } from "@/types";
-import { getFilteredUsersData, getSortedOrdersData } from "@/utils";
+import { DataGridConfig, EUserStatuses, UserData } from "@/types";
+import {
+  getFilteredUsersData,
+  getFormatedDate,
+  getSortedOrdersData,
+} from "@/utils";
 
 import styles from "./styles.module.css";
 
 const USERS_PER_PAGE_OPTIONS = [5, 10, 15];
-const {ACTIVE, INACTIVE} = EUserStatuses
+const { ACTIVE, INACTIVE } = EUserStatuses;
 
 export const UsersTable: FC = () => {
   // TODO: получение отфильтрованного списка на стороне сервера
@@ -38,9 +42,11 @@ export const UsersTable: FC = () => {
   const data = useMemo(() => {
     const visibleRows = usersData
       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-      .map(({ isActive, ...rowData }) => {
-        const result = {
+      .map(({ isActive, last_activity, orders, ...rowData }) => {
+        const result: UserData = {
           ...rowData,
+          last_activity: getFormatedDate(last_activity),
+          orders,
           status: isActive ? ACTIVE : INACTIVE,
         };
 

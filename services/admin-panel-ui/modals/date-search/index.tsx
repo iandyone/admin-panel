@@ -1,6 +1,8 @@
-import { Autocomplete, Button, Stack, TextField } from "@mui/material";
-import { FC, SyntheticEvent, useState } from "react";
+import { Button, Stack } from "@mui/material";
+import { PickerValue } from "@mui/x-date-pickers/internals";
+import { FC, useState } from "react";
 
+import { PeriodFilter } from "@/components/period-filter";
 import { FilterGetter, FilterSetter } from "@/types";
 
 export interface AutocompleteProps {
@@ -13,45 +15,49 @@ export interface AutocompleteProps {
   options: string[];
 }
 
-export const AutocompleteSearchModal: FC<AutocompleteProps> = ({
-  title,
-  dataKey,
-  options,
+export const DateSearchModal: FC<AutocompleteProps> = ({
   getFilterValue,
   setFilterValue,
   onClickControls,
   setIsActive,
 }) => {
-  const [value, setValue] = useState(() => getFilterValue(dataKey));
+  const [valueFrom, setValueFrom] = useState(() => getFilterValue("dateFrom"));
+  const [valueTo, setValueTo] = useState(() => getFilterValue("dateTo"));
 
   const handleOnClickApplyButton = () => {
-    setFilterValue(dataKey, value);
-    setIsActive(Boolean(value));
+    setFilterValue("dateFrom", valueFrom);
+    setFilterValue("dateTo", valueTo);
+    setIsActive(Boolean(valueFrom) || Boolean(valueTo));
     onClickControls();
   };
 
   const handleOnClickResetButton = () => {
-    setFilterValue(dataKey, "");
+    setFilterValue("dateFrom", "");
+    setFilterValue("dateTo", "");
     setIsActive(false);
-    setValue("");
+    setValueFrom("");
     onClickControls();
   };
 
-  const handleOnChange = (event: SyntheticEvent, newValue: string | null) => {
-    setValue(String(newValue));
+  const handleOnChangeDateFrom = (value: PickerValue) => {
+    setValueFrom(value?.valueOf() || "");
+  };
+  const handleOnChangeDateTo = (value: PickerValue) => {
+    setValueTo(value?.valueOf() || "");
   };
 
   return (
     <>
       <Stack sx={{ p: 1, width: 250 }} spacing={2}>
-        <Autocomplete
-          options={options}
-          value={String(value)}
-          onChange={handleOnChange}
-          size="small"
-          renderInput={(params) => (
-            <TextField {...params} name={title} label={title} />
-          )}
+        <PeriodFilter
+          containerProps={{
+            spacing: 2,
+            columns: 1,
+          }}
+          valueTo={valueTo}
+          valueFrom={valueFrom}
+          onChangeDateFrom={handleOnChangeDateFrom}
+          onChangeDateTo={handleOnChangeDateTo}
         />
         <Stack
           direction="row"

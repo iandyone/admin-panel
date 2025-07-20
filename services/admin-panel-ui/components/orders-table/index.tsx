@@ -7,8 +7,12 @@ import { ordersTableHeaderConfig } from "@/config";
 import { ROWS_PER_PAGE_OPTIONS } from "@/constants";
 import { useAppSelector, useOrdersTable, usePagination } from "@/hooks";
 import { selectOrders, selectOrdersFilter } from "@/store";
-import { DataGridConfig } from "@/types";
-import { getFilteredOrdersData, getSortedOrdersData } from "@/utils";
+import { DataGridConfig, OrderData } from "@/types";
+import {
+  getFilteredOrdersData,
+  getFormatedDate,
+  getSortedOrdersData,
+} from "@/utils";
 
 import styles from "./styles.module.css";
 
@@ -30,10 +34,18 @@ export const OrdersTable: FC = () => {
     usePagination({ count: ordersData.length });
 
   const data = useMemo(() => {
-    const visibleRows = ordersData.slice(
-      page * rowsPerPage,
-      page * rowsPerPage + rowsPerPage,
-    );
+    const visibleRows = ordersData
+      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+      .map(({ date, manager, status, ...rowData }) => {
+        const result: OrderData = {
+          ...rowData,
+          date: getFormatedDate(date),
+          manager,
+          status,
+        };
+
+        return result;
+      });
 
     return sortOrder
       ? getSortedOrdersData(visibleRows, sortKey, sortOrder)

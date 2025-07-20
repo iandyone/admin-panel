@@ -2,7 +2,7 @@ export type SortOrder = "desc" | "asc";
 
 export interface OrderData {
   id: number;
-  date: string;
+  date: number | string;
   customer: string;
   manager: string;
   location: string;
@@ -28,6 +28,8 @@ export interface OrderFilters {
   location: string;
   customer: string;
   date: string;
+  dateFrom: string | number;
+  dateTo: string | number;
   manager: string;
   status: string;
 }
@@ -40,4 +42,6 @@ export interface UsersFilter {
   last_activity: string;
   orders: string;
   status: string;
+  dateFrom: string | number;
+  dateTo: string | number;
 }

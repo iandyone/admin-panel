@@ -1,5 +1,5 @@
 export { getOrdersChartData, seriesValueFormatterAxis } from "./dashboard";
-export { getShortMonthName } from "./date";
+export { getShortMonthName, getFormatedDate } from "./date";
 export {
   getSortedOrdersData,
   getFilteredOrdersData,

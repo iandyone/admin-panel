@@ -1,4 +1,5 @@
 import { AutocompleteSearchModal } from "@/modals/autocomplete-search";
+import { DateSearchModal } from "@/modals/date-search";
 import { TextSearchModal } from "@/modals/text-search";
 import { EUserRoles, EUserStatuses, OrderData, UserData } from "@/types";
 import { EOrderStatuses, OrderFilters, UsersFilter } from "@/types/orders";
@@ -37,8 +38,31 @@ export function getFilteredOrdersData(
   orders: OrderData[],
   filters: OrderFilters,
 ): OrderData[] {
+  // Парсим обе граничные даты (если они заданы)
+  const fromDate = filters.dateFrom ? new Date(filters.dateFrom) : null;
+  const toDate = filters.dateTo ? new Date(filters.dateTo) : null;
+
   return orders.filter((order) => {
+    // Приводим order.date к Date
+    const orderDate = new Date(order.date);
+
+    // Если есть фильтр "с" и дата заказа раньше — отсекаем
+    if (fromDate && orderDate < fromDate) {
+      return false;
+    }
+
+    // Если есть фильтр "до" и дата заказа позже — отсекаем
+    if (toDate && orderDate > toDate) {
+      return false;
+    }
+
+    // Остальные фильтры
     for (const key in filters) {
+      // пропускаем уже обработанные
+      if (key === "dateFrom" || key === "dateTo") {
+        continue;
+      }
+
       const filterValue = filters[key as keyof OrderFilters];
 
       if (!filterValue) {
@@ -67,12 +91,40 @@ export function getFilteredUsersData(
   users: UserData[],
   filters: UsersFilter,
 ): UserData[] {
+  // Парсим обе граничные даты (если они заданы)
+  const fromDate = filters.dateFrom ? new Date(filters.dateFrom) : null;
+  const toDate = filters.dateTo ? new Date(filters.dateTo) : null;
+
   return users.filter((user) => {
+    // Приводим order.date к Date
+    const lastActivity = new Date(user.last_activity);
+
+    // Если есть фильтр "с" и дата заказа раньше — отсекаем
+    if (fromDate && lastActivity < fromDate) {
+      return false;
+    }
+
+    // Если есть фильтр "до" и дата заказа позже — отсекаем
+    if (toDate && lastActivity > toDate) {
+      return false;
+    }
+
     for (const key in filters) {
+      // пропускаем уже обработанные
+      if (key === "dateFrom" || key === "dateTo") {
+        continue;
+      }
+
       const filterValue = filters[key as keyof UsersFilter];
 
       if (!filterValue) {
         continue;
+      }
+
+      if (key === "status") {
+        return filterValue === EUserStatuses.ACTIVE
+          ? user.isActive === true
+          : user.isActive === false;
       }
 
       if (key === "id") {
@@ -98,6 +150,9 @@ export const getModalByLabelMap = (key: string) => {
     case "role":
     case "status":
       return AutocompleteSearchModal;
+    case "date":
+    case "last_activity":
+      return DateSearchModal;
 
     default:
       return TextSearchModal;

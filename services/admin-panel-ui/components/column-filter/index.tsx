@@ -6,10 +6,7 @@ import { FC, MouseEvent, useCallback, useMemo, useState } from "react";
 import { FilterIcon } from "@/svg/filter-icon";
 import { FilterGetter, FilterSetter } from "@/types";
 import { OrderFilters, UsersFilter } from "@/types/orders";
-import {
-  getModalByLabelMap,
-  getModalOptionsByLabel,
-} from "@/utils";
+import { getModalByLabelMap, getModalOptionsByLabel } from "@/utils";
 
 interface Props {
   id: string;
@@ -34,10 +31,8 @@ export const ColumnFilter: FC<Props> = ({
   const [isFilterActive, setIsFilterActive] = useState(false);
   const theme = useTheme();
 
-
-  // const optionsType = isOrdersFilterLabel(dataKey) ? "orders" : "users";
-
   const Modal = useMemo(() => getModalByLabelMap(dataKey), [dataKey]);
+  
   const options = useMemo(
     () => getModalOptionsByLabel(dataKey, mode),
     [dataKey, mode],
