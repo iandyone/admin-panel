@@ -3,16 +3,17 @@
 import { FC, useMemo } from "react";
 
 import { DataGrid } from "@/components/data-grid";
-import { usersTableHeaderConfig } from '@/config';
+import { usersTableHeaderConfig } from "@/config";
 import { ROWS_PER_PAGE_OPTIONS } from "@/constants";
-import { useAppSelector, usePagination, useTable } from "@/hooks";
+import { useAppSelector, usePagination, useUsersTable } from "@/hooks";
 import { selectUsers, selectUsersFilter } from "@/store";
-import { DataGridConfig } from "@/types";
+import { DataGridConfig, EUserStatuses } from "@/types";
 import { getFilteredUsersData, getSortedOrdersData } from "@/utils";
 
 import styles from "./styles.module.css";
 
 const USERS_PER_PAGE_OPTIONS = [5, 10, 15];
+const {ACTIVE, INACTIVE} = EUserStatuses
 
 export const UsersTable: FC = () => {
   // TODO: получение отфильтрованного списка на стороне сервера
@@ -24,7 +25,7 @@ export const UsersTable: FC = () => {
     [users, filters],
   );
 
-  const { sortOrder, sortKey, headers } = useTable({
+  const { sortOrder, sortKey, headers } = useUsersTable({
     config: usersTableHeaderConfig,
   });
 
@@ -40,7 +41,7 @@ export const UsersTable: FC = () => {
       .map(({ isActive, ...rowData }) => {
         const result = {
           ...rowData,
-          status: isActive ? "Active" : "Inactive",
+          status: isActive ? ACTIVE : INACTIVE,
         };
 
         return result;
@@ -66,7 +67,7 @@ export const UsersTable: FC = () => {
     }),
     [
       data,
-      users,
+      usersData,
       headers,
       page,
       rowsPerPage,

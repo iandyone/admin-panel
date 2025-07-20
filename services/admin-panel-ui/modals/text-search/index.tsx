@@ -3,72 +3,38 @@
 import { Button, Stack, TextField } from "@mui/material";
 import { ChangeEvent, FC, useState } from "react";
 
-import { useAppDispatch, useAppSelector } from "@/hooks";
-import {
-  resetOrdersFilter,
-  resetUsersFilter,
-  selectOrdersFilter,
-  selectUsersFilter,
-  setOrdersFilter,
-  setUsersFilter,
-} from "@/store";
-import { isOrdersFilterLabel, isUsersFilterLabel } from "@/utils";
+import { LABELS_WITH_NUMERIC_FIELS } from "@/constants";
+import { FilterGetter, FilterSetter } from "@/types";
 
-interface Props {
-  label: string;
+export interface TextModalProps {
+  title: string;
+  dataKey: string;
   setIsActive: (flag: boolean) => void;
   onClickControls: () => void;
+  getFilterValue: FilterGetter;
+  setFilterValue: FilterSetter;
 }
 
-export const TextSearchModal: FC<Props> = ({
-  label,
+export const TextSearchModal: FC<TextModalProps> = ({
+  dataKey,
+  title,
+  getFilterValue,
+  setFilterValue,
   setIsActive,
   onClickControls,
 }) => {
-  const dispatch = useAppDispatch();
-  const isOrdersFilter = isOrdersFilterLabel(label);
-  const isUsersFilter = isUsersFilterLabel(label);
-
-  const ordersFilters = useAppSelector(selectOrdersFilter);
-  const usersFilters = useAppSelector(selectUsersFilter);
-
-  const [value, setValue] = useState(() => {
-    if (isUsersFilter) {
-      return usersFilters[label];
-    }
-
-    if (isOrdersFilter) {
-      return ordersFilters[label];
-    }
-
-    return "";
-  });
+  const [value, setValue] = useState(() => getFilterValue(dataKey));
 
   const handleOnClickApplyButton = () => {
-    if (isOrdersFilter) {
-      // set
-      dispatch(setOrdersFilter({ key: label, value: value }));
-    }
-
-    if (isUsersFilter) {
-      dispatch(setUsersFilter({ key: label, value: value }));
-    }
-
+    setFilterValue(dataKey, value);
     setIsActive(Boolean(value));
     onClickControls();
   };
 
   const handleOnClickResetButton = () => {
-    if (isOrdersFilter) {
-      dispatch(resetOrdersFilter({ key: label }));
-    }
-
-    if (isUsersFilter) {
-      dispatch(resetUsersFilter({ key: label }));
-    }
-
-    setIsActive(false);
     setValue("");
+    setFilterValue(dataKey, "");
+    setIsActive(false);
     onClickControls();
   };
 
@@ -81,10 +47,11 @@ export const TextSearchModal: FC<Props> = ({
       <TextField
         id="outlined-basic"
         size="small"
-        label={`Search by ${label}`}
+        label={`Search by ${title}`}
         variant="outlined"
         value={Boolean(value) ? value : ""}
         onChange={handleOnChangeFilter}
+        type={LABELS_WITH_NUMERIC_FIELS.includes(dataKey) ? "number" : "text"}
       />
 
       <Stack direction="row" justifyContent="space-between" alignItems="center">

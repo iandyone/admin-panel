@@ -22,7 +22,7 @@ export enum EOrderStatuses {
 }
 
 export interface OrderFilters {
-  id: number;
+  id: string;
   order: string;
   price: string;
   location: string;
@@ -33,7 +33,7 @@ export interface OrderFilters {
 }
 
 export interface UsersFilter {
-  id: number;
+  id: string;
   name: string;
   role: string;
   phone: string;

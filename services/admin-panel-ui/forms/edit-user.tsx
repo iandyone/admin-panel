@@ -5,7 +5,7 @@ import { Form, Formik } from "formik";
 import { FC } from "react";
 
 import { InputField } from "@/components/ui/input-field";
-import { EUserStatuses, UserData } from "@/types";
+import { EUserRoles, UserData } from "@/types";
 import { EOrderStatuses } from "@/types/orders";
 import { editUserValidationSchema } from "@/validations";
 
@@ -55,7 +55,7 @@ export const EditUserForm: FC<Props> = ({
               />
 
               <Autocomplete
-                options={Object.values(EUserStatuses)}
+                options={Object.values(EUserRoles)}
                 value={values.status}
                 onChange={(_, newValue) => {
                   setFieldValue("role", newValue);

@@ -6,6 +6,7 @@ import { UserData } from "@/types/user";
 export type DataGridType = "orders" | "users";
 
 export interface HeaderData {
+  title: string;
   width?: string | number;
   hideSortIcon?: boolean;
   withFilter?: boolean;
@@ -13,13 +14,13 @@ export interface HeaderData {
 
 export type OrdersTableHeaderConfig = Array<
   HeaderData & {
-    title: keyof OrderFilters | '';
+    key: keyof OrderFilters | "";
   }
 >;
 
 export type UsersTableHeaderConfig = Array<
   HeaderData & {
-    title: keyof UsersFilter | '';
+    key: keyof UsersFilter | "";
   }
 >;
 
@@ -45,3 +46,7 @@ export interface DataGridConfig {
     Component: FC;
   };
 }
+
+export type FilterGetter = (key: string) => string;
+
+export type FilterSetter = (key: string, value: string) => void;

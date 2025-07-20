@@ -9,8 +9,13 @@ export interface UserData {
   status?: string;
 }
 
-export enum EUserStatuses {
+export enum EUserRoles {
   ADMIN = "admin",
   MANAGER = "manager",
   DELIVERY = "delivery",
+}
+
+export enum EUserStatuses {
+  ACTIVE = "active",
+  INACTIVE = "inactive",
 }

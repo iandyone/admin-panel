@@ -9,31 +9,37 @@ import {
 import { useCallback, useMemo, useState } from "react";
 
 import { ColumnFilter } from "@/components/column-filter";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { selectOrdersFilter, setOrdersFilter } from "@/store";
 import {
+  FilterGetter,
+  FilterSetter,
   OrdersTableHeaderConfig,
   SortOrder,
-  UsersTableHeaderConfig,
 } from "@/types";
-import { UsersFilter } from "@/types/orders";
+import { OrderFilters } from "@/types/orders";
 
 interface Props {
-  config: OrdersTableHeaderConfig | UsersTableHeaderConfig;
+  config: OrdersTableHeaderConfig;
   withActionColumn?: boolean;
 }
 
 const DEFAULT_ORDER: SortOrder = "asc";
 
 const ACTION_COLUMN_CONFIG = {
-  title: "" as keyof UsersFilter,
+  title: "",
+  key: "" as keyof OrderFilters,
   withFilter: false,
   width: "5%",
   hideSortIcon: true,
 };
 
-export const useTable = ({ config, withActionColumn = true }: Props) => {
-  // TODO: логика непустого фильтра
+export const useOrdersTable = ({ config, withActionColumn = true }: Props) => {
   const [sortKey, setSortKey] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<SortOrder>(DEFAULT_ORDER);
+
+  const filters = useAppSelector(selectOrdersFilter);
+  const dispatch = useAppDispatch();
 
   const theme = useTheme();
 
@@ -45,13 +51,23 @@ export const useTable = ({ config, withActionColumn = true }: Props) => {
     [sortOrder],
   );
 
+  const getFilterValue: FilterGetter = useCallback(
+    (key) => filters[key as keyof OrderFilters],
+    [filters],
+  );
+  const setFilterValue: FilterSetter = useCallback(
+    (key, value) =>
+      dispatch(setOrdersFilter({ key: key as keyof OrderFilters, value })),
+    [dispatch],
+  );
+
   const headers = useMemo(() => {
     const headers = withActionColumn
       ? config.concat([ACTION_COLUMN_CONFIG])
       : config;
 
     return headers.map(
-      ({ title, width = "auto", hideSortIcon, withFilter = true }) => (
+      ({ title, hideSortIcon, key, withFilter = true, width = "auto" }) => (
         <TableCell
           key={title}
           color="red"
@@ -93,7 +109,14 @@ export const useTable = ({ config, withActionColumn = true }: Props) => {
               </TableSortLabel>
 
               {withFilter && (
-                <ColumnFilter id="order-table-search-menu" label={title} />
+                <ColumnFilter
+                  id="orders-table-filter"
+                  title={title}
+                  mode="orders"
+                  dataKey={key as keyof OrderFilters}
+                  getFilterValue={getFilterValue}
+                  setFilterValue={setFilterValue}
+                />
               )}
             </Stack>
           )}
@@ -105,6 +128,8 @@ export const useTable = ({ config, withActionColumn = true }: Props) => {
     sortKey,
     sortOrder,
     theme,
+    getFilterValue,
+    setFilterValue,
     withActionColumn,
     handleOnClickSortLabel,
   ]);

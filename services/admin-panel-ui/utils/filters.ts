@@ -1,5 +1,7 @@
-import { OrderData, UserData } from "@/types";
-import { OrderFilters, UsersFilter } from "@/types/orders";
+import { AutocompleteSearchModal } from "@/modals/autocomplete-search";
+import { TextSearchModal } from "@/modals/text-search";
+import { EUserRoles, EUserStatuses, OrderData, UserData } from "@/types";
+import { EOrderStatuses, OrderFilters, UsersFilter } from "@/types/orders";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type Order = "asc" | "desc";
@@ -61,7 +63,6 @@ export function getFilteredOrdersData(
   });
 }
 
-
 export function getFilteredUsersData(
   users: UserData[],
   filters: UsersFilter,
@@ -91,3 +92,29 @@ export function getFilteredUsersData(
     return true;
   });
 }
+
+export const getModalByLabelMap = (key: string) => {
+  switch (key) {
+    case "role":
+    case "status":
+      return AutocompleteSearchModal;
+
+    default:
+      return TextSearchModal;
+  }
+};
+
+export const getModalOptionsByLabel = (
+  key: string,
+  type: "users" | "orders" = "orders",
+) => {
+  switch (key) {
+    case "role":
+      return EUserRoles;
+    case "status":
+      return type === "orders" ? EOrderStatuses : EUserStatuses;
+
+    default:
+      return [];
+  }
+};

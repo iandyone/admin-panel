@@ -1,23 +1,47 @@
 "use client";
 
 import { Button, Menu, useTheme } from "@mui/material";
-import { FC, MouseEvent, useCallback, useState } from "react";
+import { FC, MouseEvent, useCallback, useMemo, useState } from "react";
 
-import { TextSearchModal } from "@/modals/text-search-modal";
 import { FilterIcon } from "@/svg/filter-icon";
+import { FilterGetter, FilterSetter } from "@/types";
 import { OrderFilters, UsersFilter } from "@/types/orders";
+import {
+  getModalByLabelMap,
+  getModalOptionsByLabel,
+} from "@/utils";
 
 interface Props {
   id: string;
   onClick?: () => void;
-  label: keyof OrderFilters | keyof UsersFilter;
+  dataKey: keyof OrderFilters | keyof UsersFilter;
+  title: string;
+  getFilterValue: FilterGetter;
+  setFilterValue: FilterSetter;
+  mode: "orders" | "users";
 }
 
-export const ColumnFilter: FC<Props> = ({ id, onClick, label }) => {
+export const ColumnFilter: FC<Props> = ({
+  id,
+  dataKey,
+  title,
+  onClick,
+  getFilterValue,
+  setFilterValue,
+  mode = "orders",
+}) => {
   const [modalAnchor, setModalAnchor] = useState<HTMLElement | null>(null);
   const [isFilterActive, setIsFilterActive] = useState(false);
-
   const theme = useTheme();
+
+
+  // const optionsType = isOrdersFilterLabel(dataKey) ? "orders" : "users";
+
+  const Modal = useMemo(() => getModalByLabelMap(dataKey), [dataKey]);
+  const options = useMemo(
+    () => getModalOptionsByLabel(dataKey, mode),
+    [dataKey, mode],
+  );
 
   const handleOnCloseFilter = () => {
     setModalAnchor(null);
@@ -57,8 +81,12 @@ export const ColumnFilter: FC<Props> = ({ id, onClick, label }) => {
         onClose={handleOnCloseFilter}
         anchorOrigin={{ horizontal: 0, vertical: 30 }}
       >
-        <TextSearchModal
-          label={label}
+        <Modal
+          dataKey={dataKey}
+          title={title}
+          options={Object.values(options)}
+          getFilterValue={getFilterValue}
+          setFilterValue={setFilterValue}
           onClickControls={handleOnCloseFilter}
           setIsActive={setIsFilterActive}
         />

@@ -4,6 +4,8 @@ export {
   getSortedOrdersData,
   getFilteredOrdersData,
   getFilteredUsersData,
+  getModalByLabelMap,
+  getModalOptionsByLabel,
 } from "./filters";
 export {
   isOrderData,

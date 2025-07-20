@@ -5,7 +5,7 @@ import { FC, useMemo } from "react";
 import { DataGrid } from "@/components/data-grid";
 import { ordersTableHeaderConfig } from "@/config";
 import { ROWS_PER_PAGE_OPTIONS } from "@/constants";
-import { useAppSelector, usePagination, useTable } from "@/hooks";
+import { useAppSelector, useOrdersTable, usePagination } from "@/hooks";
 import { selectOrders, selectOrdersFilter } from "@/store";
 import { DataGridConfig } from "@/types";
 import { getFilteredOrdersData, getSortedOrdersData } from "@/utils";
@@ -22,7 +22,7 @@ export const OrdersTable: FC = () => {
     [orders, filters],
   );
 
-  const { sortOrder, sortKey, headers } = useTable({
+  const { sortOrder, sortKey, headers } = useOrdersTable({
     config: ordersTableHeaderConfig,
   });
 
