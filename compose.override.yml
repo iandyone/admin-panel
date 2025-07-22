@@ -8,19 +8,23 @@ services:
       - ./configs:/app/configs
       - ./package.json:/app/package.json
       # - ui-node-modules:/app/node_modules
-      - ./node_modules:/app/node_modules
+      # - ./node_modules:/app/node_modules
+      - ui-node-modules:/app/node_modules
     working_dir: /app/services/admin-panel-ui
     command: sh -c "yarn install && yarn workspace @services/admin-panel-ui dev"
   api:
     build:
       target: deps
     image: admin-panel-api-dev
+    env_file:
+      - .env
     volumes:
       - ./services/admin-panel-api:/app/services/admin-panel-api/
       - ./configs:/app/configs
       - ./package.json:/app/package.json
-      - api-node-modules:/app/node_modules
+      # - api-node-modules:/app/node_modules
       # - ./node_modules:/app/node_modules
+      - api-node-modules:/app/node_modules
     working_dir: /app/services/admin-panel-api
     command: sh -c "yarn workspace @services/admin-panel-api start:dev"
 
