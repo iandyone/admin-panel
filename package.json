@@ -20,7 +20,8 @@
     "run:api": "docker run -dp 8080:8080 --rm --name admin-panel-api admin-panel-api",
     "start:prod": "docker compose -f compose.yml up -d --build",
     "start:dev": "docker compose up -d --build",
-    "stop": "docker compose down"
+    "stop": "docker compose down",
+    "migrate:dev": "npx prisma migrate dev --schema services/admin-panel-api/prisma/schema.prisma"
   },
   "packageManager": "yarn@4.9.1",
   "workspaces": [
