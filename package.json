@@ -21,7 +21,8 @@
     "start:prod": "docker compose -f compose.yml up -d --build",
     "start:dev": "docker compose up -d --build",
     "stop": "docker compose down",
-    "migrate:dev": "npx prisma migrate dev --schema services/admin-panel-api/prisma/schema.prisma"
+    "migrate:dev": "npx prisma migrate dev --schema services/admin-panel-api/prisma/schema.prisma",
+    "db:seed": "yarn workspace @services/admin-panel-api seed"
   },
   "packageManager": "yarn@4.9.1",
   "workspaces": [
