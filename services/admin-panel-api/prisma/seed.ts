@@ -64,7 +64,7 @@ async function seedOrders() {
     });
 
     for (const productId of productIds) {
-      await prisma.orderItems.create({
+      await prisma.ordersItems.create({
         data: {
           Order: { connect: { id: order.id } },
           Product: { connect: { id: productId } },
