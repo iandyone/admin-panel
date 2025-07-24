@@ -9,12 +9,12 @@ datasource db {
 
 model Credentials {
   id       Int    @id @unique @default(autoincrement())
-  userId   Int    @map("user_id")
+  userId   Int    @unique @map("user_id")
   email    String @unique
   password String
   role     Role?  @default(DELIVERY)
 
-  user User @relation(fields: [userId], references: [id])
+  User User? @relation(fields: [userId], references: [id])
 
   @@map("credentials")
 }
@@ -30,42 +30,54 @@ model User {
   lastActivity DateTime? @map("last_activity")
   updatedAt    DateTime? @updatedAt() @map("updated_at")
   createdAt    DateTime? @default(now()) @map("created_at")
-  orders       Int       @default(0)
+  orders       Int?
 
-  managedOrders   Order[]       @relation("ManagerOrders")
-  deliveredOrders Order[]       @relation("DeliverymanOrders")
-  credentials     Credentials[]
+  ManagedOrders   Order[]      @relation("ManagerOrders")
+  DeliveredOrders Order[]      @relation("DeliverymanOrders")
+  Credentials     Credentials?
 
   @@map("users")
 }
 
 model Order {
   id            Int         @id @unique @default(autoincrement())
-  invoice       Int         @default(0)
   location      String
   customer      String
-  createdAt     DateTime    @default(now()) @map("created_at")
-  updatedAt     DateTime    @updatedAt() @map("updated_at")
+  createdAt     DateTime?   @default(now()) @map("created_at")
+  updatedAt     DateTime?   @updatedAt() @map("updated_at")
   managerId     Int         @map("manager_id")
   deliverymanId Int         @map("deliveryman_id")
   status        OrderStatus @default(CREATED)
-  products      Product[]
 
-  manager     User @relation("ManagerOrders", fields: [managerId], references: [id])
-  deliveryman User @relation("DeliverymanOrders", fields: [deliverymanId], references: [id])
+  Manager     User?        @relation("ManagerOrders", fields: [managerId], references: [id])
+  Deliveryman User?        @relation("DeliverymanOrders", fields: [deliverymanId], references: [id])
+  OrderItems  OrdersItems[]
 
   @@map("orders")
 }
 
 model Product {
-  id       Int             @id @unique @default(autoincrement())
-  name     String          @unique
-  price    Int
-  category ProductCategory
+  id        Int             @id @unique @default(autoincrement())
+  name      String          @unique
+  price     Float
+  category  ProductCategory
+  createdAt DateTime?       @default(now()) @map("created_at")
+  updatedAt DateTime?       @updatedAt() @map("updated_at")
 
-  orders Order[]
+  OrderItems OrdersItems[]
 
   @@map("products")
+}
+
+model OrdersItems {
+  id        Int @id @default(autoincrement())
+  orderId   Int @map("order_id")
+  productId Int @map("product_id")
+
+  Order   Order?   @relation(fields: [orderId], references: [id])
+  Product Product? @relation(fields: [productId], references: [id])
+
+  @@map("orders_items")
 }
 
 enum Role {
