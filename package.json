@@ -22,9 +22,12 @@
     "start:dev": "docker compose up -d --build",
     "stop": "docker compose down",
     "db:migrate": "cross-env DB_HOST=localhost npx prisma migrate dev --schema services/admin-panel-api/prisma/schema.prisma",
-    "db:seed": "yarn workspace @services/admin-panel-api seed",
-    "db:studio": "cross-env DB_HOST=localhost npx dotenv -e .env -- yarn workspace @services/admin-panel-api run studio",
-    "db:push": "npx dotenv -e .env -- yarn workspace @services/admin-panel-api db:push"
+    "db:seed": "yarn workspace @services/admin-panel-api db:seed",
+    "db:studio": "cross-env DB_HOST=localhost npx dotenv -e .env -- yarn workspace @services/admin-panel-api run db:studio",
+    "db:push": "npx dotenv -e .env -- yarn workspace @services/admin-panel-api db:push",
+    "db:deploy": "npx dotenv -e .env.prod -- yarn workspace @services/admin-panel-api db:deploy",
+    "db:migrate-prod": "npx dotenv -e .env.prod -- npx prisma migrate dev --schema services/admin-panel-api/prisma/schema.prisma",
+    "db:seed-prod": "npx dotenv -e .env.prod -- yarn workspace @services/admin-panel-api db:seed"
   },
   "packageManager": "yarn@4.9.1",
   "workspaces": [
