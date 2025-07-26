@@ -5,16 +5,18 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 import { DatabaseModule } from '../database/database.module';
+import { OrdersModule } from '../orders/orders.module';
 import { UsersModule } from '../users/users.module';
 
 @Module({
   imports: [
+    UsersModule,
+    OrdersModule,
+    DatabaseModule,
     ConfigModule.forRoot({
-      // compose will load a .env file from root dir
+      // compose will load a .env file from the root dir
       isGlobal: true,
     }),
-    UsersModule,
-    DatabaseModule,
   ],
   controllers: [AppController],
   providers: [AppService],

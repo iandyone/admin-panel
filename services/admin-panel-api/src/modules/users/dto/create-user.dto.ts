@@ -1,4 +1,4 @@
-import { Credentials, User } from '@prisma/client';
+import { UserData } from '../../../types';
 
 export class CreateUserDto {
   firstName: string;
@@ -7,13 +7,7 @@ export class CreateUserDto {
   email: string;
   password: string;
 
-  constructor({
-    firstName,
-    lastName,
-    phone,
-    email,
-    password,
-  }: User & Credentials) {
+  constructor({ firstName, lastName, phone, email, password }: UserData) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.phone = phone;

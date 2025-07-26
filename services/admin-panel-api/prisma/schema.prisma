@@ -45,12 +45,12 @@ model Order {
   customer      String
   createdAt     DateTime?   @default(now()) @map("created_at")
   updatedAt     DateTime?   @updatedAt() @map("updated_at")
-  managerId     Int         @map("manager_id")
-  deliverymanId Int         @map("deliveryman_id")
+  managerId     Int?         @map("manager_id")
+  deliverymanId Int?        @map("deliveryman_id")
   status        OrderStatus @default(CREATED)
 
-  Manager     User?        @relation("ManagerOrders", fields: [managerId], references: [id])
-  Deliveryman User?        @relation("DeliverymanOrders", fields: [deliverymanId], references: [id])
+  Manager     User?         @relation("ManagerOrders", fields: [managerId], references: [id])
+  Deliveryman User?         @relation("DeliverymanOrders", fields: [deliverymanId], references: [id])
   OrderItems  OrdersItems[]
 
   @@map("orders")

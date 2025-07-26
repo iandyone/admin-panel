@@ -21,7 +21,7 @@
     "start:prod": "docker compose -f compose.yml up -d --build",
     "start:dev": "docker compose up -d --build",
     "stop": "docker compose down",
-    "db:migrate": "npx prisma migrate dev --schema services/admin-panel-api/prisma/schema.prisma",
+    "db:migrate": "cross-env DB_HOST=localhost npx prisma migrate dev --schema services/admin-panel-api/prisma/schema.prisma",
     "db:seed": "yarn workspace @services/admin-panel-api seed",
     "db:studio": "cross-env DB_HOST=localhost npx dotenv -e .env -- yarn workspace @services/admin-panel-api run studio",
     "db:push": "npx dotenv -e .env -- yarn workspace @services/admin-panel-api db:push"
