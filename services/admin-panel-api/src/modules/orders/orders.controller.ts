@@ -10,16 +10,13 @@ import {
   UsePipes,
 } from '@nestjs/common';
 import { Order } from '@prisma/client';
+import { createOrderSchema, updateOrderSchema } from 'src/validations';
+import { idSchema } from 'src/validations/schemas';
 
 import { OrdersService } from './orders.service';
 
 import { JoiValidationPipe } from '../../pipes/joi-validation.pipe';
 import { OrderData } from '../../types';
-import { idSchema } from '../../validations/common.schema';
-import {
-  createOrderSchema,
-  updateOrderSchema,
-} from '../../validations/order.schema';
 import { UseId } from '../decorators';
 
 @Controller('orders')
