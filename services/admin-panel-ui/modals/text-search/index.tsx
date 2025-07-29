@@ -3,7 +3,7 @@
 import { Button, Stack, TextField } from "@mui/material";
 import { ChangeEvent, FC, useState } from "react";
 
-import { LABELS_WITH_NUMERIC_FIELS } from "@/constants";
+import { LABELS_WITH_NUMERIC_FIELDS } from "@/constants";
 import { FilterGetter, FilterSetter } from "@/types";
 
 export interface TextModalProps {
@@ -51,7 +51,7 @@ export const TextSearchModal: FC<TextModalProps> = ({
         variant="outlined"
         value={Boolean(value) ? value : ""}
         onChange={handleOnChangeFilter}
-        type={LABELS_WITH_NUMERIC_FIELS.includes(dataKey) ? "number" : "text"}
+        type={LABELS_WITH_NUMERIC_FIELDS.includes(dataKey) ? "number" : "text"}
       />
 
       <Stack direction="row" justifyContent="space-between" alignItems="center">

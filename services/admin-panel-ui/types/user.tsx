@@ -3,7 +3,7 @@ export interface UserData {
   name: string;
   role: string;
   phone: number | string;
-  last_activity: number | string;
+  lastActivity: number | string;
   orders: number;
   isActive?: boolean;
   status?: string;

@@ -1,7 +1,6 @@
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Suspense } from "react";
 
 import { AppProvider } from "../components/app-provider";
 
@@ -23,9 +22,7 @@ export default function RootLayout({
     <html lang="en" data-toolpad-color-scheme="light">
       <body className={inter.className}>
         <AppRouterCacheProvider>
-          <Suspense fallback={<div>Root layout loading...</div>}>
-            <AppProvider>{children}</AppProvider>
-          </Suspense>
+          <AppProvider>{children}</AppProvider>
         </AppRouterCacheProvider>
       </body>
     </html>

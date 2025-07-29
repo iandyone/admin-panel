@@ -2,7 +2,7 @@ import { Stack, Typography } from "@mui/material";
 import { FC } from "react";
 
 import { TrendingRow } from "@/components/ui/trending-row";
-import { TRANDS } from "@/constants";
+import { TRENDS } from "@/constants";
 
 export const Trending: FC = () => {
   return (
@@ -22,7 +22,7 @@ export const Trending: FC = () => {
       </Stack>
 
       <Stack spacing={2}>
-        {TRANDS.map((trendItem, index) => (
+        {TRENDS.map((trendItem, index) => (
           <TrendingRow key={trendItem.id} index={index + 1} {...trendItem} />
         ))}
       </Stack>

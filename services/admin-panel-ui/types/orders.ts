@@ -39,7 +39,7 @@ export interface UsersFilter {
   name: string;
   role: string;
   phone: string;
-  last_activity: string;
+  lastActivity: string;
   orders: string;
   status: string;
   dateFrom: string | number;

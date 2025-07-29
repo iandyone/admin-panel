@@ -10,7 +10,7 @@ import { selectOrders, selectOrdersFilter } from "@/store";
 import { DataGridConfig, OrderData } from "@/types";
 import {
   getFilteredOrdersData,
-  getFormatedDate,
+  getFormattedDate,
   getSortedOrdersData,
 } from "@/utils";
 
@@ -39,7 +39,7 @@ export const OrdersTable: FC = () => {
       .map(({ date, manager, status, ...rowData }) => {
         const result: OrderData = {
           ...rowData,
-          date: getFormatedDate(date),
+          date: getFormattedDate(date),
           manager,
           status,
         };

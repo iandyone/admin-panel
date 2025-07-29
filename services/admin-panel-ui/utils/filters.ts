@@ -91,26 +91,21 @@ export function getFilteredUsersData(
   users: UserData[],
   filters: UsersFilter,
 ): UserData[] {
-  // Парсим обе граничные даты (если они заданы)
   const fromDate = filters.dateFrom ? new Date(filters.dateFrom) : null;
   const toDate = filters.dateTo ? new Date(filters.dateTo) : null;
 
   return users.filter((user) => {
-    // Приводим order.date к Date
-    const lastActivity = new Date(user.last_activity);
+    const lastActivity = new Date(user.lastActivity);
 
-    // Если есть фильтр "с" и дата заказа раньше — отсекаем
     if (fromDate && lastActivity < fromDate) {
       return false;
     }
 
-    // Если есть фильтр "до" и дата заказа позже — отсекаем
     if (toDate && lastActivity > toDate) {
       return false;
     }
 
     for (const key in filters) {
-      // пропускаем уже обработанные
       if (key === "dateFrom" || key === "dateTo") {
         continue;
       }
@@ -151,7 +146,7 @@ export const getModalByLabelMap = (key: string) => {
     case "status":
       return AutocompleteSearchModal;
     case "date":
-    case "last_activity":
+    case "lastActivity":
       return DateSearchModal;
 
     default:

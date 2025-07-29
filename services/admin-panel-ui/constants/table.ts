@@ -3,7 +3,7 @@ import { TrendItem } from "@/types/dashboard";
 export const DEFAULT_ROWS_PER_PAGE = 15;
 export const ROWS_PER_PAGE_OPTIONS = [DEFAULT_ROWS_PER_PAGE, 25, 50];
 
-export const TRANDS: TrendItem[] = [
+export const TRENDS: TrendItem[] = [
   {
     id: 1,
     title: "Pizza Meal for Kids (Small size)",

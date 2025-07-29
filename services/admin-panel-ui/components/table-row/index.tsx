@@ -21,7 +21,7 @@ export const TableRowItem: FC<Props> = ({ data, ...rowProps }) => {
   const orderItems = new Set([...ORDERS_DATA.map(({ order }) => order)]);
 
   const isOrderModal = isOrderData(data);
-  const isuserModal = isUserData(data);
+  const isUserModal = isUserData(data);
 
   const handleOnClickEditButton = () => {
     setIsOpen(true);
@@ -67,7 +67,7 @@ export const TableRowItem: FC<Props> = ({ data, ...rowProps }) => {
             orderItems={Array.from(orderItems)}
           />
         )}
-        {isuserModal && (
+        {isUserModal && (
           <EditUserForm
             data={data}
             onCancel={handleOnCancel}

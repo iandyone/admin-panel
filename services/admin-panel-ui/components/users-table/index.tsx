@@ -10,7 +10,7 @@ import { selectUsers, selectUsersFilter } from "@/store";
 import { DataGridConfig, EUserStatuses, UserData } from "@/types";
 import {
   getFilteredUsersData,
-  getFormatedDate,
+  getFormattedDate,
   getSortedOrdersData,
 } from "@/utils";
 
@@ -42,10 +42,10 @@ export const UsersTable: FC = () => {
   const data = useMemo(() => {
     const visibleRows = usersData
       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-      .map(({ isActive, last_activity, orders, ...rowData }) => {
+      .map(({ isActive, lastActivity, orders, ...rowData }) => {
         const result: UserData = {
           ...rowData,
-          last_activity: getFormatedDate(last_activity),
+          lastActivity: getFormattedDate(lastActivity),
           orders,
           status: isActive ? ACTIVE : INACTIVE,
         };

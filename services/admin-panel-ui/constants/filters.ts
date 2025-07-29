@@ -5,7 +5,7 @@ export const USERS_FILTERS_DEFAULT: UsersFilter = {
   name: "",
   role: "",
   phone: "",
-  last_activity: "",
+  lastActivity: "",
   orders: "",
   status: "",
   dateFrom: "",
@@ -24,4 +24,4 @@ export const ORDERS_FILTERS: OrderFilters = {
   date: "",
 };
 
-export const LABELS_WITH_NUMERIC_FIELS = ["id", "orders", "price"];
+export const LABELS_WITH_NUMERIC_FIELDS = ["id", "orders", "price"];
