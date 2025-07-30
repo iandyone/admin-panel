@@ -6,7 +6,7 @@ import { DataGrid } from "@/components/data-grid";
 import { usersTableHeaderConfig } from "@/config";
 import { ROWS_PER_PAGE_OPTIONS } from "@/constants";
 import { useAppSelector, usePagination, useUsersTable } from "@/hooks";
-import { selectUsers, selectUsersFilter } from "@/store";
+import { selectUsersFilter } from "@/store";
 import { DataGridConfig, EUserStatuses, UserData } from "@/types";
 import {
   getFilteredUsersData,
@@ -16,12 +16,14 @@ import {
 
 import styles from "./styles.module.css";
 
+interface Props {
+  users: UserData[];
+}
+
 const USERS_PER_PAGE_OPTIONS = [5, 10, 15];
 const { ACTIVE, INACTIVE } = EUserStatuses;
 
-export const UsersTable: FC = () => {
-  // TODO: получение отфильтрованного списка на стороне сервера
-  const users = useAppSelector(selectUsers);
+export const UsersTable: FC<Props> = ({ users }) => {
   const filters = useAppSelector(selectUsersFilter);
 
   const usersData = useMemo(

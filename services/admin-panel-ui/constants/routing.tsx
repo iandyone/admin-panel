@@ -1,8 +1,7 @@
-
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonIcon from "@mui/icons-material/Person";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { Navigation } from '@toolpad/core';
+import { Navigation } from "@toolpad/core";
 
 export enum ERoutes {
   DASHBOARD = "dashboard",
@@ -10,6 +9,10 @@ export enum ERoutes {
   USERS = "users",
   AUTH = "auth",
 }
+
+export const FetchTags = {
+  USERS: "users",
+};
 
 export const navigation: Navigation = [
   { title: "Dashboard", segment: ERoutes.DASHBOARD, icon: <DashboardIcon /> },

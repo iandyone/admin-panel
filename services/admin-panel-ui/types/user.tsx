@@ -6,16 +6,21 @@ export interface UserData {
   lastActivity: number | string;
   orders: number;
   isActive?: boolean;
-  status?: string;
+  status?: EUserStatuses;
 }
 
 export enum EUserRoles {
-  ADMIN = "admin",
-  MANAGER = "manager",
-  DELIVERY = "delivery",
+  ADMIN = "ADMIN",
+  MANAGER = "MANAGER",
+  DELIVERY = "DELIVERY",
 }
 
 export enum EUserStatuses {
   ACTIVE = "active",
   INACTIVE = "inactive",
 }
+
+export type UpdateUserDto = Pick<
+  UserData,
+  "name" | "role" | "status" | "phone"
+>;

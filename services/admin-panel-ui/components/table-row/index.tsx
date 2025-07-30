@@ -4,11 +4,13 @@ import { Button, TableCell, TableRow, TableRowProps } from "@mui/material";
 import Image from "next/image";
 import { FC, useState } from "react";
 
+import { updateUserAction } from '@/actions';
 import { FormModalWrapper } from "@/components/form-modal-wrapper";
 import { EditOrderForm } from "@/forms/edit-order";
 import { EditUserForm } from "@/forms/edit-user";
 import { ORDERS_DATA } from "@/mocks";
 import { OrderData, UserData } from "@/types";
+import { UpdateUserDto } from '@/types/user';
 import { isOrderData, isUserData } from "@/utils/guards";
 
 interface Props extends TableRowProps {
@@ -34,6 +36,11 @@ export const TableRowItem: FC<Props> = ({ data, ...rowProps }) => {
     onClose();
   };
   const handleOnSubmit = () => {
+    onClose();
+  };
+
+  const handleOnSubmitUpdateUser = (userData: UpdateUserDto) => {
+    updateUserAction({id: data.id, userData});
     onClose();
   };
 
@@ -71,7 +78,7 @@ export const TableRowItem: FC<Props> = ({ data, ...rowProps }) => {
           <EditUserForm
             data={data}
             onCancel={handleOnCancel}
-            onSubmit={handleOnSubmit}
+            onSubmit={handleOnSubmitUpdateUser}
           />
         )}
       </FormModalWrapper>

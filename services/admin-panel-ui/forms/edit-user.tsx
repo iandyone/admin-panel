@@ -5,13 +5,13 @@ import { Form, Formik } from "formik";
 import { FC } from "react";
 
 import { InputField } from "@/components/ui/input-field";
-import { EUserRoles, UserData } from "@/types";
-import { EOrderStatuses } from "@/types/orders";
+import { EUserRoles, EUserStatuses, UserData } from "@/types";
+import { UpdateUserDto } from '@/types/user';
 import { editUserValidationSchema } from "@/validations";
 
 interface Props {
   data: UserData;
-  onSubmit: () => void;
+  onSubmit: (state: UpdateUserDto) => void;
   onCancel: () => void;
 }
 
@@ -20,7 +20,7 @@ export const EditUserForm: FC<Props> = ({
   onCancel,
   onSubmit,
 }) => {
-  const initialValues: Partial<UserData> = {
+  const initialValues: UpdateUserDto = {
     name,
     role,
     phone,
@@ -56,7 +56,7 @@ export const EditUserForm: FC<Props> = ({
 
               <Autocomplete
                 options={Object.values(EUserRoles)}
-                value={values.status}
+                value={values.role}
                 onChange={(_, newValue) => {
                   setFieldValue("role", newValue);
                 }}
@@ -70,7 +70,7 @@ export const EditUserForm: FC<Props> = ({
                 )}
               />
               <Autocomplete
-                options={Object.values(EOrderStatuses)}
+                options={Object.values(EUserStatuses)}
                 value={values.status}
                 onChange={(_, newValue) => {
                   setFieldValue("status", newValue);
