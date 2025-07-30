@@ -45,7 +45,8 @@ export class UsersController {
   @Patch(':id')
   update(
     @Param('id', new JoiValidationPipe(idSchema), ParseIntPipe) id: number,
-    @Body(new JoiValidationPipe(updateUserSchema)) user: User,
+    @Body(new JoiValidationPipe(updateUserSchema))
+    user: User & { role: string },
   ) {
     return this.usersService.update(id, user);
   }

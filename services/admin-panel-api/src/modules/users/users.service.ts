@@ -4,7 +4,7 @@ import { User } from '@prisma/client';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
-import { UserData } from '../../types';
+import { UserData, UserResponse, UsersResponse } from '../../types';
 import { DatabaseService } from '../database/database.service';
 
 @Injectable()
@@ -17,16 +17,41 @@ export class UsersService {
     return await this.db.createUser(createUserDto);
   }
 
-  async findAll() {
-    return await this.db.getUsers();
+  async findAll(): Promise<UsersResponse> {
+    const usersData = await this.db.getUsers();
+
+    const users: UserResponse[] = usersData.map(
+      ({
+        id,
+        firstName,
+        lastName,
+        phone,
+        lastActivity,
+        orders,
+        isActive,
+        Credentials: { role },
+      }) => ({
+        id,
+        name: `${firstName} ${lastName}`,
+        role,
+        phone,
+        lastActivity: lastActivity
+          ? new Date(lastActivity).toLocaleDateString()
+          : null,
+        orders,
+        isActive,
+      }),
+    );
+
+    return users;
   }
 
   async findOne(id: number) {
     return await this.db.getUser(id);
   }
 
-  async update(id: number, user: Partial<User>) {
-    const updateUserDto = new UpdateUserDto(id, user);
+  async update(id: number, user: Partial<User> & { role: string }) {
+    const updateUserDto = new UpdateUserDto(user);
 
     return await this.db.updateUser(id, updateUserDto);
   }

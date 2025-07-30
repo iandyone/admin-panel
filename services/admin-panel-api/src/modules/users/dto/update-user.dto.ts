@@ -1,20 +1,23 @@
 import { CreateUserDto } from './create-user.dto';
 
 export class UpdateUserDto {
-  id: number;
   firstName: string | null;
   lastName: string | null;
   phone: string | null;
-  email: string | null;
+  role: string | null;
+  isActive: boolean | null;
 
-  constructor(
-    id: number,
-    { firstName, lastName, email, phone }: Partial<CreateUserDto>,
-  ) {
-    this.id = id;
-    this.firstName = firstName || null;
-    this.lastName = lastName || null;
-    this.phone = phone || null;
-    this.email = email || null;
+  constructor({
+    firstName,
+    lastName,
+    role,
+    phone,
+    isActive,
+  }: Partial<CreateUserDto & { isActive: boolean; role: string }>) {
+    this.firstName = firstName ?? null;
+    this.lastName = lastName ?? null;
+    this.phone = phone ?? null;
+    this.role = role ?? null;
+    this.isActive = isActive ?? null;
   }
 }

@@ -1,4 +1,4 @@
-import { Credentials, Order, User } from '@prisma/client';
+import { $Enums, Credentials, Order, User } from '@prisma/client';
 
 export interface AppConfig {
   PORT_API: number;
@@ -7,3 +7,15 @@ export interface AppConfig {
 export type UserData = User & Credentials;
 
 export type OrderData = Order & { productsIds: string[] };
+
+export interface UserResponse {
+  id: number;
+  name: string;
+  role: $Enums.Role;
+  phone: string;
+  lastActivity: string | null;
+  orders: number;
+  isActive: boolean;
+}
+
+export type UsersResponse = UserResponse[];

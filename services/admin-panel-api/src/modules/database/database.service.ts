@@ -4,7 +4,7 @@ import {
   Injectable,
   BadRequestException,
 } from '@nestjs/common';
-import { OrderStatus, Prisma, Role } from '@prisma/client';
+import { $Enums, OrderStatus, Prisma, Role } from '@prisma/client';
 import bcrypt from 'bcrypt';
 
 import { PrismaService } from './prisma.service';
@@ -20,7 +20,10 @@ export class DatabaseService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getUsers() {
-    const users = await this.prisma.user.findMany();
+    const users = await this.prisma.user.findMany({
+      include: { Credentials: true },
+      orderBy: { id: 'asc' },
+    });
 
     return users;
   }
@@ -71,11 +74,14 @@ export class DatabaseService {
 
   async updateUser(id: number, user: UpdateUserDto) {
     const { id: userId } = await this.getUser(id);
-    const updateUserData = filterNullValues<UpdateUserDto>(user);
+    const { role, ...updateUserData } = filterNullValues<UpdateUserDto>(user);
 
     const updatedUser = await this.prisma.user.update({
       where: { id: userId },
-      data: { ...updateUserData },
+      data: {
+        ...updateUserData,
+        Credentials: { update: { role: $Enums.Role[role] } },
+      },
     });
 
     return updatedUser.id;
