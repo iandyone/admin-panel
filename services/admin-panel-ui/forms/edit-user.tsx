@@ -6,8 +6,8 @@ import { FC } from "react";
 
 import { InputField } from "@/components/ui/input-field";
 import { EUserRoles, EUserStatuses, UserData } from "@/types";
-import { UpdateUserDto } from '@/types/user';
-import { editUserValidationSchema } from "@/validations";
+import { UpdateUserDto } from "@/types/user";
+import { updateUserValidationSchema } from "@/validations";
 
 interface Props {
   data: UserData;
@@ -16,12 +16,13 @@ interface Props {
 }
 
 export const EditUserForm: FC<Props> = ({
-  data: { name, role, phone, status },
+  data: { firstName, lastName, role, phone, status },
   onCancel,
   onSubmit,
 }) => {
   const initialValues: UpdateUserDto = {
-    name,
+    firstName,
+    lastName,
     role,
     phone,
     status,
@@ -32,18 +33,26 @@ export const EditUserForm: FC<Props> = ({
       <Formik
         initialValues={initialValues}
         enableReinitialize
-        validationSchema={editUserValidationSchema}
+        validationSchema={updateUserValidationSchema}
         onSubmit={onSubmit}
       >
         {({ values, touched, errors, setFieldValue }) => (
           <Form>
             <Stack direction="column" spacing={2}>
               <InputField
-                name="name"
-                label="Name"
+                name="firstName"
+                label="First name"
                 type="text"
                 size="medium"
-                error={Boolean(touched.name && errors.name)}
+                error={Boolean(touched.firstName && errors.firstName)}
+              />
+
+              <InputField
+                name="lastName"
+                label="Last name"
+                type="text"
+                size="medium"
+                error={Boolean(touched.lastName && errors.lastName)}
               />
 
               <InputField

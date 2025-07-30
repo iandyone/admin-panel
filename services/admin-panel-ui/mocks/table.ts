@@ -506,7 +506,8 @@ export const ORDERS_DATA: OrderData[] = [
 export const USERS_DATA: UserData[] = [
   {
     id: 1,
-    name: "Irina Smirnova",
+    firstName: "Irina",
+    lastName: "Smirnova",
     role: "delivery",
     phone: "+375(29)7735128",
     lastActivity: 1748765723000,
@@ -515,7 +516,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 2,
-    name: "Lyudmila Pavlova",
+    firstName: "Lyudmila",
+    lastName: "Pavlova",
     role: "manager",
     phone: "+375(33)5482301",
     lastActivity: 1748771230000,
@@ -524,7 +526,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 3,
-    name: "Elena Kozlov",
+    firstName: "Elena",
+    lastName: "Kozlov",
     role: "delivery",
     phone: "+375(25)3104579",
     lastActivity: 1748873155000,
@@ -533,7 +536,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 4,
-    name: "Alexey Titov",
+    firstName: "Alexey",
+    lastName: "Titov",
     role: "manager",
     phone: "+375(44)2928610",
     lastActivity: 1748881353000,
@@ -542,7 +546,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 5,
-    name: "Galina Balashova",
+    firstName: "Galina",
+    lastName: "Balashova",
     role: "admin",
     phone: "+375(29)9847523",
     lastActivity: 1748946600000,
@@ -551,7 +556,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 6,
-    name: "Alina Bogdanova",
+    firstName: "Alina",
+    lastName: "Bogdanova",
     role: "admin",
     phone: "+375(33)4601298",
     lastActivity: 1748952942000,
@@ -560,7 +566,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 7,
-    name: "Sergey Kiselev",
+    firstName: "Sergey",
+    lastName: "Kiselev",
     role: "admin",
     phone: "+375(25)2021983",
     lastActivity: 1749027600000,
@@ -569,7 +576,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 8,
-    name: "Ekaterina Popova",
+    firstName: "Ekaterina",
+    lastName: "Popova",
     role: "delivery",
     phone: "+375(44)9815476",
     lastActivity: 1749036015000,
@@ -578,7 +586,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 9,
-    name: "Olga Solovyov",
+    firstName: "Olga",
+    lastName: "Solovyov",
     role: "delivery",
     phone: "+375(29)6374502",
     lastActivity: 1749131100000,
@@ -587,7 +596,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 10,
-    name: "Vladimir Nikolaeva",
+    firstName: "Vladimir",
+    lastName: "Nikolaeva",
     role: "delivery",
     phone: "+375(33)6128490",
     lastActivity: 1749138910000,
@@ -596,7 +606,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 11,
-    name: "Natalia Popova",
+    firstName: "Natalia",
+    lastName: "Popova",
     role: "manager",
     phone: "+375(44)4321985",
     lastActivity: 1749197288000,
@@ -605,7 +616,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 12,
-    name: "Ekaterina Yakovleva",
+    firstName: "Ekaterina",
+    lastName: "Yakovleva",
     role: "delivery",
     phone: "+375(25)4681092",
     lastActivity: 1749234600000,
@@ -614,7 +626,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 13,
-    name: "Alina Kozlova",
+    firstName: "Alina",
+    lastName: "Kozlova",
     role: "manager",
     phone: "+375(29)8956073",
     lastActivity: 1749305654000,
@@ -623,7 +636,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 14,
-    name: "Galina Safonova",
+    firstName: "Galina",
+    lastName: "Safonova",
     role: "manager",
     phone: "+375(33)3407812",
     lastActivity: 1749373749000,
@@ -632,7 +646,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 15,
-    name: "Sergey Novikova",
+    firstName: "Sergey",
+    lastName: "Novikova",
     role: "manager",
     phone: "+375(44)8253149",
     lastActivity: 1749489437000,
@@ -641,7 +656,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 16,
-    name: "Ivan Yakovlev",
+    firstName: "Ivan",
+    lastName: "Yakovlev",
     role: "admin",
     phone: "+375(25)1720456",
     lastActivity: 1749550210000,
@@ -650,7 +666,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 17,
-    name: "Kirill Vasilyeva",
+    firstName: "Kirill",
+    lastName: "Vasilyeva",
     role: "delivery",
     phone: "+375(29)5102763",
     lastActivity: 1749643932000,
@@ -659,7 +676,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 18,
-    name: "Roman Volkov",
+    firstName: "Roman",
+    lastName: "Volkov",
     role: "delivery",
     phone: "+375(33)9412037",
     lastActivity: 1749733993000,
@@ -668,7 +686,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 19,
-    name: "Marina Nikolaeva",
+    firstName: "Marina",
+    lastName: "Nikolaeva",
     role: "manager",
     phone: "+375(44)2376508",
     lastActivity: 1749824054000,
@@ -677,7 +696,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 20,
-    name: "Stanislav Bogdanov",
+    firstName: "Stanislav",
+    lastName: "Bogdanov",
     role: "manager",
     phone: "+375(25)6680241",
     lastActivity: 1749914115000,
@@ -686,7 +706,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 21,
-    name: "Lyudmila Lebedeva",
+    firstName: "Lyudmila",
+    lastName: "Lebedeva",
     role: "admin",
     phone: "+375(29)2215690",
     lastActivity: 1750004176000,
@@ -695,7 +716,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 22,
-    name: "Maxim Kiselev",
+    firstName: "Maxim",
+    lastName: "Kiselev",
     role: "manager",
     phone: "+375(33)8759023",
     lastActivity: 1750094237000,
@@ -704,7 +726,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 23,
-    name: "Andrey Markova",
+    firstName: "Andrey",
+    lastName: "Markova",
     role: "manager",
     phone: "+375(44)4432105",
     lastActivity: 1750184298000,
@@ -713,7 +736,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 24,
-    name: "Natalia Solovyova",
+    firstName: "Natalia",
+    lastName: "Solovyova",
     role: "manager",
     phone: "+375(25)3901124",
     lastActivity: 1750274359000,
@@ -722,7 +746,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 25,
-    name: "Mikhail Safonova",
+    firstName: "Mikhail",
+    lastName: "Safonova",
     role: "delivery",
     phone: "+375(29)0050478",
     lastActivity: 1750364420000,
@@ -731,7 +756,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 26,
-    name: "Kirill Lebedev",
+    firstName: "Kirill",
+    lastName: "Lebedev",
     role: "admin",
     phone: "+375(33)9057214",
     lastActivity: 1750454481000,
@@ -740,7 +766,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 27,
-    name: "Nikolay Tarasov",
+    firstName: "Nikolay",
+    lastName: "Tarasov",
     role: "admin",
     phone: "+375(44)9511623",
     lastActivity: 1750544542000,
@@ -749,7 +776,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 28,
-    name: "Roman Solovyov",
+    firstName: "Roman",
+    lastName: "Solovyov",
     role: "manager",
     phone: "+375(25)5578029",
     lastActivity: 1750634603000,
@@ -758,7 +786,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 29,
-    name: "Marina Bogdanova",
+    firstName: "Marina",
+    lastName: "Bogdanova",
     role: "delivery",
     phone: "+375(29)9945187",
     lastActivity: 1750662427000,
@@ -767,7 +796,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 30,
-    name: "Pavel Novikova",
+    firstName: "Pavel",
+    lastName: "Novikova",
     role: "manager",
     phone: "+375(33)6037285",
     lastActivity: 1750745166000,
@@ -776,7 +806,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 31,
-    name: "Marina Smirnova",
+    firstName: "Marina",
+    lastName: "Smirnova",
     role: "admin",
     phone: "+375(44)1342076",
     lastActivity: 1750827905000,
@@ -785,7 +816,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 32,
-    name: "Dmitry Lebedev",
+    firstName: "Dmitry",
+    lastName: "Lebedev",
     role: "admin",
     phone: "+375(25)6971984",
     lastActivity: 1750910644000,
@@ -794,7 +826,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 33,
-    name: "Irina Vasilyeva",
+    firstName: "Irina",
+    lastName: "Vasilyeva",
     role: "manager",
     phone: "+375(29)8749123",
     lastActivity: 1750993383000,
@@ -803,7 +836,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 34,
-    name: "Elena Petrova",
+    firstName: "Elena",
+    lastName: "Petrova",
     role: "delivery",
     phone: "+375(33)3140759",
     lastActivity: 1751076122000,
@@ -812,7 +846,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 35,
-    name: "Mikhail Volkova",
+    firstName: "Mikhail",
+    lastName: "Volkova",
     role: "admin",
     phone: "+375(44)8072916",
     lastActivity: 1751158861000,
@@ -821,7 +856,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 36,
-    name: "Stanislav Lebedev",
+    firstName: "Stanislav",
+    lastName: "Lebedev",
     role: "admin",
     phone: "+375(25)7989704",
     lastActivity: 1751357288000,
@@ -830,7 +866,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 37,
-    name: "Lyudmila Yakovleva",
+    firstName: "Lyudmila",
+    lastName: "Yakovleva",
     role: "admin",
     phone: "+375(29)1918376",
     lastActivity: 1751447349000,
@@ -839,7 +876,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 38,
-    name: "Maxim Pavlov",
+    firstName: "Maxim",
+    lastName: "Pavlov",
     role: "manager",
     phone: "+375(33)2641057",
     lastActivity: 1751537410000,
@@ -848,7 +886,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 39,
-    name: "Stanislav Nikolaeva",
+    firstName: "Stanislav",
+    lastName: "Nikolaeva",
     role: "admin",
     phone: "+375(44)8579241",
     lastActivity: 1751627471000,
@@ -857,7 +896,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 40,
-    name: "Irina Sidorova",
+    firstName: "Irina",
+    lastName: "Sidorova",
     role: "delivery",
     phone: "+375(25)2130458",
     lastActivity: 1751717532000,
@@ -866,7 +906,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 41,
-    name: "Ivan Kozlov",
+    firstName: "Ivan",
+    lastName: "Kozlov",
     role: "admin",
     phone: "+375(33)1804529",
     lastActivity: 1751807593000,
@@ -875,7 +916,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 42,
-    name: "Tatiana Tarasova",
+    firstName: "Tatiana",
+    lastName: "Tarasova",
     role: "admin",
     phone: "+375(44)1479058",
     lastActivity: 1751897654000,
@@ -884,7 +926,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 43,
-    name: "Irina Lebedeva",
+    firstName: "Irina",
+    lastName: "Lebedeva",
     role: "admin",
     phone: "+375(25)0061987",
     lastActivity: 1751987715000,
@@ -893,7 +936,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 44,
-    name: "Galina Pavlov",
+    firstName: "Galina",
+    lastName: "Pavlov",
     role: "manager",
     phone: "+375(29)5183476",
     lastActivity: 1752077776000,
@@ -902,7 +946,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 45,
-    name: "Anna Lebedeva",
+    firstName: "Anna",
+    lastName: "Lebedeva",
     role: "delivery",
     phone: "+375(33)2861974",
     lastActivity: 1752167837000,
@@ -911,7 +956,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 46,
-    name: "Alina Kozlova",
+    firstName: "Alina",
+    lastName: "Kozlova",
     role: "delivery",
     phone: "+375(44)7392518",
     lastActivity: 1752257898000,
@@ -920,7 +966,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 47,
-    name: "Andrey Petrova",
+    firstName: "Andrey",
+    lastName: "Petrova",
     role: "delivery",
     phone: "+375(25)7610492",
     lastActivity: 1752347959000,
@@ -929,7 +976,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 48,
-    name: "Yulia Sidorova",
+    firstName: "Yulia",
+    lastName: "Sidorova",
     role: "manager",
     phone: "+375(29)4903721",
     lastActivity: 1752438020000,
@@ -938,7 +986,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 49,
-    name: "Elena Solovyova",
+    firstName: "Elena",
+    lastName: "Solovyova",
     role: "manager",
     phone: "+375(33)6172859",
     lastActivity: 1752528081000,
@@ -947,7 +996,8 @@ export const USERS_DATA: UserData[] = [
   },
   {
     id: 50,
-    name: "Yulia Smirnova",
+    firstName: "Yulia",
+    lastName: "Smirnova",
     role: "delivery",
     phone: "+375(44)3187590",
     lastActivity: 1752618142000,

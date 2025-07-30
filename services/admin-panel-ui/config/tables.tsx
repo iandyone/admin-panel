@@ -13,10 +13,11 @@ export const ordersTableHeaderConfig: OrdersTableHeaderConfig = [
 
 export const usersTableHeaderConfig: UsersTableHeaderConfig = [
   { title: 'Id', key: "id", width: "5%" },
-  { title: 'Name', key: "name", width: "30%" },
-  { title: 'Role', key: "role", width: "10%" },
+  { title: 'First Name', key: "firstName", width: "10%" },
+  { title: 'Last Name', key: "lastName", width: "10%" },
   { title: 'Phone', key: "phone", width: "10%" },
-  { title: 'Activity', key: "lastActivity", width: "10%" },
+  { title: 'Role', key: "role", width: "10%" },
+  { title: 'Last Activity', key: "lastActivity", width: "10%" },
   { title: 'Orders', key: "orders", width: "10%" },
   { title: 'Status', key: "status", width: "10%" },
 ];

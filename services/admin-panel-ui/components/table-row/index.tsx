@@ -4,13 +4,13 @@ import { Button, TableCell, TableRow, TableRowProps } from "@mui/material";
 import Image from "next/image";
 import { FC, useState } from "react";
 
-import { updateUserAction } from '@/actions';
+import { updateUserAction } from "@/actions";
 import { FormModalWrapper } from "@/components/form-modal-wrapper";
 import { EditOrderForm } from "@/forms/edit-order";
 import { EditUserForm } from "@/forms/edit-user";
 import { ORDERS_DATA } from "@/mocks";
 import { OrderData, UserData } from "@/types";
-import { UpdateUserDto } from '@/types/user';
+import { UpdateUserDto } from "@/types/user";
 import { isOrderData, isUserData } from "@/utils/guards";
 
 interface Props extends TableRowProps {
@@ -40,14 +40,18 @@ export const TableRowItem: FC<Props> = ({ data, ...rowProps }) => {
   };
 
   const handleOnSubmitUpdateUser = (userData: UpdateUserDto) => {
-    updateUserAction({id: data.id, userData});
+    updateUserAction({ id: data.id, userData });
     onClose();
   };
 
   return (
     <TableRow hover {...rowProps}>
-      {Object.values(data).map((item) => (
-        <TableCell size="small" key={item}>
+      {Object.values(data).map((item, index) => (
+        <TableCell
+          size="small"
+          key={item?.id || index}
+          sx={{ textTransform: "capitalize" }}
+        >
           {item}
         </TableCell>
       ))}

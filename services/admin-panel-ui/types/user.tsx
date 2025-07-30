@@ -1,8 +1,9 @@
 export interface UserData {
   id: number;
-  name: string;
+  firstName: string;
+  lastName: string;
   role: string;
-  phone: number | string;
+  phone: string;
   lastActivity: number | string;
   orders: number;
   isActive?: boolean;
@@ -10,9 +11,9 @@ export interface UserData {
 }
 
 export enum EUserRoles {
-  ADMIN = "ADMIN",
-  MANAGER = "MANAGER",
-  DELIVERY = "DELIVERY",
+  ADMIN = "admin",
+  MANAGER = "manager",
+  DELIVERY = "delivery",
 }
 
 export enum EUserStatuses {
@@ -22,5 +23,5 @@ export enum EUserStatuses {
 
 export type UpdateUserDto = Pick<
   UserData,
-  "name" | "role" | "status" | "phone"
+  "firstName" | "lastName" | "role" | "status" | "phone"
 >;

@@ -23,14 +23,13 @@ export const getUsers = async () => {
   }
 }
 
-export const updateUserAction = async ({ id, userData: { name, role, status, phone } }: Props) => {
-  const [firstName, lastName] = name.split(' ');
+export const updateUserAction = async ({ id, userData: { firstName, lastName, role, status, phone } }: Props) => {
 
   const updatedUser = {
     firstName,
     lastName,
-    role,
     phone,
+    role: role.toUpperCase(),
     isActive: status === EUserStatuses.ACTIVE,
   }
 

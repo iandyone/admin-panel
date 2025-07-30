@@ -36,7 +36,8 @@ export interface OrderFilters {
 
 export interface UsersFilter {
   id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   role: string;
   phone: string;
   lastActivity: string;

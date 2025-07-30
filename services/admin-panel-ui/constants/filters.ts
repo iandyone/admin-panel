@@ -2,7 +2,8 @@ import { OrderFilters, UsersFilter } from "@/types/orders";
 
 export const USERS_FILTERS_DEFAULT: UsersFilter = {
   id: "",
-  name: "",
+  firstName: "",
+  lastName: "",
   role: "",
   phone: "",
   lastActivity: "",

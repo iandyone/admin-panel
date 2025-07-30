@@ -1,5 +1,6 @@
 "use client";
 
+import moment from "moment";
 import { FC, useMemo } from "react";
 
 import { DataGrid } from "@/components/data-grid";
@@ -13,6 +14,7 @@ import {
   getFormattedDate,
   getSortedOrdersData,
 } from "@/utils";
+import { formatPhoneNumber } from "@/utils/date";
 
 import styles from "./styles.module.css";
 
@@ -44,11 +46,15 @@ export const UsersTable: FC<Props> = ({ users }) => {
   const data = useMemo(() => {
     const visibleRows = usersData
       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-      .map(({ isActive, lastActivity, orders, ...rowData }) => {
+      .map(({ isActive, lastActivity, orders, phone, role, ...rowData }) => {
         const result: UserData = {
           ...rowData,
-          lastActivity: getFormattedDate(lastActivity),
-          orders,
+          phone: formatPhoneNumber(phone),
+          role: role.toLowerCase(),
+          lastActivity: moment.isDate(lastActivity)
+            ? getFormattedDate(lastActivity)
+            : "—",
+          orders: orders ?? "—",
           status: isActive ? ACTIVE : INACTIVE,
         };
 
