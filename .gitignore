@@ -1,7 +1,8 @@
 .vscode
 .pnp.*
 .env
-.env.prod
+.env.local
+.env.production
 
 .yarn/*
 !.yarn/patches
