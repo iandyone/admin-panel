@@ -11,15 +11,21 @@ interface Props {
   userData: UpdateUserDto
 }
 
+const API_BASE_PATH = process.env.NEXT_PUBLIC_API_BASE_PATH;
+
 export const getUsers = async () => {
   try {
-    const users = await fetch(`http://api:8080/users`, {
+
+
+    const users = await fetch(`${API_BASE_PATH}/users`, {
       next: { tags: [FetchTags.USERS] },
     });
 
     return users ? users.json() : [];
   } catch (error) {
-    return { error }
+    console.log({ error })
+
+    return []
   }
 }
 
@@ -35,7 +41,7 @@ export const updateUserAction = async ({ id, userData: { firstName, lastName, ro
 
 
   try {
-    const response = await fetch(`http://api:8080/users/${id}`, {
+    const response = await fetch(`${API_BASE_PATH}/users/${id}`, {
       method: 'PATCH',
       body: JSON.stringify(updatedUser),
       headers: {
