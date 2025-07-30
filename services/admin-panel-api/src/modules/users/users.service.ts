@@ -32,9 +32,10 @@ export class UsersService {
         Credentials: { role },
       }) => ({
         id,
-        name: `${firstName} ${lastName}`,
-        role,
+        firstName,
+        lastName,
         phone,
+        role,
         lastActivity: lastActivity
           ? new Date(lastActivity).toLocaleDateString()
           : null,

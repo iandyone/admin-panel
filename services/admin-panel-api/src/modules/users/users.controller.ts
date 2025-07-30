@@ -10,12 +10,15 @@ import {
   UsePipes,
 } from '@nestjs/common';
 import { Credentials, User } from '@prisma/client';
-import { createUserSchema, updateUserSchema } from 'src/validations';
-import { idSchema } from 'src/validations/schemas';
 
 import { UsersService } from './users.service';
 
 import { JoiValidationPipe } from '../../pipes/joi-validation.pipe';
+import {
+  createUserSchema,
+  idSchema,
+  updateUserSchema,
+} from '../../validations';
 import { UseId } from '../decorators';
 
 @Controller('users')

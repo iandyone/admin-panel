@@ -10,7 +10,8 @@ export type OrderData = Order & { productsIds: string[] };
 
 export interface UserResponse {
   id: number;
-  name: string;
+  firstName: string;
+  lastName: string;
   role: $Enums.Role;
   phone: string;
   lastActivity: string | null;
