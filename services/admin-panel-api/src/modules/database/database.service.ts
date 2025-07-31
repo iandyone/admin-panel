@@ -9,6 +9,8 @@ import bcrypt from 'bcrypt';
 
 import { PrismaService } from './prisma.service';
 
+import { DEFAULT_PER_PAGE, START_PAGE } from '../../constants';
+import { PaginationProps } from '../../types';
 import { filterNullValues, getOrderItemsFromProductsIds } from '../../utils';
 import { CreateOrderDto } from '../orders/dto/create-order.dto';
 import { UpdateOrderDto } from '../orders/dto/update-order.dto';
@@ -19,10 +21,15 @@ import { UpdateUserDto } from '../users/dto/update-user.dto';
 export class DatabaseService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getUsers() {
+  async getUsers({
+    page = START_PAGE,
+    perPage = DEFAULT_PER_PAGE,
+  }: PaginationProps) {
     const users = await this.prisma.user.findMany({
       include: { Credentials: true },
       orderBy: { id: 'asc' },
+      skip: page * perPage,
+      take: perPage,
     });
 
     return users;
@@ -87,8 +94,14 @@ export class DatabaseService {
     return updatedUser.id;
   }
 
-  async getOrders() {
-    const orders = await this.prisma.order.findMany();
+  async getOrders({
+    page = START_PAGE,
+    perPage = DEFAULT_PER_PAGE,
+  }: PaginationProps) {
+    const orders = await this.prisma.order.findMany({
+      skip: page * perPage,
+      take: perPage,
+    });
 
     return orders;
   }

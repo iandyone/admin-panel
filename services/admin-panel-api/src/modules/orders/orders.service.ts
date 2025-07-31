@@ -3,15 +3,15 @@ import { Injectable } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 
-import { OrderData } from '../../types';
+import { OrderData, PaginationProps } from '../../types';
 import { DatabaseService } from '../database/database.service';
 
 @Injectable()
 export class OrdersService {
   constructor(private readonly db: DatabaseService) {}
 
-  async findAll() {
-    return await this.db.getOrders();
+  async findAll(paginationProps: PaginationProps) {
+    return await this.db.getOrders(paginationProps);
   }
 
   async findOne(id: number) {

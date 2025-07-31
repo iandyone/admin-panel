@@ -8,6 +8,7 @@ import {
   Body,
   Patch,
   UsePipes,
+  Query,
 } from '@nestjs/common';
 import { Credentials, User } from '@prisma/client';
 
@@ -35,8 +36,11 @@ export class UsersController {
   }
 
   @Get()
-  async findAll() {
-    return await this.usersService.findAll();
+  async findAll(
+    @Query('page', ParseIntPipe) page: number,
+    @Query('perPage', ParseIntPipe) perPage: number,
+  ) {
+    return await this.usersService.findAll({ page, perPage });
   }
 
   @Get(':id')

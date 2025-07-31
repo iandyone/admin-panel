@@ -20,3 +20,8 @@ export interface UserResponse {
 }
 
 export type UsersResponse = UserResponse[];
+
+export interface PaginationProps {
+  page: number;
+  perPage: number;
+}

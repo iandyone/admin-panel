@@ -4,7 +4,12 @@ import { User } from '@prisma/client';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
-import { UserData, UserResponse, UsersResponse } from '../../types';
+import {
+  PaginationProps,
+  UserData,
+  UserResponse,
+  UsersResponse,
+} from '../../types';
 import { DatabaseService } from '../database/database.service';
 
 @Injectable()
@@ -17,8 +22,8 @@ export class UsersService {
     return await this.db.createUser(createUserDto);
   }
 
-  async findAll(): Promise<UsersResponse> {
-    const usersData = await this.db.getUsers();
+  async findAll(paginationProps: PaginationProps): Promise<UsersResponse> {
+    const usersData = await this.db.getUsers(paginationProps);
 
     const users: UserResponse[] = usersData.map(
       ({

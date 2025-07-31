@@ -8,6 +8,7 @@ import {
   ParseIntPipe,
   Patch,
   UsePipes,
+  Query,
 } from '@nestjs/common';
 import { Order } from '@prisma/client';
 
@@ -27,8 +28,11 @@ export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
   @Get()
-  findAll() {
-    return this.ordersService.findAll();
+  findAll(
+    @Query('page', ParseIntPipe) page: number,
+    @Query('perPage', ParseIntPipe) perPage: number,
+  ) {
+    return this.ordersService.findAll({ page, perPage });
   }
 
   @Get(':id')
