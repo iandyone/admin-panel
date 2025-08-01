@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material";
 
-import { OrdersHeader } from "@/components/ordera-header";
+import { OrdersHeader } from "@/components/orders-header";
 import { OrdersTable } from "@/components/orders-table";
 
 export default function Page() {

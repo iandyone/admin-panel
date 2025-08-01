@@ -46,7 +46,3 @@ export interface DataGridConfig {
     Component: FC;
   };
 }
-
-export type FilterGetter = (key: string) => string | number;
-
-export type FilterSetter = (key: string, value: string| number) => void;

@@ -1,10 +1,10 @@
 "use client";
 
 import { Button, Menu, useTheme } from "@mui/material";
+import { useSearchParams } from "next/navigation";
 import { FC, MouseEvent, useCallback, useMemo, useState } from "react";
 
 import { FilterIcon } from "@/svg/filter-icon";
-import { FilterGetter, FilterSetter } from "@/types";
 import { OrderFilters, UsersFilter } from "@/types/orders";
 import { getModalByLabelMap, getModalOptionsByLabel } from "@/utils";
 
@@ -13,8 +13,6 @@ interface Props {
   onClick?: () => void;
   dataKey: keyof OrderFilters | keyof UsersFilter;
   title: string;
-  getFilterValue: FilterGetter;
-  setFilterValue: FilterSetter;
   mode: "orders" | "users";
 }
 
@@ -23,16 +21,16 @@ export const ColumnFilter: FC<Props> = ({
   dataKey,
   title,
   onClick,
-  getFilterValue,
-  setFilterValue,
   mode = "orders",
 }) => {
-  const [modalAnchor, setModalAnchor] = useState<HTMLElement | null>(null);
-  const [isFilterActive, setIsFilterActive] = useState(false);
+  const params = useSearchParams();
   const theme = useTheme();
 
+  const [modalAnchor, setModalAnchor] = useState<HTMLElement | null>(null);
+  const [isFilterActive, setIsFilterActive] = useState(params.has(dataKey));
+
   const Modal = useMemo(() => getModalByLabelMap(dataKey), [dataKey]);
-  
+
   const options = useMemo(
     () => getModalOptionsByLabel(dataKey, mode),
     [dataKey, mode],
@@ -80,8 +78,6 @@ export const ColumnFilter: FC<Props> = ({
           dataKey={dataKey}
           title={title}
           options={Object.values(options)}
-          getFilterValue={getFilterValue}
-          setFilterValue={setFilterValue}
           onClickControls={handleOnCloseFilter}
           setIsActive={setIsFilterActive}
         />

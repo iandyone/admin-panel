@@ -1,14 +1,15 @@
 "use client";
 
 import moment from "moment";
+import { useSearchParams } from "next/navigation";
 import { FC, useMemo } from "react";
 
 import { DataGrid } from "@/components/data-grid";
 import { usersTableHeaderConfig } from "@/config";
-import { ROWS_PER_PAGE_OPTIONS } from "@/constants";
-import { useAppSelector, usePagination, useUsersTable } from "@/hooks";
-import { selectUsersFilter } from "@/store";
+import { ROWS_PER_PAGE_OPTIONS, USERS_SEARCH_FILTERS } from "@/constants";
+import { usePagination, useUsersTable } from "@/hooks";
 import { DataGridConfig, EUserStatuses, UserData } from "@/types";
+import { UsersFilter } from "@/types/orders";
 import {
   getFilteredUsersData,
   getFormattedDate,
@@ -22,11 +23,19 @@ interface Props {
   users: UserData[];
 }
 
-const USERS_PER_PAGE_OPTIONS = [5, 10, 15];
+
 const { ACTIVE, INACTIVE } = EUserStatuses;
 
 export const UsersTable: FC<Props> = ({ users }) => {
-  const filters = useAppSelector(selectUsersFilter);
+  const params = useSearchParams();
+
+  const filters: UsersFilter = USERS_SEARCH_FILTERS.reduce(
+    (acc, filterKey) => ({
+      ...acc,
+      [filterKey]: params.get(filterKey),
+    }),
+    {} as UsersFilter,
+  );
 
   const usersData = useMemo(
     () => getFilteredUsersData(users, filters),
@@ -40,7 +49,7 @@ export const UsersTable: FC<Props> = ({ users }) => {
   const { page, rowsPerPage, handleOnChangePage, handleChangeRowsPerPage } =
     usePagination({
       count: usersData.length,
-      rowsPerPageOptions: USERS_PER_PAGE_OPTIONS,
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
     });
 
   const data = useMemo(() => {

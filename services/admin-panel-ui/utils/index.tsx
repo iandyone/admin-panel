@@ -10,6 +10,4 @@ export {
 export {
   isOrderData,
   isUserData,
-  isOrdersFilterLabel,
-  isUsersFilterLabel,
 } from "./guards";

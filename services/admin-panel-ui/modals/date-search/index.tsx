@@ -1,49 +1,53 @@
 import { Button, Stack } from "@mui/material";
 import { PickerValue } from "@mui/x-date-pickers/internals";
-import { FC, useState } from "react";
+import { FC } from "react";
 
 import { PeriodFilter } from "@/components/period-filter";
-import { FilterGetter, FilterSetter } from "@/types";
+import { useSearch } from "@/hooks";
 
 export interface AutocompleteProps {
   dataKey: string;
   title: string;
   setIsActive: (flag: boolean) => void;
   onClickControls: () => void;
-  getFilterValue: FilterGetter;
-  setFilterValue: FilterSetter;
   options: string[];
 }
 
 export const DateSearchModal: FC<AutocompleteProps> = ({
-  getFilterValue,
-  setFilterValue,
   onClickControls,
   setIsActive,
 }) => {
-  const [valueFrom, setValueFrom] = useState(() => getFilterValue("dateFrom"));
-  const [valueTo, setValueTo] = useState(() => getFilterValue("dateTo"));
+  const {
+    filterValue: valueFrom,
+    setFilterValue: setValueFrom,
+    applySearchFilterHandler: applyDateFromFilter,
+  } = useSearch("dateFrom");
+  const {
+    filterValue: valueTo,
+    setFilterValue: setValueTo,
+    applySearchFilterHandler: applyDateToilter,
+  } = useSearch("dateTo");
 
   const handleOnClickApplyButton = () => {
-    setFilterValue("dateFrom", valueFrom);
-    setFilterValue("dateTo", valueTo);
+    applyDateFromFilter();
+    applyDateToilter();
     setIsActive(Boolean(valueFrom) || Boolean(valueTo));
     onClickControls();
   };
 
   const handleOnClickResetButton = () => {
-    setFilterValue("dateFrom", "");
-    setFilterValue("dateTo", "");
+    applyDateFromFilter();
+    applyDateToilter();
     setIsActive(false);
     setValueFrom("");
     onClickControls();
   };
 
   const handleOnChangeDateFrom = (value: PickerValue) => {
-    setValueFrom(value?.valueOf() || "");
+    setValueFrom(value?.valueOf().toString() || "");
   };
   const handleOnChangeDateTo = (value: PickerValue) => {
-    setValueTo(value?.valueOf() || "");
+    setValueTo(value?.valueOf().toString() || "");
   };
 
   return (

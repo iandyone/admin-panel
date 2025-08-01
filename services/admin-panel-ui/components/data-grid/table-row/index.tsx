@@ -6,8 +6,8 @@ import { FC, useState } from "react";
 
 import { updateUserAction } from "@/actions";
 import { FormModalWrapper } from "@/components/form-modal-wrapper";
-import { EditOrderForm } from "@/forms/edit-order";
-import { EditUserForm } from "@/forms/edit-user";
+import { UpdateOrderForm } from "@/forms/update-order";
+import { UpdateUserForm } from "@/forms/update-user";
 import { ORDERS_DATA } from "@/mocks";
 import { OrderData, UserData } from "@/types";
 import { UpdateUserDto } from "@/types/user";
@@ -19,11 +19,10 @@ interface Props extends TableRowProps {
 
 export const TableRowItem: FC<Props> = ({ data, ...rowProps }) => {
   const [isOpen, setIsOpen] = useState(false);
-  // TODO: получить список доступных для заказа блюд
-  const orderItems = new Set([...ORDERS_DATA.map(({ order }) => order)]);
-
   const isOrderModal = isOrderData(data);
   const isUserModal = isUserData(data);
+
+  const orderItems = new Set([...ORDERS_DATA.map(({ order }) => order)]);
 
   const handleOnClickEditButton = () => {
     setIsOpen(true);
@@ -71,7 +70,7 @@ export const TableRowItem: FC<Props> = ({ data, ...rowProps }) => {
         title={`Update ${isOrderModal ? "order" : `user`} #${data.id}`}
       >
         {isOrderModal && (
-          <EditOrderForm
+          <UpdateOrderForm
             data={data}
             onCancel={handleOnCancel}
             onSubmit={handleOnSubmit}
@@ -79,7 +78,7 @@ export const TableRowItem: FC<Props> = ({ data, ...rowProps }) => {
           />
         )}
         {isUserModal && (
-          <EditUserForm
+          <UpdateUserForm
             data={data}
             onCancel={handleOnCancel}
             onSubmit={handleOnSubmitUpdateUser}

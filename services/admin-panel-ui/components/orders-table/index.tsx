@@ -1,13 +1,15 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { FC, useMemo } from "react";
 
 import { DataGrid } from "@/components/data-grid";
 import { ordersTableHeaderConfig } from "@/config";
-import { ROWS_PER_PAGE_OPTIONS } from "@/constants";
+import { ORDERS_SEARCH_FILTERS, ROWS_PER_PAGE_OPTIONS } from "@/constants";
 import { useAppSelector, useOrdersTable, usePagination } from "@/hooks";
-import { selectOrders, selectOrdersFilter } from "@/store";
+import { selectOrders } from "@/store";
 import { DataGridConfig, OrderData } from "@/types";
+import { OrderFilters } from "@/types/orders";
 import {
   getFilteredOrdersData,
   getFormattedDate,
@@ -18,8 +20,16 @@ import styles from "./styles.module.css";
 
 export const OrdersTable: FC = () => {
   // TODO: получение отфильтрованного списка на стороне сервера
+  const params = useSearchParams();
   const orders = useAppSelector(selectOrders);
-  const filters = useAppSelector(selectOrdersFilter);
+
+  const filters: OrderFilters = ORDERS_SEARCH_FILTERS.reduce(
+    (acc, filterKey) => ({
+      ...acc,
+      [filterKey]: params.get(filterKey),
+    }),
+    {} as OrderFilters,
+  );
 
   const ordersData = useMemo(
     () => getFilteredOrdersData(orders, filters),

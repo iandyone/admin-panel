@@ -3,6 +3,7 @@
 import { revalidateTag } from 'next/cache';
 
 import { FetchTags } from '@/constants';
+import { DEFAULT_ROWS_PER_PAGE, START_PAGE } from '@/constants/table';
 import { EUserStatuses } from '@/types';
 import { UpdateUserDto } from '@/types/user';
 
@@ -15,9 +16,7 @@ const API_BASE_PATH = process.env.NEXT_PUBLIC_API_BASE_PATH;
 
 export const getUsers = async () => {
   try {
-
-
-    const users = await fetch(`${API_BASE_PATH}/users`, {
+    const users = await fetch(`${API_BASE_PATH}/users?page=${START_PAGE}&perPage=${DEFAULT_ROWS_PER_PAGE}`, {
       next: { tags: [FetchTags.USERS] },
     });
 
@@ -30,7 +29,6 @@ export const getUsers = async () => {
 }
 
 export const updateUserAction = async ({ id, userData: { firstName, lastName, role, status, phone } }: Props) => {
-
   const updatedUser = {
     firstName,
     lastName,

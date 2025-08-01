@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { FC } from "react";
 
-import { TableRowItem } from "@/components/table-row";
+import { TableRowItem } from "@/components/data-grid/table-row";
 import { DataGridConfig } from "@/types";
 
 interface Props {

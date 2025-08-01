@@ -9,14 +9,7 @@ import {
 import { useCallback, useMemo, useState } from "react";
 
 import { ColumnFilter } from "@/components/column-filter";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { selectOrdersFilter, setOrdersFilter } from "@/store";
-import {
-  FilterGetter,
-  FilterSetter,
-  OrdersTableHeaderConfig,
-  SortOrder,
-} from "@/types";
+import { OrdersTableHeaderConfig, SortOrder } from "@/types";
 import { OrderFilters } from "@/types/orders";
 
 interface Props {
@@ -38,9 +31,6 @@ export const useOrdersTable = ({ config, withActionColumn = true }: Props) => {
   const [sortKey, setSortKey] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<SortOrder>(DEFAULT_ORDER);
 
-  const filters = useAppSelector(selectOrdersFilter);
-  const dispatch = useAppDispatch();
-
   const theme = useTheme();
 
   const handleOnClickSortLabel = useCallback(
@@ -49,16 +39,6 @@ export const useOrdersTable = ({ config, withActionColumn = true }: Props) => {
       setSortKey(filter);
     },
     [sortOrder],
-  );
-
-  const getFilterValue: FilterGetter = useCallback(
-    (key) => filters[key as keyof OrderFilters],
-    [filters],
-  );
-  const setFilterValue: FilterSetter = useCallback(
-    (key, value) =>
-      dispatch(setOrdersFilter({ key: key as keyof OrderFilters, value })),
-    [dispatch],
   );
 
   const headers = useMemo(() => {
@@ -114,8 +94,6 @@ export const useOrdersTable = ({ config, withActionColumn = true }: Props) => {
                   mode="orders"
                   title={title}
                   dataKey={key as keyof OrderFilters}
-                  getFilterValue={getFilterValue}
-                  setFilterValue={setFilterValue}
                 />
               )}
             </Stack>
@@ -128,8 +106,6 @@ export const useOrdersTable = ({ config, withActionColumn = true }: Props) => {
     sortKey,
     sortOrder,
     theme,
-    getFilterValue,
-    setFilterValue,
     withActionColumn,
     handleOnClickSortLabel,
   ]);

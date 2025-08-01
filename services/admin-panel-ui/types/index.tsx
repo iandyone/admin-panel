@@ -7,6 +7,4 @@ export {
   type DataGridType,
   type OrdersTableHeaderConfig,
   type UsersTableHeaderConfig,
-  type FilterGetter,
-  type FilterSetter
 } from "./table";

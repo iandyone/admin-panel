@@ -1,45 +1,45 @@
 "use client";
 
 import { Button, Stack, TextField } from "@mui/material";
-import { ChangeEvent, FC, useState } from "react";
+import { ChangeEvent, FC } from "react";
 
 import { LABELS_WITH_NUMERIC_FIELDS } from "@/constants";
-import { FilterGetter, FilterSetter } from "@/types";
+import { useSearch } from "@/hooks";
 
 export interface TextModalProps {
   title: string;
   dataKey: string;
   setIsActive: (flag: boolean) => void;
   onClickControls: () => void;
-  getFilterValue: FilterGetter;
-  setFilterValue: FilterSetter;
 }
 
 export const TextSearchModal: FC<TextModalProps> = ({
   dataKey,
   title,
-  getFilterValue,
-  setFilterValue,
   setIsActive,
   onClickControls,
 }) => {
-  const [value, setValue] = useState(() => getFilterValue(dataKey));
+  const {
+    filterValue,
+    setFilterValue,
+    applySearchFilterHandler,
+    resetSearchFilterHandler,
+  } = useSearch(dataKey);
 
   const handleOnClickApplyButton = () => {
-    setFilterValue(dataKey, value);
-    setIsActive(Boolean(value));
+    applySearchFilterHandler();
+    setIsActive(Boolean(filterValue));
     onClickControls();
   };
 
   const handleOnClickResetButton = () => {
-    setValue("");
-    setFilterValue(dataKey, "");
+    resetSearchFilterHandler();
     setIsActive(false);
     onClickControls();
   };
 
   const handleOnChangeFilter = ({ target }: ChangeEvent<HTMLInputElement>) => {
-    setValue(target.value);
+    setFilterValue(target.value);
   };
 
   return (
@@ -49,7 +49,7 @@ export const TextSearchModal: FC<TextModalProps> = ({
         size="small"
         label={`Search by ${title}`}
         variant="outlined"
-        value={Boolean(value) ? value : ""}
+        value={Boolean(filterValue) ? filterValue : ""}
         onChange={handleOnChangeFilter}
         type={LABELS_WITH_NUMERIC_FIELDS.includes(dataKey) ? "number" : "text"}
       />

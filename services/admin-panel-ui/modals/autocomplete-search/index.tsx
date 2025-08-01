@@ -1,15 +1,15 @@
-import { Autocomplete, Button, Stack, TextField } from "@mui/material";
-import { FC, SyntheticEvent, useState } from "react";
+"use client";
 
-import { FilterGetter, FilterSetter } from "@/types";
+import { Autocomplete, Button, Stack, TextField } from "@mui/material";
+import { FC, SyntheticEvent } from "react";
+
+import { useSearch } from "@/hooks";
 
 export interface AutocompleteProps {
   dataKey: string;
   title: string;
-  setIsActive: (flag: boolean) => void;
+  setIsActive: (isActive: boolean) => void;
   onClickControls: () => void;
-  getFilterValue: FilterGetter;
-  setFilterValue: FilterSetter;
   options: string[];
 }
 
@@ -17,28 +17,30 @@ export const AutocompleteSearchModal: FC<AutocompleteProps> = ({
   title,
   dataKey,
   options,
-  getFilterValue,
-  setFilterValue,
   onClickControls,
   setIsActive,
 }) => {
-  const [value, setValue] = useState(() => getFilterValue(dataKey));
+  const {
+    filterValue,
+    setFilterValue,
+    applySearchFilterHandler,
+    resetSearchFilterHandler,
+  } = useSearch(dataKey);
 
   const handleOnClickApplyButton = () => {
-    setFilterValue(dataKey, value);
-    setIsActive(Boolean(value));
+    applySearchFilterHandler();
+    setIsActive(Boolean(filterValue));
     onClickControls();
   };
 
   const handleOnClickResetButton = () => {
-    setFilterValue(dataKey, "");
+    resetSearchFilterHandler();
     setIsActive(false);
-    setValue("");
     onClickControls();
   };
 
   const handleOnChange = (event: SyntheticEvent, newValue: string | null) => {
-    setValue(String(newValue));
+    setFilterValue(String(newValue));
   };
 
   return (
@@ -46,7 +48,7 @@ export const AutocompleteSearchModal: FC<AutocompleteProps> = ({
       <Stack sx={{ p: 1, width: 250 }} spacing={2}>
         <Autocomplete
           options={options}
-          value={String(value)}
+          value={String(filterValue)}
           onChange={handleOnChange}
           size="small"
           renderInput={(params) => (

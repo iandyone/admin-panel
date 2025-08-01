@@ -5,27 +5,26 @@ import { Form, Formik } from "formik";
 import { FC } from "react";
 
 import { InputField } from "@/components/ui/input-field";
-import { OrderData } from "@/types";
-import { EOrderStatuses } from "@/types/orders";
-import { editOrderValidationSchema } from "@/validations";
+import { EUserRoles, EUserStatuses, UserData } from "@/types";
+import { UpdateUserDto } from "@/types/user";
+import { updateUserValidationSchema } from "@/validations";
 
 interface Props {
-  data: OrderData;
-  orderItems: string[];
-  onSubmit: () => void;
+  data: UserData;
+  onSubmit: (state: UpdateUserDto) => void;
   onCancel: () => void;
 }
 
-export const EditOrderForm: FC<Props> = ({
-  data: { order, customer, location, status },
-  orderItems,
+export const UpdateUserForm: FC<Props> = ({
+  data: { firstName, lastName, role, phone, status },
   onCancel,
   onSubmit,
 }) => {
-  const initialValues: Partial<OrderData> = {
-    order,
-    customer,
-    location,
+  const initialValues: UpdateUserDto = {
+    firstName,
+    lastName,
+    role,
+    phone,
     status,
   };
 
@@ -34,46 +33,53 @@ export const EditOrderForm: FC<Props> = ({
       <Formik
         initialValues={initialValues}
         enableReinitialize
-        validationSchema={editOrderValidationSchema}
+        validationSchema={updateUserValidationSchema}
         onSubmit={onSubmit}
       >
         {({ values, touched, errors, setFieldValue }) => (
           <Form>
             <Stack direction="column" spacing={2}>
+              <InputField
+                name="firstName"
+                label="First name"
+                type="text"
+                size="medium"
+                error={Boolean(touched.firstName && errors.firstName)}
+              />
+
+              <InputField
+                name="lastName"
+                label="Last name"
+                type="text"
+                size="medium"
+                error={Boolean(touched.lastName && errors.lastName)}
+              />
+
+              <InputField
+                name="phone"
+                label="Phone"
+                type="text"
+                size="medium"
+                error={Boolean(touched.phone && errors.phone)}
+              />
+
               <Autocomplete
-                multiple
-                options={orderItems}
-                value={values.order?.split(", ")}
+                options={Object.values(EUserRoles)}
+                value={values.role}
                 onChange={(_, newValue) => {
-                  setFieldValue("order", newValue.join(", "));
+                  setFieldValue("role", newValue);
                 }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    name="order"
-                    label="Order"
-                    error={Boolean(touched.order && errors.order)}
+                    name="role"
+                    label="Role"
+                    error={Boolean(touched.role && errors.role)}
                   />
                 )}
               />
-              <InputField
-                name="customer"
-                label="Customer"
-                type="text"
-                size="medium"
-                error={Boolean(touched.customer && errors.customer)}
-              />
-
-              <InputField
-                name="location"
-                label="Location"
-                type="text"
-                size="medium"
-                error={Boolean(touched.location && errors.location)}
-              />
-
               <Autocomplete
-                options={Object.values(EOrderStatuses)}
+                options={Object.values(EUserStatuses)}
                 value={values.status}
                 onChange={(_, newValue) => {
                   setFieldValue("status", newValue);

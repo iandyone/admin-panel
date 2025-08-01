@@ -9,14 +9,7 @@ import {
 import { useCallback, useMemo, useState } from "react";
 
 import { ColumnFilter } from "@/components/column-filter";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { selectUsersFilter, setUsersFilter } from "@/store";
-import {
-  FilterGetter,
-  FilterSetter,
-  SortOrder,
-  UsersTableHeaderConfig,
-} from "@/types";
+import { SortOrder, UsersTableHeaderConfig } from "@/types";
 import { UsersFilter } from "@/types/orders";
 
 interface Props {
@@ -38,9 +31,6 @@ export const useUsersTable = ({ config, withActionColumn = true }: Props) => {
   const [sortKey, setSortKey] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<SortOrder>(DEFAULT_ORDER);
 
-  const filters = useAppSelector(selectUsersFilter);
-  const dispatch = useAppDispatch();
-
   const theme = useTheme();
 
   const handleOnClickSortLabel = useCallback(
@@ -49,16 +39,6 @@ export const useUsersTable = ({ config, withActionColumn = true }: Props) => {
       setSortKey(filter);
     },
     [sortOrder],
-  );
-
-  const getFilterValue: FilterGetter = useCallback(
-    (key) => filters[key as keyof UsersFilter],
-    [filters],
-  );
-  const setFilterValue: FilterSetter = useCallback(
-    (key, value) =>
-      dispatch(setUsersFilter({ key: key as keyof UsersFilter, value })),
-    [dispatch],
   );
 
   const headers = useMemo(() => {
@@ -111,11 +91,9 @@ export const useUsersTable = ({ config, withActionColumn = true }: Props) => {
               {withFilter && (
                 <ColumnFilter
                   id="users-table-filter"
-                  title={title}
                   mode="users"
+                  title={title}
                   dataKey={key as keyof UsersFilter}
-                  getFilterValue={getFilterValue}
-                  setFilterValue={setFilterValue}
                 />
               )}
             </Stack>
@@ -128,8 +106,6 @@ export const useUsersTable = ({ config, withActionColumn = true }: Props) => {
     sortKey,
     sortOrder,
     theme,
-    getFilterValue,
-    setFilterValue,
     withActionColumn,
     handleOnClickSortLabel,
   ]);
