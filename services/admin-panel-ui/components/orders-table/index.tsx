@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { FC, useMemo } from "react";
 
 import { DataGrid } from "@/components/data-grid";
-import { ordersTableHeaderConfig } from "@/config";
+import { ordersTableHeaderConfig } from "@/configs";
 import { ORDERS_SEARCH_FILTERS, ROWS_PER_PAGE_OPTIONS } from "@/constants";
 import { useAppSelector, useOrdersTable, usePagination } from "@/hooks";
 import { selectOrders } from "@/store";
@@ -41,7 +41,7 @@ export const OrdersTable: FC = () => {
   });
 
   const { page, rowsPerPage, handleOnChangePage, handleChangeRowsPerPage } =
-    usePagination({ count: ordersData.length });
+    usePagination( );
 
   const data = useMemo(() => {
     const visibleRows = ordersData

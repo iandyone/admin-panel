@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { USERS_DATA } from "@/mocks";
-import { UserData } from "@/types";
+import { User } from "@/types";
 
 export interface UsersState {
-  users: UserData[];
+  users: User[];
 }
 
 const initialState: UsersState = {
@@ -15,7 +15,7 @@ export const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    setUsers: (state, { payload }: PayloadAction<UserData[]>) => {
+    setUsers: (state, { payload }: PayloadAction<User[]>) => {
       state.users = payload;
     },
   },

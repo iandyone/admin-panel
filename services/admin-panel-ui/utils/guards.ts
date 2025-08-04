@@ -1,9 +1,9 @@
-import { OrderData, UserData } from "@/types";
+import { OrderData, User } from "@/types";
 
-export function isOrderData(data: OrderData | UserData): data is OrderData {
+export function isOrderData(data: OrderData | User): data is OrderData {
   return "order" in data;
 }
 
-export function isUserData(data: OrderData | UserData): data is UserData {
+export function isUserData(data: OrderData | User): data is User {
   return "role" in data;
 }

@@ -5,10 +5,11 @@ import { useSearchParams } from "next/navigation";
 import { FC, useMemo } from "react";
 
 import { DataGrid } from "@/components/data-grid";
-import { usersTableHeaderConfig } from "@/config";
+import { usersTableHeaderConfig } from "@/configs";
 import { ROWS_PER_PAGE_OPTIONS, USERS_SEARCH_FILTERS } from "@/constants";
 import { usePagination, useUsersTable } from "@/hooks";
-import { DataGridConfig, EUserStatuses, UserData } from "@/types";
+import { useGetUsersQuery } from "@/query/useGetUsersQuery";
+import { DataGridConfig, EUserStatuses, User } from "@/types";
 import { UsersFilter } from "@/types/orders";
 import {
   getFilteredUsersData,
@@ -19,44 +20,41 @@ import { formatPhoneNumber } from "@/utils/date";
 
 import styles from "./styles.module.css";
 
-interface Props {
-  users: UserData[];
-}
-
-
 const { ACTIVE, INACTIVE } = EUserStatuses;
 
-export const UsersTable: FC<Props> = ({ users }) => {
-  const params = useSearchParams();
+export const UsersTable: FC = () => {
+  const searchParams = useSearchParams();
 
-  const filters: UsersFilter = USERS_SEARCH_FILTERS.reduce(
-    (acc, filterKey) => ({
-      ...acc,
-      [filterKey]: params.get(filterKey),
-    }),
-    {} as UsersFilter,
-  );
+  const { page, rowsPerPage, handleOnChangePage, handleChangeRowsPerPage } =
+    usePagination();
 
-  const usersData = useMemo(
-    () => getFilteredUsersData(users, filters),
-    [users, filters],
+  const { data: usersFetchData, isSuccess: isUsersFetched } = useGetUsersQuery(
+    page,
+    rowsPerPage,
   );
 
   const { sortOrder, sortKey, headers } = useUsersTable({
     config: usersTableHeaderConfig,
   });
 
-  const { page, rowsPerPage, handleOnChangePage, handleChangeRowsPerPage } =
-    usePagination({
-      count: usersData.length,
-      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
-    });
+  const filters: UsersFilter = USERS_SEARCH_FILTERS.reduce(
+    (acc, filterKey) => ({
+      ...acc,
+      [filterKey]: searchParams.get(filterKey),
+    }),
+    {} as UsersFilter,
+  );
+
+  const usersData = useMemo(
+    () =>
+      isUsersFetched ? getFilteredUsersData(usersFetchData.users, filters) : [],
+    [usersFetchData, filters, isUsersFetched],
+  );
 
   const data = useMemo(() => {
-    const visibleRows = usersData
-      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-      .map(({ isActive, lastActivity, orders, phone, role, ...rowData }) => {
-        const result: UserData = {
+    const visibleRows = usersData.map(
+      ({ isActive, lastActivity, orders, phone, role, ...rowData }) => {
+        const result: User = {
           ...rowData,
           phone: formatPhoneNumber(phone),
           role: role.toLowerCase(),
@@ -68,12 +66,13 @@ export const UsersTable: FC<Props> = ({ users }) => {
         };
 
         return result;
-      });
+      },
+    );
 
     return sortOrder
       ? getSortedOrdersData(visibleRows, sortKey, sortOrder)
       : visibleRows;
-  }, [usersData, sortKey, sortOrder, page, rowsPerPage]);
+  }, [usersData, sortKey, sortOrder]);
 
   const config: DataGridConfig = useMemo(
     () => ({
@@ -82,7 +81,7 @@ export const UsersTable: FC<Props> = ({ users }) => {
       pagination: {
         page,
         rowsPerPage,
-        count: usersData.length,
+        count: usersFetchData?.total || 0,
         onPageChange: handleOnChangePage,
         onRowsPerPageChange: handleChangeRowsPerPage,
         rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
@@ -90,7 +89,7 @@ export const UsersTable: FC<Props> = ({ users }) => {
     }),
     [
       data,
-      usersData,
+      usersFetchData,
       headers,
       page,
       rowsPerPage,

@@ -9,12 +9,12 @@ import { FormModalWrapper } from "@/components/form-modal-wrapper";
 import { UpdateOrderForm } from "@/forms/update-order";
 import { UpdateUserForm } from "@/forms/update-user";
 import { ORDERS_DATA } from "@/mocks";
-import { OrderData, UserData } from "@/types";
+import { OrderData, User } from "@/types";
 import { UpdateUserDto } from "@/types/user";
 import { isOrderData, isUserData } from "@/utils/guards";
 
 interface Props extends TableRowProps {
-  data: OrderData | UserData;
+  data: OrderData | User;
 }
 
 export const TableRowItem: FC<Props> = ({ data, ...rowProps }) => {

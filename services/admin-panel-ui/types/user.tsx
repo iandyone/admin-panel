@@ -1,4 +1,4 @@
-export interface UserData {
+export interface User {
   id: number;
   firstName: string;
   lastName: string;
@@ -22,6 +22,6 @@ export enum EUserStatuses {
 }
 
 export type UpdateUserDto = Pick<
-  UserData,
+  User,
   "firstName" | "lastName" | "role" | "status" | "phone"
 >;

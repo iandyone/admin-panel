@@ -5,12 +5,12 @@ import { Form, Formik } from "formik";
 import { FC } from "react";
 
 import { InputField } from "@/components/ui/input-field";
-import { EUserRoles, EUserStatuses, UserData } from "@/types";
+import { EUserRoles, EUserStatuses, User } from "@/types";
 import { UpdateUserDto } from "@/types/user";
 import { updateUserValidationSchema } from "@/validations";
 
 interface Props {
-  data: UserData;
+  data: User;
   onSubmit: (state: UpdateUserDto) => void;
   onCancel: () => void;
 }

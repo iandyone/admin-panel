@@ -1,4 +1,4 @@
-import { OrderData, UserData } from "@/types";
+import { OrderData, User } from "@/types";
 
 export const ORDERS_DATA: OrderData[] = [
   {
@@ -503,7 +503,7 @@ export const ORDERS_DATA: OrderData[] = [
   },
 ];
 
-export const USERS_DATA: UserData[] = [
+export const USERS_DATA: User[] = [
   {
     id: 1,
     firstName: "Irina",

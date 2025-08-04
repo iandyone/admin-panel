@@ -1,7 +1,7 @@
 import { AutocompleteSearchModal } from "@/modals/autocomplete-search";
 import { DateSearchModal } from "@/modals/date-search";
 import { TextSearchModal } from "@/modals/text-search";
-import { EUserRoles, EUserStatuses, OrderData, UserData } from "@/types";
+import { EUserRoles, EUserStatuses, OrderData, User } from "@/types";
 import { EOrderStatuses, OrderFilters, UsersFilter } from "@/types/orders";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -88,9 +88,9 @@ export function getFilteredOrdersData(
 }
 
 export function getFilteredUsersData(
-  users: UserData[],
+  users: User[],
   filters: UsersFilter,
-): UserData[] {
+): User[] {
   const fromDate = filters.dateFrom ? new Date(filters.dateFrom) : null;
   const toDate = filters.dateTo ? new Date(filters.dateTo) : null;
 
@@ -127,7 +127,7 @@ export function getFilteredUsersData(
           return false;
         }
       } else {
-        const userField = String(user[key as keyof UserData]).toLowerCase();
+        const userField = String(user[key as keyof User]).toLowerCase();
         const filterStr = String(filterValue).toLowerCase();
 
         if (!userField.includes(filterStr)) {

@@ -1,0 +1,5 @@
+eslint.config.mjs
+.gitignore
+next-env.d.ts
+tsconfig.json
+tsconfig.tsbuildinfo

@@ -1,17 +1,11 @@
+
+
 import { ChangeEventHandler, MouseEvent, useCallback, useState } from "react";
 
-import { DEFAULT_ROWS_PER_PAGE } from "@/constants";
+import { DEFAULT_ROWS_PER_PAGE, START_PAGE } from "@/constants";
 
-interface PaginationConfig {
-  count: number;
-  perPage?: number;
-  rowsPerPageOptions?: number[];
-}
-
-export const usePagination = ({
-  perPage = DEFAULT_ROWS_PER_PAGE,
-}: PaginationConfig) => {
-  const [page, setPage] = useState(0);
+export const usePagination = (perPage = DEFAULT_ROWS_PER_PAGE) => {
+  const [page, setPage] = useState(START_PAGE);
   const [rowsPerPage, setRowsPerPage] = useState(perPage);
 
   const handleOnChangePage = useCallback(

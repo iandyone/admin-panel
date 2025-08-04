@@ -1,16 +1,24 @@
 import { Stack, Typography } from "@mui/material";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import { Suspense } from "react";
 
-import { getUsers } from '@/actions';
+// import { getUsers } from "@/actions";
+import { getUsers } from "@/actions";
 import { UsersTable } from "@/components/users-table";
-
-const TableWrapper = async () => {
-  const users = await getUsers();
-
-  return <UsersTable users={users} />;
-};
+import { DEFAULT_ROWS_PER_PAGE, FetchTags, START_PAGE } from "@/constants";
 
 export default async function Page() {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: [FetchTags.USERS, START_PAGE, DEFAULT_ROWS_PER_PAGE],
+    queryFn: async () => await getUsers(START_PAGE, DEFAULT_ROWS_PER_PAGE),
+  });
+
   return (
     <Stack gap={3} sx={{ mt: 0 }}>
       <Typography component="h2" variant="h6">
@@ -18,7 +26,9 @@ export default async function Page() {
       </Typography>
 
       <Suspense fallback="Fetching users data">
-        <TableWrapper />
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <UsersTable />;
+        </HydrationBoundary>
       </Suspense>
     </Stack>
   );

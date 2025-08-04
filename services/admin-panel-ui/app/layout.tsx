@@ -1,11 +1,13 @@
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Suspense } from "react";
-
-import { AppProvider } from "../components/app-provider";
 
 import "./globals.css";
+import {
+  MaterialUIProvider,
+  ReduxProvider,
+  TanskackQueryProvider,
+} from "@/providers";
+
 
 export const metadata: Metadata = {
   title: "Admin panel",
@@ -22,11 +24,11 @@ export default function RootLayout({
   return (
     <html lang="en" data-toolpad-color-scheme="light">
       <body className={inter.className}>
-        <AppRouterCacheProvider>
-          <Suspense>
-            <AppProvider>{children}</AppProvider>
-          </Suspense>
-        </AppRouterCacheProvider>
+        <TanskackQueryProvider>
+          <ReduxProvider>
+            <MaterialUIProvider>{children}</MaterialUIProvider>
+          </ReduxProvider>
+        </TanskackQueryProvider>
       </body>
     </html>
   );
