@@ -14,14 +14,31 @@ export interface UserResponse {
   lastName: string;
   role: $Enums.Role;
   phone: string;
-  lastActivity: string | null;
+  lastActivity: number | null;
   orders: number;
   isActive: boolean;
 }
 
-export type UsersResponse = UserResponse[];
+export interface UsersResponse {
+  total: number;
+  users: UserResponse[];
+}
 
 export interface PaginationProps {
   page: number;
   perPage: number;
+}
+
+export interface UsersFindAllProps {
+  page: string;
+  perPage: string;
+  id?: string;
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  role?: string;
+  dateFrom?: string;
+  dateTo?: string;
+  orders?: string;
+  isActive?: string;
 }

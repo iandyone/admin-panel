@@ -1,4 +1,3 @@
-import { $Enums } from '@prisma/client';
 import joi from 'joi';
 
 import {
@@ -6,9 +5,10 @@ import {
   emailSchema,
   passwordSchema,
   phoneSchema,
+  pageSchema,
+  idSchema,
+  userRoleSchema,
 } from './schemas';
-
-const ROLES = Object.values($Enums.Role);
 
 export const createUserSchema = joi.object({
   firstName: nameSchema.required(),
@@ -24,8 +24,17 @@ export const updateUserSchema = joi.object({
   email: emailSchema.optional(),
   phone: phoneSchema.optional(),
   isActive: joi.bool().optional(),
-  role: joi
-    .string()
-    .valid(...ROLES)
-    .optional(),
+  role: userRoleSchema.optional(),
+});
+
+export const findAllUserSchema = joi.object({
+  page: pageSchema,
+  perPage: pageSchema,
+  id: idSchema.optional(),
+  firstName: nameSchema.min(1).optional(),
+  lastName: nameSchema.min(1).optional(),
+  phone: phoneSchema.min(1).optional(),
+  role: userRoleSchema.optional(),
+  isActive: joi.bool().optional(),
+  orders: joi.number().min(0).optional(),
 });

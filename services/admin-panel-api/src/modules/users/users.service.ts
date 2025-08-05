@@ -2,14 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
 
 import { CreateUserDto } from './dto/create-user.dto';
+import { FindAllUsersDto } from './dto/find-all-users.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 import {
-  PaginationProps,
   UserData,
   UserResponse,
+  UsersFindAllProps,
   UsersResponse,
 } from '../../types';
+import { filterNullValues } from '../../utils';
 import { DatabaseService } from '../database/database.service';
 
 @Injectable()
@@ -22,10 +24,13 @@ export class UsersService {
     return await this.db.createUser(createUserDto);
   }
 
-  async findAll(paginationProps: PaginationProps): Promise<UsersResponse> {
-    const usersData = await this.db.getUsers(paginationProps);
+  async findAll(usersFindAllData: UsersFindAllProps): Promise<UsersResponse> {
+    const findAllUserDto = new FindAllUsersDto(usersFindAllData);
+    const { users, total } = await this.db.getUsers(
+      filterNullValues<FindAllUsersDto>(findAllUserDto),
+    );
 
-    const users: UserResponse[] = usersData.map(
+    const formattedUsers: UserResponse[] = users.map(
       ({
         id,
         firstName,
@@ -41,15 +46,13 @@ export class UsersService {
         lastName,
         phone,
         role,
-        lastActivity: lastActivity
-          ? new Date(lastActivity).toLocaleDateString()
-          : null,
+        lastActivity: lastActivity ? new Date(lastActivity).getTime() : null,
         orders,
         isActive,
       }),
     );
 
-    return users;
+    return { users: formattedUsers, total };
   }
 
   async findOne(id: number) {

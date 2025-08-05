@@ -1,4 +1,7 @@
+import { $Enums } from '@prisma/client';
 import joi from 'joi';
+
+const ROLES = Object.values($Enums.Role).map((role) => role.toLowerCase());
 
 export const idSchema = joi
   .string()
@@ -19,3 +22,6 @@ export const managerIdSchema = joi.number().min(1);
 export const nameSchema = joi.string().min(4).max(15);
 export const phoneSchema = joi.string().min(12);
 export const emailSchema = joi.string().email({ minDomainSegments: 2 });
+
+export const pageSchema = joi.number().min(0);
+export const userRoleSchema = joi.string().valid(...ROLES);

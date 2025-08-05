@@ -11,12 +11,14 @@ import {
   Query,
 } from '@nestjs/common';
 import { Credentials, User } from '@prisma/client';
+import { UsersFindAllProps } from 'src/types';
 
 import { UsersService } from './users.service';
 
 import { JoiValidationPipe } from '../../pipes/joi-validation.pipe';
 import {
   createUserSchema,
+  findAllUserSchema,
   idSchema,
   updateUserSchema,
 } from '../../validations';
@@ -36,11 +38,9 @@ export class UsersController {
   }
 
   @Get()
-  async findAll(
-    @Query('page', ParseIntPipe) page: number,
-    @Query('perPage', ParseIntPipe) perPage: number,
-  ) {
-    return await this.usersService.findAll({ page, perPage });
+  @UsePipes(new JoiValidationPipe(findAllUserSchema))
+  async findAll(@Query() query: UsersFindAllProps) {
+    return await this.usersService.findAll(query);
   }
 
   @Get(':id')

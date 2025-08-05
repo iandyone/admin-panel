@@ -15,6 +15,7 @@ import { filterNullValues, getOrderItemsFromProductsIds } from '../../utils';
 import { CreateOrderDto } from '../orders/dto/create-order.dto';
 import { UpdateOrderDto } from '../orders/dto/update-order.dto';
 import { CreateUserDto } from '../users/dto/create-user.dto';
+import { FindAllUsersDto } from '../users/dto/find-all-users.dto';
 import { UpdateUserDto } from '../users/dto/update-user.dto';
 
 @Injectable()
@@ -24,15 +25,71 @@ export class DatabaseService {
   async getUsers({
     page = START_PAGE,
     perPage = DEFAULT_PER_PAGE,
-  }: PaginationProps) {
-    const users = await this.prisma.user.findMany({
-      include: { Credentials: true },
-      orderBy: { id: 'asc' },
-      skip: page * perPage,
-      take: perPage,
-    });
+    ...filters
+  }: FindAllUsersDto) {
+    const usersFilter = Object.keys(filters).reduce((acc, key) => {
+      const filterValue = filters[key];
+      const filter =
+        typeof filterValue === 'number'
+          ? { equals: filterValue }
+          : { startsWith: filterValue, mode: 'insensitive' };
 
-    return users;
+      if (key === 'role') {
+        return {
+          ...acc,
+          Credentials: {
+            role: $Enums.Role[filters.role.toLocaleUpperCase()],
+          },
+        };
+      }
+
+      if (key === 'isActive') {
+        return {
+          ...acc,
+          isActive: {
+            equals: filters.isActive,
+          },
+        };
+      }
+
+      if (key === 'dateFrom' || key === 'dateTo') {
+        const filterFrom = filters.dateFrom
+          ? { gte: new Date(filters.dateFrom) }
+          : {};
+        const filterTo = filters.dateTo
+          ? { lte: new Date(filters.dateTo) }
+          : {};
+
+        return {
+          ...acc,
+          lastActivity: {
+            ...filterFrom,
+            ...filterTo,
+          },
+        };
+      }
+
+      return {
+        ...acc,
+        [key]: { ...filter },
+      };
+    }, {});
+
+    const [users, total] = await this.prisma.$transaction([
+      this.prisma.user.findMany({
+        where: usersFilter,
+        include: { Credentials: true },
+        orderBy: { id: 'asc' },
+        skip: page * perPage,
+        take: perPage,
+      }),
+      this.prisma.user.count({ where: { ...usersFilter } }),
+    ]);
+
+    return {
+      users,
+      total: Math.ceil(total),
+    };
   }
 
   async getUser(id: number) {
