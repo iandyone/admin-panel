@@ -7,7 +7,7 @@ export interface User {
   lastActivity: number | string;
   orders: number;
   isActive?: boolean;
-  status?: EUserStatuses;
+  // status?: EUserStatuses;
 }
 
 export enum EUserRoles {
@@ -23,5 +23,5 @@ export enum EUserStatuses {
 
 export type UpdateUserDto = Pick<
   User,
-  "firstName" | "lastName" | "role" | "status" | "phone"
+  "firstName" | "lastName" | "role" | "isActive" | "phone"
 >;

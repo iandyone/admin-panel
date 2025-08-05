@@ -3,8 +3,7 @@
 import { Button, Stack, TextField } from "@mui/material";
 import { ChangeEvent, FC } from "react";
 
-import { LABELS_WITH_NUMERIC_FIELDS } from "@/constants";
-import { useFilter } from '@/hooks';
+import { useFilter } from "@/hooks";
 
 export interface TextModalProps {
   title: string;
@@ -13,7 +12,7 @@ export interface TextModalProps {
   onClickControls: () => void;
 }
 
-export const TextSearchModal: FC<TextModalProps> = ({
+export const PhoneSearchModal: FC<TextModalProps> = ({
   dataKey,
   title,
   setIsActive,
@@ -27,7 +26,9 @@ export const TextSearchModal: FC<TextModalProps> = ({
   } = useFilter(dataKey);
 
   const handleOnClickApplyButton = () => {
-    applySearchFilterHandler();
+    const phoneValue = encodeURIComponent(filterValue);
+
+    applySearchFilterHandler(phoneValue);
     setIsActive(Boolean(filterValue));
     onClickControls();
   };
@@ -49,9 +50,9 @@ export const TextSearchModal: FC<TextModalProps> = ({
         size="small"
         label={`Search by ${title}`}
         variant="outlined"
-        value={Boolean(filterValue) ? filterValue : ""}
+        value={Boolean(filterValue) ? decodeURIComponent(filterValue) : ""}
         onChange={handleOnChangeFilter}
-        type={LABELS_WITH_NUMERIC_FIELDS.includes(dataKey) ? "number" : "text"}
+        type='text'
       />
 
       <Stack direction="row" justifyContent="space-between" alignItems="center">

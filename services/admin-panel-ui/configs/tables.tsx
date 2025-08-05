@@ -19,5 +19,5 @@ export const usersTableHeaderConfig: UsersTableHeaderConfig = [
   { title: 'Role', key: "role", width: "10%" },
   { title: 'Last Activity', key: "lastActivity", width: "10%" },
   { title: 'Orders', key: "orders", width: "10%" },
-  { title: 'Status', key: "status", width: "10%" },
+  { title: 'Status', key: "isActive", width: "10%" },
 ];

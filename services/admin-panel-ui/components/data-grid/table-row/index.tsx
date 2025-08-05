@@ -10,12 +10,14 @@ import { UpdateOrderForm } from "@/forms/update-order";
 import { UpdateUserForm } from "@/forms/update-user";
 import { ORDERS_DATA } from "@/mocks";
 import { OrderData, User } from "@/types";
-import { UpdateUserDto } from "@/types/user";
+import { EUserStatuses, UpdateUserDto } from "@/types/user";
 import { isOrderData, isUserData } from "@/utils/guards";
 
 interface Props extends TableRowProps {
   data: OrderData | User;
 }
+
+const { ACTIVE, INACTIVE } = EUserStatuses;
 
 export const TableRowItem: FC<Props> = ({ data, ...rowProps }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,7 +33,6 @@ export const TableRowItem: FC<Props> = ({ data, ...rowProps }) => {
   const onClose = () => setIsOpen(false);
 
   const handleOnCancel = () => {
-    // TODO: логика работы формы
     onClose();
   };
   const handleOnSubmit = () => {
@@ -45,15 +46,20 @@ export const TableRowItem: FC<Props> = ({ data, ...rowProps }) => {
 
   return (
     <TableRow hover {...rowProps}>
-      {Object.values(data).map((item, index) => (
-        <TableCell
-          size="small"
-          key={item?.id || index}
-          sx={{ textTransform: "capitalize" }}
-        >
-          {item}
-        </TableCell>
-      ))}
+      {Object.entries(data).map(([key, value], index) => {
+        const ceilValue =
+          key === "isActive" ? (value ? ACTIVE : INACTIVE) : value;
+
+        return (
+          <TableCell
+            size="small"
+            key={index}
+            sx={{ textTransform: "capitalize" }}
+          >
+            {ceilValue}
+          </TableCell>
+        );
+      })}
       <TableCell size="small">
         <Button
           onClick={handleOnClickEditButton}

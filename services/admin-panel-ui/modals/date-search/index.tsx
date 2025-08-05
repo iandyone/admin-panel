@@ -1,9 +1,9 @@
 import { Button, Stack } from "@mui/material";
 import { PickerValue } from "@mui/x-date-pickers/internals";
-import { FC } from "react";
+import { FC, useState } from "react";
 
 import { PeriodFilter } from "@/components/period-filter";
-import { useSearch } from "@/hooks";
+import { useAppSeatchParams } from "@/hooks";
 
 export interface AutocompleteProps {
   dataKey: string;
@@ -17,37 +17,42 @@ export const DateSearchModal: FC<AutocompleteProps> = ({
   onClickControls,
   setIsActive,
 }) => {
-  const {
-    filterValue: valueFrom,
-    setFilterValue: setValueFrom,
-    applySearchFilterHandler: applyDateFromFilter,
-  } = useSearch("dateFrom");
-  const {
-    filterValue: valueTo,
-    setFilterValue: setValueTo,
-    applySearchFilterHandler: applyDateToilter,
-  } = useSearch("dateTo");
+  const { setSearchParam, updateUrlWithSearchParams, searchParams } =
+    useAppSeatchParams();
+
+  const [valueTo, setValueTo] = useState<number | null>(
+    Number(searchParams.get("dateTo")) || null,
+  );
+  const [valueFrom, setValueFrom] = useState<number | null>(
+    Number(searchParams.get("dateFrom")) || null,
+  );
+
+  const handleOnChangeDateFrom = (value: PickerValue) => {
+    setValueFrom(value ? value?.valueOf() : null);
+  };
+
+  const handleOnChangeDateTo = (value: PickerValue) => {
+    setValueTo(value ? value?.valueOf() : null);
+  };
 
   const handleOnClickApplyButton = () => {
-    applyDateFromFilter();
-    applyDateToilter();
+    setSearchParam("dateTo", valueTo ? valueTo.toString() : "");
+    setSearchParam("dateFrom", valueFrom ? valueFrom.toString() : "");
+
+    updateUrlWithSearchParams();
     setIsActive(Boolean(valueFrom) || Boolean(valueTo));
     onClickControls();
   };
 
   const handleOnClickResetButton = () => {
-    applyDateFromFilter();
-    applyDateToilter();
-    setIsActive(false);
-    setValueFrom("");
-    onClickControls();
-  };
+    setValueFrom(null);
+    setValueTo(null);
+    setSearchParam("dateTo", "");
+    setSearchParam("dateFrom", "");
 
-  const handleOnChangeDateFrom = (value: PickerValue) => {
-    setValueFrom(value?.valueOf().toString() || "");
-  };
-  const handleOnChangeDateTo = (value: PickerValue) => {
-    setValueTo(value?.valueOf().toString() || "");
+    updateUrlWithSearchParams();
+    setIsActive(false);
+    onClickControls();
   };
 
   return (
@@ -58,8 +63,8 @@ export const DateSearchModal: FC<AutocompleteProps> = ({
             spacing: 2,
             columns: 1,
           }}
-          valueTo={valueTo}
-          valueFrom={valueFrom}
+          valueTo={valueTo || ""}
+          valueFrom={valueFrom || ""}
           onChangeDateFrom={handleOnChangeDateFrom}
           onChangeDateTo={handleOnChangeDateTo}
         />

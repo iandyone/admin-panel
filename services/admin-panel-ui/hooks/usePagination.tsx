@@ -1,5 +1,3 @@
-
-
 import { ChangeEventHandler, MouseEvent, useCallback, useState } from "react";
 
 import { DEFAULT_ROWS_PER_PAGE, START_PAGE } from "@/constants";
@@ -16,9 +14,12 @@ export const usePagination = (perPage = DEFAULT_ROWS_PER_PAGE) => {
   );
 
   const handleChangeRowsPerPage: ChangeEventHandler<HTMLTextAreaElement> =
-    useCallback(({ target: { value } }) => {
-      setRowsPerPage(parseInt(value, 10));
-    }, []);
+    useCallback(
+      ({ target: { value } }) => {
+        setRowsPerPage(parseInt(value, 10));
+      },
+      [],
+    );
 
   return {
     page,

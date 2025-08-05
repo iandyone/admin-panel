@@ -8,7 +8,7 @@ export const USERS_SEARCH_FILTERS = [
   "phone",
   "lastActivity",
   "orders",
-  "status",
+  "isActive",
   "dateFrom",
   "dateTo",
 ];
@@ -24,3 +24,16 @@ export const ORDERS_SEARCH_FILTERS = [
   'manager',
   'status',
 ]
+
+export const USERS_DEFAULT_FILTER = {
+  id: null,
+  firstName: null,
+  lastName: null,
+  role: null,
+  phone: null,
+  lastActivity: null,
+  orders: null,
+  isActive: null,
+  dateFrom: null,
+  dateTo: null
+}

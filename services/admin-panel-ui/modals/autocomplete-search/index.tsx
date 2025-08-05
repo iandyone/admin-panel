@@ -3,7 +3,8 @@
 import { Autocomplete, Button, Stack, TextField } from "@mui/material";
 import { FC, SyntheticEvent } from "react";
 
-import { useSearch } from "@/hooks";
+import { useFilter } from "@/hooks";
+import { EUserStatuses } from "@/types";
 
 export interface AutocompleteProps {
   dataKey: string;
@@ -12,6 +13,13 @@ export interface AutocompleteProps {
   onClickControls: () => void;
   options: string[];
 }
+
+const { ACTIVE, INACTIVE } = EUserStatuses;
+
+const userStatusMap: Record<string, string> = {
+  true: ACTIVE,
+  false: INACTIVE,
+};
 
 export const AutocompleteSearchModal: FC<AutocompleteProps> = ({
   title,
@@ -25,10 +33,12 @@ export const AutocompleteSearchModal: FC<AutocompleteProps> = ({
     setFilterValue,
     applySearchFilterHandler,
     resetSearchFilterHandler,
-  } = useSearch(dataKey);
+  } = useFilter(dataKey);
 
   const handleOnClickApplyButton = () => {
-    applySearchFilterHandler();
+    const value = dataKey === "isActive" ? filterValue === ACTIVE : filterValue;
+
+    applySearchFilterHandler(String(value));
     setIsActive(Boolean(filterValue));
     onClickControls();
   };
@@ -48,7 +58,7 @@ export const AutocompleteSearchModal: FC<AutocompleteProps> = ({
       <Stack sx={{ p: 1, width: 250 }} spacing={2}>
         <Autocomplete
           options={options}
-          value={String(filterValue)}
+          value={userStatusMap[filterValue] || filterValue}
           onChange={handleOnChange}
           size="small"
           renderInput={(params) => (

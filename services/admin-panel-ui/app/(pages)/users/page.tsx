@@ -9,13 +9,13 @@ import { Suspense } from "react";
 // import { getUsers } from "@/actions";
 import { getUsers } from "@/actions";
 import { UsersTable } from "@/components/users-table";
-import { DEFAULT_ROWS_PER_PAGE, FetchTags, START_PAGE } from "@/constants";
+import { DEFAULT_ROWS_PER_PAGE, FetchTags, START_PAGE, USERS_DEFAULT_FILTER } from "@/constants";
 
 export default async function Page() {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: [FetchTags.USERS, START_PAGE, DEFAULT_ROWS_PER_PAGE],
+    queryKey: [FetchTags.USERS, START_PAGE, DEFAULT_ROWS_PER_PAGE, USERS_DEFAULT_FILTER],
     queryFn: async () => await getUsers(START_PAGE, DEFAULT_ROWS_PER_PAGE),
   });
 

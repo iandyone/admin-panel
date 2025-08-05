@@ -15,8 +15,10 @@ interface Props {
   onCancel: () => void;
 }
 
+const { ACTIVE, INACTIVE } = EUserStatuses;
+
 export const UpdateUserForm: FC<Props> = ({
-  data: { firstName, lastName, role, phone, status },
+  data: { firstName, lastName, role, phone, isActive },
   onCancel,
   onSubmit,
 }) => {
@@ -25,7 +27,7 @@ export const UpdateUserForm: FC<Props> = ({
     lastName,
     role,
     phone,
-    status,
+    isActive,
   };
 
   return (
@@ -80,7 +82,7 @@ export const UpdateUserForm: FC<Props> = ({
               />
               <Autocomplete
                 options={Object.values(EUserStatuses)}
-                value={values.status}
+                value={values.isActive ? ACTIVE : INACTIVE}
                 onChange={(_, newValue) => {
                   setFieldValue("status", newValue);
                 }}
@@ -89,7 +91,7 @@ export const UpdateUserForm: FC<Props> = ({
                     {...params}
                     name="status"
                     label="Status"
-                    error={Boolean(touched.status && errors.status)}
+                    error={Boolean(touched.isActive && errors.isActive)}
                   />
                 )}
               />

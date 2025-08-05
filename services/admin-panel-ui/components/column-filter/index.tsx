@@ -13,16 +13,9 @@ interface Props {
   onClick?: () => void;
   dataKey: keyof OrderFilters | keyof UsersFilter;
   title: string;
-  mode: "orders" | "users";
 }
 
-export const ColumnFilter: FC<Props> = ({
-  id,
-  dataKey,
-  title,
-  onClick,
-  mode = "orders",
-}) => {
+export const ColumnFilter: FC<Props> = ({ id, dataKey, title, onClick }) => {
   const params = useSearchParams();
   const theme = useTheme();
 
@@ -31,10 +24,7 @@ export const ColumnFilter: FC<Props> = ({
 
   const Modal = useMemo(() => getModalByLabelMap(dataKey), [dataKey]);
 
-  const options = useMemo(
-    () => getModalOptionsByLabel(dataKey, mode),
-    [dataKey, mode],
-  );
+  const options = useMemo(() => getModalOptionsByLabel(dataKey), [dataKey]);
 
   const handleOnCloseFilter = () => {
     setModalAnchor(null);

@@ -91,7 +91,6 @@ export const useUsersTable = ({ config, withActionColumn = true }: Props) => {
               {withFilter && (
                 <ColumnFilter
                   id="users-table-filter"
-                  mode="users"
                   title={title}
                   dataKey={key as keyof UsersFilter}
                 />

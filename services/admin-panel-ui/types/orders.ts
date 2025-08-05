@@ -35,14 +35,14 @@ export interface OrderFilters {
 }
 
 export interface UsersFilter {
-  id: string;
-  firstName: string;
-  lastName: string;
-  role: string;
-  phone: string;
-  lastActivity: string;
-  orders: string;
-  status: string;
-  dateFrom: string | number;
-  dateTo: string | number;
+  id?: string;
+  firstName?: string;
+  lastName?: string;
+  role?: string;
+  phone?: string;
+  lastActivity?: string;
+  orders?: string;
+  isActive?: string;
+  dateFrom?: string | number;
+  dateTo?: string | number;
 }

@@ -1,8 +1,9 @@
 import { AutocompleteSearchModal } from "@/modals/autocomplete-search";
 import { DateSearchModal } from "@/modals/date-search";
+import { PhoneSearchModal } from '@/modals/phone-search';
 import { TextSearchModal } from "@/modals/text-search";
-import { EUserRoles, EUserStatuses, OrderData, User } from "@/types";
-import { EOrderStatuses, OrderFilters, UsersFilter } from "@/types/orders";
+import { EUserRoles, EUserStatuses, OrderData } from "@/types";
+import { EOrderStatuses, OrderFilters } from "@/types/orders";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type Order = "asc" | "desc";
@@ -87,67 +88,17 @@ export function getFilteredOrdersData(
   });
 }
 
-export function getFilteredUsersData(
-  users: User[],
-  filters: UsersFilter,
-): User[] {
-  const fromDate = filters.dateFrom ? new Date(filters.dateFrom) : null;
-  const toDate = filters.dateTo ? new Date(filters.dateTo) : null;
-
-  return users.filter((user) => {
-    const lastActivity = new Date(user.lastActivity);
-
-    if (fromDate && lastActivity < fromDate) {
-      return false;
-    }
-
-    if (toDate && lastActivity > toDate) {
-      return false;
-    }
-
-    for (const key in filters) {
-      if (key === "dateFrom" || key === "dateTo") {
-        continue;
-      }
-
-      const filterValue = filters[key as keyof UsersFilter];
-
-      if (!filterValue) {
-        continue;
-      }
-
-      if (key === "status") {
-        return filterValue === EUserStatuses.ACTIVE
-          ? user.isActive === true
-          : user.isActive === false;
-      }
-
-      if (key === "id") {
-        if (user.id !== Number(filterValue)) {
-          return false;
-        }
-      } else {
-        const userField = String(user[key as keyof User]).toLowerCase();
-        const filterStr = String(filterValue).toLowerCase();
-
-        if (!userField.includes(filterStr)) {
-          return false;
-        }
-      }
-    }
-
-    return true;
-  });
-}
-
 export const getModalByLabelMap = (key: string) => {
   switch (key) {
     case "role":
     case "status":
+    case "isActive":
       return AutocompleteSearchModal;
     case "date":
     case "lastActivity":
       return DateSearchModal;
+    case "phone":
+      return PhoneSearchModal;
 
     default:
       return TextSearchModal;
@@ -156,13 +107,14 @@ export const getModalByLabelMap = (key: string) => {
 
 export const getModalOptionsByLabel = (
   key: string,
-  type: "users" | "orders" = "orders",
 ) => {
   switch (key) {
     case "role":
       return EUserRoles;
+    case "isActive":
+      return EUserStatuses;
     case "status":
-      return type === "orders" ? EOrderStatuses : EUserStatuses;
+      return EOrderStatuses;
 
     default:
       return [];

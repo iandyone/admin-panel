@@ -91,7 +91,6 @@ export const useOrdersTable = ({ config, withActionColumn = true }: Props) => {
               {withFilter && (
                 <ColumnFilter
                   id="orders-table-filter"
-                  mode="orders"
                   title={title}
                   dataKey={key as keyof OrderFilters}
                 />

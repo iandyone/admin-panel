@@ -5,7 +5,7 @@ import { revalidateTag } from 'next/cache';
 import { $axios } from '@/configs';
 import { FetchTags } from '@/constants';
 import { DEFAULT_ROWS_PER_PAGE, START_PAGE } from '@/constants/table';
-import { EUserStatuses, UsersResponse } from '@/types';
+import { UsersFilter, UsersResponse } from '@/types';
 import { UpdateUserDto } from '@/types/user';
 
 interface Props {
@@ -15,19 +15,19 @@ interface Props {
 
 const API_BASE_PATH = process.env.NEXT_PUBLIC_API_BASE_PATH;
 
-export const getUsers = async (page = START_PAGE, perPage = DEFAULT_ROWS_PER_PAGE) => {
+export const getUsers = async (page = START_PAGE, perPage = DEFAULT_ROWS_PER_PAGE, filters?: UsersFilter) => {
   try {
     const response = await $axios.get<UsersResponse>(`/users`, {
       params: {
         page,
-        perPage
+        perPage,
+        ...filters
       }
     });
     const usersData = response.data;
 
     return usersData;
   } catch (error) {
-
     console.log(error);
 
     return {
@@ -38,13 +38,13 @@ export const getUsers = async (page = START_PAGE, perPage = DEFAULT_ROWS_PER_PAG
 }
 
 
-export const updateUserAction = async ({ id, userData: { firstName, lastName, role, status, phone } }: Props) => {
+export const updateUserAction = async ({ id, userData: { firstName, lastName, role, isActive, phone } }: Props) => {
   const updatedUser = {
     firstName,
     lastName,
     phone,
     role: role.toUpperCase(),
-    isActive: status === EUserStatuses.ACTIVE,
+    isActive,
   }
 
 

@@ -3,7 +3,6 @@ export { getShortMonthName, getFormattedDate } from "./date";
 export {
   getSortedOrdersData,
   getFilteredOrdersData,
-  getFilteredUsersData,
   getModalByLabelMap,
   getModalOptionsByLabel,
 } from "./filters";
