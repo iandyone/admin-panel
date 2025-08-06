@@ -15,7 +15,7 @@ interface Props {
 
 const API_BASE_PATH = process.env.NEXT_PUBLIC_API_BASE_PATH;
 
-export const getUsers = async (page = START_PAGE, perPage = DEFAULT_ROWS_PER_PAGE, filters?: UsersFilter) => {
+export const prefetchUsers = async (page = START_PAGE, perPage = DEFAULT_ROWS_PER_PAGE, filters?: UsersFilter) => {
   try {
     const response = await $axios_server.get<UsersResponse>(`/users`, {
       params: {

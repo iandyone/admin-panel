@@ -17,11 +17,10 @@ export const useGetUsersQuery = (page = START_PAGE, perPage = DEFAULT_ROWS_PER_P
           }
         });
 
-        const usersData = response.data;
 
-        return usersData;
+        return response.data;
       } catch (error) {
-        console.log(error);
+        console.log({ error });
 
         return {
           total: 0,

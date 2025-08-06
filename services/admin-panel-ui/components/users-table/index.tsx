@@ -7,11 +7,10 @@ import { DataGrid } from "@/components/data-grid";
 import { usersTableHeaderConfig } from "@/configs";
 import { ROWS_PER_PAGE_OPTIONS, USERS_SEARCH_FILTERS } from "@/constants";
 import { usePagination, useUsersTable } from "@/hooks";
-import { useGetUsersQuery } from "@/query/useGetUsersQuery";
+import { useGetUsersQuery } from '@/query';
 import { DataGridConfig, User } from "@/types";
 import { UsersFilter } from "@/types/orders";
 import { getFormattedDate, getSortedOrdersData } from "@/utils";
-import { formatPhoneNumber } from "@/utils/date";
 
 import styles from "./styles.module.css";
 
@@ -45,7 +44,7 @@ export const UsersTable: FC = () => {
         ({ isActive, lastActivity, orders, phone, role, ...rowData }) => {
           const result: User = {
             ...rowData,
-            phone: formatPhoneNumber(phone),
+            phone,
             role: role.toLowerCase(),
             lastActivity: lastActivity ? getFormattedDate(lastActivity) : "—",
             orders: orders ?? "—",

@@ -7,7 +7,7 @@ import {
 import { Suspense } from "react";
 
 // import { getUsers } from "@/actions";
-import { getUsers } from "@/actions";
+import { prefetchUsers } from "@/actions";
 import { UsersTable } from "@/components/users-table";
 import { DEFAULT_ROWS_PER_PAGE, FetchTags, START_PAGE, USERS_DEFAULT_FILTER } from "@/constants";
 
@@ -16,7 +16,7 @@ export default async function Page() {
 
   await queryClient.prefetchQuery({
     queryKey: [FetchTags.USERS, START_PAGE, DEFAULT_ROWS_PER_PAGE, USERS_DEFAULT_FILTER],
-    queryFn: async () => await getUsers(START_PAGE, DEFAULT_ROWS_PER_PAGE),
+    queryFn: async () => await prefetchUsers(START_PAGE, DEFAULT_ROWS_PER_PAGE),
   });
 
   return (

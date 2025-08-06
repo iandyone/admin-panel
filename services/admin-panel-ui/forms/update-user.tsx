@@ -5,23 +5,26 @@ import { Form, Formik } from "formik";
 import { FC } from "react";
 
 import { InputField } from "@/components/ui/input-field";
+import { useUpdateUserMutation } from "@/query";
 import { EUserRoles, EUserStatuses, User } from "@/types";
 import { UpdateUserDto } from "@/types/user";
 import { updateUserValidationSchema } from "@/validations";
 
 interface Props {
   data: User;
-  onSubmit: (state: UpdateUserDto) => void;
+  onSubmit: () => void;
   onCancel: () => void;
 }
 
 const { ACTIVE, INACTIVE } = EUserStatuses;
 
 export const UpdateUserForm: FC<Props> = ({
-  data: { firstName, lastName, role, phone, isActive },
+  data: { firstName, lastName, role, phone, isActive, id },
   onCancel,
   onSubmit,
 }) => {
+  const { mutateAsync: updateUser } = useUpdateUserMutation();
+
   const initialValues: UpdateUserDto = {
     firstName,
     lastName,
@@ -30,13 +33,18 @@ export const UpdateUserForm: FC<Props> = ({
     isActive,
   };
 
+  const handleOnSubmit = async (userData: UpdateUserDto) => {
+    await updateUser({ id, userData });
+    onSubmit();
+  };
+
   return (
     <Stack direction="column" spacing={2}>
       <Formik
         initialValues={initialValues}
         enableReinitialize
         validationSchema={updateUserValidationSchema}
-        onSubmit={onSubmit}
+        onSubmit={handleOnSubmit}
       >
         {({ values, touched, errors, setFieldValue }) => (
           <Form>
@@ -84,12 +92,12 @@ export const UpdateUserForm: FC<Props> = ({
                 options={Object.values(EUserStatuses)}
                 value={values.isActive ? ACTIVE : INACTIVE}
                 onChange={(_, newValue) => {
-                  setFieldValue("status", newValue);
+                  setFieldValue("isActive", newValue === ACTIVE);
                 }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    name="status"
+                    name="isActive"
                     label="Status"
                     error={Boolean(touched.isActive && errors.isActive)}
                   />

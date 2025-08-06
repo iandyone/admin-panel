@@ -4,13 +4,12 @@ import { Button, TableCell, TableRow, TableRowProps } from "@mui/material";
 import Image from "next/image";
 import { FC, useState } from "react";
 
-import { updateUserAction } from "@/actions";
 import { FormModalWrapper } from "@/components/form-modal-wrapper";
 import { UpdateOrderForm } from "@/forms/update-order";
 import { UpdateUserForm } from "@/forms/update-user";
 import { ORDERS_DATA } from "@/mocks";
 import { OrderData, User } from "@/types";
-import { EUserStatuses, UpdateUserDto } from "@/types/user";
+import { EUserStatuses } from "@/types/user";
 import { isOrderData, isUserData } from "@/utils/guards";
 
 interface Props extends TableRowProps {
@@ -30,18 +29,8 @@ export const TableRowItem: FC<Props> = ({ data, ...rowProps }) => {
     setIsOpen(true);
   };
 
-  const onClose = () => setIsOpen(false);
-
-  const handleOnCancel = () => {
-    onClose();
-  };
-  const handleOnSubmit = () => {
-    onClose();
-  };
-
-  const handleOnSubmitUpdateUser = (userData: UpdateUserDto) => {
-    updateUserAction({ id: data.id, userData });
-    onClose();
+  const handleOnCloseModal = () => {
+    setIsOpen(false);
   };
 
   return (
@@ -72,22 +61,22 @@ export const TableRowItem: FC<Props> = ({ data, ...rowProps }) => {
 
       <FormModalWrapper
         open={isOpen}
-        onClose={onClose}
+        onClose={handleOnCloseModal}
         title={`Update ${isOrderModal ? "order" : `user`} #${data.id}`}
       >
         {isOrderModal && (
           <UpdateOrderForm
             data={data}
-            onCancel={handleOnCancel}
-            onSubmit={handleOnSubmit}
+            onCancel={handleOnCloseModal}
+            onSubmit={handleOnCloseModal}
             orderItems={Array.from(orderItems)}
           />
         )}
         {isUserModal && (
           <UpdateUserForm
             data={data}
-            onCancel={handleOnCancel}
-            onSubmit={handleOnSubmitUpdateUser}
+            onCancel={handleOnCloseModal}
+            onSubmit={handleOnCloseModal}
           />
         )}
       </FormModalWrapper>

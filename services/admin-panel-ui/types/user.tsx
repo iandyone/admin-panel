@@ -7,7 +7,6 @@ export interface User {
   lastActivity: number | string;
   orders: number;
   isActive?: boolean;
-  // status?: EUserStatuses;
 }
 
 export enum EUserRoles {
