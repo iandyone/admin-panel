@@ -6,3 +6,10 @@ export const $axios = axios.create({
     'Content-Type': 'application/json',
   },
 })
+
+export const $axios_server = axios.create({
+  baseURL: process.env.API_BASE_PATH,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})

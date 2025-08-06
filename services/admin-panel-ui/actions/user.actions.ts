@@ -2,7 +2,7 @@
 
 import { revalidateTag } from 'next/cache';
 
-import { $axios } from '@/configs';
+import { $axios_server } from '@/configs';
 import { FetchTags } from '@/constants';
 import { DEFAULT_ROWS_PER_PAGE, START_PAGE } from '@/constants/table';
 import { UsersFilter, UsersResponse } from '@/types';
@@ -17,7 +17,7 @@ const API_BASE_PATH = process.env.NEXT_PUBLIC_API_BASE_PATH;
 
 export const getUsers = async (page = START_PAGE, perPage = DEFAULT_ROWS_PER_PAGE, filters?: UsersFilter) => {
   try {
-    const response = await $axios.get<UsersResponse>(`/users`, {
+    const response = await $axios_server.get<UsersResponse>(`/users`, {
       params: {
         page,
         perPage,
