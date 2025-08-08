@@ -31,62 +31,66 @@ export const USERS: Array<
 
 export const PRODUCTS: Array<Prisma.ProductCreateInput> = [
   // APPETIZERS
-  { name: 'Draniki (Potato Pancakes)', category: 'APPETIZERS', price: 6.5 },
+  { name: 'Draniki (Potato Pancakes)', category: 'APPETIZERS', amount: 6.5 },
   {
     name: 'Kolduny (Meat-Stuffed Dumplings)',
     category: 'APPETIZERS',
-    price: 7.0,
+    amount: 7.0,
   },
   {
     name: 'Syrniki (Cottage Cheese Fritters)',
     category: 'APPETIZERS',
-    price: 5.75,
+    amount: 5.75,
   },
   {
     name: 'Zrazy (Meat Roll with Mushroom Filling)',
     category: 'APPETIZERS',
-    price: 8.25,
+    amount: 8.25,
   },
 
   // SOUPS
-  { name: 'Borshch (Beet Soup)', category: 'SOUPS', price: 6.75 },
-  { name: 'Krupnik (Barley Soup)', category: 'SOUPS', price: 6.25 },
-  { name: 'Kapusnyak (Cabbage Soup)', category: 'SOUPS', price: 5.99 },
-  { name: 'Okroshka (Cold Summer Soup)', category: 'SOUPS', price: 5.5 },
+  { name: 'Borshch (Beet Soup)', category: 'SOUPS', amount: 6.75 },
+  { name: 'Krupnik (Barley Soup)', category: 'SOUPS', amount: 6.25 },
+  { name: 'Kapusnyak (Cabbage Soup)', category: 'SOUPS', amount: 6.0 },
+  { name: 'Okroshka (Cold Summer Soup)', category: 'SOUPS', amount: 5.5 },
 
   // SALADS
-  { name: 'Olivier Salad', category: 'SALADS', price: 7.5 },
-  { name: 'Vinaigrette Salad', category: 'SALADS', price: 6.5 },
-  { name: 'Beetroot Salad with Garlic', category: 'SALADS', price: 6.0 },
-  { name: 'Herring Under a Fur Coat (Shuba)', category: 'SALADS', price: 7.99 },
+  { name: 'Olivier Salad', category: 'SALADS', amount: 7.5 },
+  { name: 'Vinaigrette Salad', category: 'SALADS', amount: 6.5 },
+  { name: 'Beetroot Salad with Garlic', category: 'SALADS', amount: 6.0 },
+  {
+    name: 'Herring Under a Fur Coat (Shuba)',
+    category: 'SALADS',
+    amount: 7.99,
+  },
 
   // MAINS
-  { name: 'Machanka (Pork Stew)', category: 'MAINS', price: 14.0 },
-  { name: 'Draniki with Machanka', category: 'MAINS', price: 13.5 },
-  { name: 'Kabli (Potato-Stuffed Pancakes)', category: 'MAINS', price: 12.75 },
-  { name: 'Zhur (Savory Oat Porridge)', category: 'MAINS', price: 11.5 },
+  { name: 'Machanka (Pork Stew)', category: 'MAINS', amount: 14.0 },
+  { name: 'Draniki with Machanka', category: 'MAINS', amount: 13.5 },
+  { name: 'Kabli (Potato-Stuffed Pancakes)', category: 'MAINS', amount: 12.75 },
+  { name: 'Zhur (Savory Oat Porridge)', category: 'MAINS', amount: 11.5 },
 
   // DESSERTS
-  { name: 'Medovik (Honey Cake)', category: 'DESSERTS', price: 6.5 },
+  { name: 'Medovik (Honey Cake)', category: 'DESSERTS', amount: 6.5 },
   {
     name: 'Klittenki (Quark Dumplings with Plum)',
     category: 'DESSERTS',
-    price: 7.25,
+    amount: 7.25,
   },
-  { name: 'Chornitsa (Blueberry Kissel)', category: 'DESSERTS', price: 5.99 },
-  { name: 'Zefir (Light Fruit Confection)', category: 'DESSERTS', price: 6.0 },
+  { name: 'Chornitsa (Blueberry Kissel)', category: 'DESSERTS', amount: 5.99 },
+  { name: 'Zefir (Light Fruit Confection)', category: 'DESSERTS', amount: 6.0 },
 
   // DRINKS
-  { name: 'Kvass', category: 'DRINKS', price: 3.5 },
-  { name: 'Kompot', category: 'DRINKS', price: 3.0 },
-  { name: 'Kisel', category: 'DRINKS', price: 2.75 },
-  { name: 'Berry Mors', category: 'DRINKS', price: 3.25 },
+  { name: 'Kvass', category: 'DRINKS', amount: 3.5 },
+  { name: 'Kompot', category: 'DRINKS', amount: 3.0 },
+  { name: 'Kisel', category: 'DRINKS', amount: 2.75 },
+  { name: 'Berry Mors', category: 'DRINKS', amount: 3.25 },
 
   // ALCOHOL
-  { name: 'Krambambulya (Spiced Mead)', category: 'ALCOHOL', price: 8.5 },
-  { name: 'Medovukha (Honey Mead)', category: 'ALCOHOL', price: 9.0 },
-  { name: 'Belarusian Vodka', category: 'ALCOHOL', price: 12.0 },
-  { name: 'Craft Beer (Local)', category: 'ALCOHOL', price: 7.5 },
+  { name: 'Krambambulya (Spiced Mead)', category: 'ALCOHOL', amount: 8.5 },
+  { name: 'Medovukha (Honey Mead)', category: 'ALCOHOL', amount: 9.0 },
+  { name: 'Belarusian Vodka', category: 'ALCOHOL', amount: 12.0 },
+  { name: 'Craft Beer (Local)', category: 'ALCOHOL', amount: 7.5 },
 ];
 
 export const ORDERS: Array<Prisma.OrderCreateInput & { productIds: number[] }> =

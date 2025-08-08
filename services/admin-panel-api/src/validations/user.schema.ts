@@ -27,7 +27,7 @@ export const updateUserSchema = joi.object({
   role: userRoleSchema.optional(),
 });
 
-export const findAllUserSchema = joi.object({
+export const findAllUsersSchema = joi.object({
   page: pageSchema,
   perPage: pageSchema,
   id: idSchema.optional(),

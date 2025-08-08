@@ -18,7 +18,7 @@ import { UsersService } from './users.service';
 import { JoiValidationPipe } from '../../pipes/joi-validation.pipe';
 import {
   createUserSchema,
-  findAllUserSchema,
+  findAllUsersSchema,
   idSchema,
   updateUserSchema,
 } from '../../validations';
@@ -38,7 +38,7 @@ export class UsersController {
   }
 
   @Get()
-  @UsePipes(new JoiValidationPipe(findAllUserSchema))
+  @UsePipes(new JoiValidationPipe(findAllUsersSchema))
   async findAll(@Query() query: UsersFindAllProps) {
     return await this.usersService.findAll(query);
   }

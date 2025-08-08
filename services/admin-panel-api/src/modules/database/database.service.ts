@@ -10,9 +10,9 @@ import bcrypt from 'bcrypt';
 import { PrismaService } from './prisma.service';
 
 import { DEFAULT_PER_PAGE, START_PAGE } from '../../constants';
-import { PaginationProps } from '../../types';
 import { filterNullValues, getOrderItemsFromProductsIds } from '../../utils';
 import { CreateOrderDto } from '../orders/dto/create-order.dto';
+import { FindAllOrdersDto } from '../orders/dto/find-all-orders.dto';
 import { UpdateOrderDto } from '../orders/dto/update-order.dto';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { FindAllUsersDto } from '../users/dto/find-all-users.dto';
@@ -146,21 +146,150 @@ export class DatabaseService {
         ...updateUserData,
         Credentials: { update: { role: $Enums.Role[role] } },
       },
+      omit: {
+        updatedAt: true,
+        createdAt: true,
+      },
     });
 
-    return updatedUser.id;
+    return updatedUser;
   }
 
   async getOrders({
     page = START_PAGE,
     perPage = DEFAULT_PER_PAGE,
-  }: PaginationProps) {
-    const orders = await this.prisma.order.findMany({
-      skip: page * perPage,
-      take: perPage,
-    });
+    ...filters
+  }: FindAllOrdersDto) {
+    const ordersFilter = Object.keys(filters).reduce((acc, key) => {
+      const filterValue = filters[key];
+      const filter =
+        typeof filterValue === 'number'
+          ? { equals: filterValue }
+          : { startsWith: filterValue, mode: 'insensitive' };
 
-    return orders;
+      if (key === 'status') {
+        return {
+          ...acc,
+          status: {
+            equals: $Enums.OrderStatus[filters.status.toUpperCase()],
+          },
+        };
+      }
+
+      if (key === 'manager') {
+        return {
+          ...acc,
+          Manager: {
+            is: {
+              firstName: filter,
+            },
+          },
+        };
+      }
+
+      if (key === 'dateFromCreated' || key === 'dateToCreated') {
+        const filterFrom = filters.dateFromCreated
+          ? { gte: new Date(filters.dateFromCreated) }
+          : {};
+        const filterTo = filters.dateToCreated
+          ? { lte: new Date(filters.dateToCreated) }
+          : {};
+
+        return {
+          ...acc,
+          createdAt: {
+            ...filterFrom,
+            ...filterTo,
+          },
+        };
+      }
+
+      if (key === 'dateFromUpdated' || key === 'dateToUpdated') {
+        const filterFrom = filters.dateFromUpdated
+          ? { gte: new Date(filters.dateFromUpdated) }
+          : {};
+        const filterTo = filters.dateToUpdated
+          ? { lte: new Date(filters.dateToUpdated) }
+          : {};
+
+        return {
+          ...acc,
+          updatedAt: {
+            ...filterFrom,
+            ...filterTo,
+          },
+        };
+      }
+
+      if (key === 'deliveryman') {
+        return {
+          ...acc,
+          Deliveryman: {
+            firstName: filter,
+          },
+        };
+      }
+
+      if (key === 'order') {
+        return {
+          ...acc,
+          OrderItems: {
+            some: {
+              Product: {
+                name: filter,
+              },
+            },
+          },
+        };
+      }
+
+      return {
+        ...acc,
+        [key]: filter,
+      };
+    }, {});
+
+    const [orders, total] = await this.prisma.$transaction([
+      this.prisma.order.findMany({
+        where: ordersFilter,
+        skip: page * perPage,
+        take: perPage,
+        orderBy: { id: 'asc' },
+        include: {
+          OrderItems: {
+            select: {
+              Product: {
+                select: {
+                  name: true,
+                  amount: true,
+                },
+              },
+            },
+          },
+          Manager: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+            },
+          },
+          Deliveryman: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+            },
+          },
+        },
+      }),
+
+      this.prisma.order.count({ where: ordersFilter }),
+    ]);
+
+    return {
+      orders,
+      total: Math.ceil(total),
+    };
   }
 
   async getOrder(id: number) {

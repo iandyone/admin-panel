@@ -15,11 +15,12 @@ import { Order } from '@prisma/client';
 import { OrdersService } from './orders.service';
 
 import { JoiValidationPipe } from '../../pipes/joi-validation.pipe';
-import { OrderData } from '../../types';
+import { OrderData, OrdersFindAllProps } from '../../types';
 import {
   idSchema,
   createOrderSchema,
   updateOrderSchema,
+  findAllOrdersSchema,
 } from '../../validations';
 import { UseId } from '../decorators';
 
@@ -28,11 +29,9 @@ export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
   @Get()
-  findAll(
-    @Query('page', ParseIntPipe) page: number,
-    @Query('perPage', ParseIntPipe) perPage: number,
-  ) {
-    return this.ordersService.findAll({ page, perPage });
+  @UsePipes(new JoiValidationPipe(findAllOrdersSchema))
+  findAll(@Query() query: OrdersFindAllProps) {
+    return this.ordersService.findAll(query);
   }
 
   @Get(':id')

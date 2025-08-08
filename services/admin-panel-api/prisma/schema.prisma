@@ -23,9 +23,7 @@ model User {
   id        Int    @id @unique @default(autoincrement())
   firstName String @map("first_name")
   lastName  String @map("last_name")
-
   phone String @unique
-
   isActive     Boolean   @default(true) @map("is_active")
   lastActivity DateTime? @map("last_activity")
   updatedAt    DateTime? @updatedAt() @map("updated_at")
@@ -45,8 +43,9 @@ model Order {
   customer      String
   createdAt     DateTime?   @default(now()) @map("created_at")
   updatedAt     DateTime?   @updatedAt() @map("updated_at")
-  managerId     Int?         @map("manager_id")
+  managerId     Int?        @map("manager_id")
   deliverymanId Int?        @map("deliveryman_id")
+  totalAmount   Decimal     @default(0) @db.Decimal(14, 2)
   status        OrderStatus @default(CREATED)
 
   Manager     User?         @relation("ManagerOrders", fields: [managerId], references: [id])
@@ -57,12 +56,13 @@ model Order {
 }
 
 model Product {
-  id        Int             @id @unique @default(autoincrement())
-  name      String          @unique
-  price     Float
-  category  ProductCategory
-  createdAt DateTime?       @default(now()) @map("created_at")
-  updatedAt DateTime?       @updatedAt() @map("updated_at")
+  id       Int             @id @unique @default(autoincrement())
+  name     String          @unique
+  amount   Decimal         @default(0) @db.Decimal(14, 2)
+  category ProductCategory
+
+  createdAt DateTime? @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt() @map("updated_at")
 
   OrderItems OrdersItems[]
 
@@ -73,6 +73,9 @@ model OrdersItems {
   id        Int @id @default(autoincrement())
   orderId   Int @map("order_id")
   productId Int @map("product_id")
+
+  quantity Int     @default(1)
+  amount   Decimal @default(0) @db.Decimal(14, 2)
 
   Order   Order?   @relation(fields: [orderId], references: [id])
   Product Product? @relation(fields: [productId], references: [id])
