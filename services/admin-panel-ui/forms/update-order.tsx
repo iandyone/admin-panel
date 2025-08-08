@@ -5,12 +5,12 @@ import { Form, Formik } from "formik";
 import { FC } from "react";
 
 import { InputField } from "@/components/ui/input-field";
-import { OrderData } from "@/types";
+import { Order } from "@/types";
 import { EOrderStatuses } from "@/types/orders";
 import { editOrderValidationSchema } from "@/validations";
 
 interface Props {
-  data: OrderData;
+  data: Order;
   orderItems: string[];
   onSubmit: () => void;
   onCancel: () => void;
@@ -22,7 +22,7 @@ export const UpdateOrderForm: FC<Props> = ({
   onCancel,
   onSubmit,
 }) => {
-  const initialValues: Partial<OrderData> = {
+  const initialValues: Partial<Order> = {
     order,
     customer,
     location,

@@ -6,7 +6,6 @@ import {
 } from "@tanstack/react-query";
 import { Suspense } from "react";
 
-// import { getUsers } from "@/actions";
 import { prefetchUsers } from "@/actions";
 import { UsersTable } from "@/components/users-table";
 import { DEFAULT_ROWS_PER_PAGE, FetchTags, START_PAGE, USERS_DEFAULT_FILTER } from "@/constants";

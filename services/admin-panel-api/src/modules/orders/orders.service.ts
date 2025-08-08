@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { filterNullValues } from 'src/utils';
 
 import { CreateOrderDto } from './dto/create-order.dto';
 import { FindAllOrdersDto } from './dto/find-all-orders.dto';
@@ -12,6 +11,7 @@ import {
   OrdersFindAllProps,
   OrdersResponse,
 } from '../../types';
+import { filterNullValues } from '../../utils';
 import { DatabaseService } from '../database/database.service';
 
 @Injectable()

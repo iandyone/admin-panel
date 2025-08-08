@@ -6,34 +6,22 @@ import { FC, useMemo } from "react";
 import { DataGrid } from "@/components/data-grid";
 import { ordersTableHeaderConfig } from "@/configs";
 import { ORDERS_SEARCH_FILTERS, ROWS_PER_PAGE_OPTIONS } from "@/constants";
-import { useAppSelector, useOrdersTable, usePagination } from "@/hooks";
-import { selectOrders } from "@/store";
-import { DataGridConfig, OrderData } from "@/types";
-import { OrderFilters } from "@/types/orders";
-import {
-  getFilteredOrdersData,
-  getFormattedDate,
-  getSortedOrdersData,
-} from "@/utils";
+import { useOrdersTable, usePagination } from "@/hooks";
+import { useGetOrdersQuery } from "@/query";
+import { DataGridConfig, Order, OrderFilter } from "@/types";
+import { getFormattedDate, getSortedOrdersData } from "@/utils";
 
 import styles from "./styles.module.css";
 
 export const OrdersTable: FC = () => {
-  // TODO: получение отфильтрованного списка на стороне сервера
   const params = useSearchParams();
-  const orders = useAppSelector(selectOrders);
 
-  const filters: OrderFilters = ORDERS_SEARCH_FILTERS.reduce(
+  const filters: OrderFilter = ORDERS_SEARCH_FILTERS.reduce(
     (acc, filterKey) => ({
       ...acc,
       [filterKey]: params.get(filterKey),
     }),
-    {} as OrderFilters,
-  );
-
-  const ordersData = useMemo(
-    () => getFilteredOrdersData(orders, filters),
-    [orders, filters],
+    {} as OrderFilter,
   );
 
   const { sortOrder, sortKey, headers } = useOrdersTable({
@@ -41,35 +29,50 @@ export const OrdersTable: FC = () => {
   });
 
   const { page, rowsPerPage, handleOnChangePage, handleChangeRowsPerPage } =
-    usePagination( );
+    usePagination();
+
+  const { data: ordersData, isSuccess: isOrdersFetched } = useGetOrdersQuery(
+    page,
+    rowsPerPage,
+    filters,
+  );
 
   const data = useMemo(() => {
-    const visibleRows = ordersData
-      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-      .map(({ date, manager, status, ...rowData }) => {
-        const result: OrderData = {
-          ...rowData,
-          date: getFormattedDate(date),
-          manager,
-          status,
+    if (isOrdersFetched) {
+      const visibleRows = ordersData?.orders.map((order) => {
+        const result: Order = {
+          id: order.id,
+          order: order.order.join(", "),
+          totalAmount: order.totalAmount,
+          location: order.location,
+          customer: order.customer,
+          createdAt: getFormattedDate(order.createdAt.toString()),
+          updatedAt: getFormattedDate(order.updatedAt.toString()),
+          manager: order.manager,
+          deliveryman: order.deliveryman,
+          status: order.status.toLowerCase(),
         };
 
         return result;
       });
 
-    return sortOrder
-      ? getSortedOrdersData(visibleRows, sortKey, sortOrder)
-      : visibleRows;
-  }, [ordersData, sortKey, sortOrder, page, rowsPerPage]);
+      return sortOrder
+        ? getSortedOrdersData(visibleRows, sortKey, sortOrder)
+        : visibleRows;
+    }
+
+    return [];
+  }, [ordersData, sortKey, sortOrder, isOrdersFetched]);
 
   const config: DataGridConfig = useMemo(
     () => ({
+      width: 2000,
       headers,
       data,
       pagination: {
         page,
         rowsPerPage,
-        count: ordersData.length,
+        count: ordersData?.total || 0,
         onPageChange: handleOnChangePage,
         onRowsPerPageChange: handleChangeRowsPerPage,
         rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,

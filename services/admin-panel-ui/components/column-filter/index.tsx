@@ -5,13 +5,13 @@ import { useSearchParams } from "next/navigation";
 import { FC, MouseEvent, useCallback, useMemo, useState } from "react";
 
 import { FilterIcon } from "@/svg/filter-icon";
-import { OrderFilters, UsersFilter } from "@/types/orders";
+import { OrderFilter, UsersFilter } from "@/types/orders";
 import { getModalByLabelMap, getModalOptionsByLabel } from "@/utils";
 
 interface Props {
   id: string;
   onClick?: () => void;
-  dataKey: keyof OrderFilters | keyof UsersFilter;
+  dataKey: keyof OrderFilter | keyof UsersFilter;
   title: string;
 }
 

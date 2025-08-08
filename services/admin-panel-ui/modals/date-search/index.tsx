@@ -13,18 +13,28 @@ export interface AutocompleteProps {
   options: string[];
 }
 
+const searchKeyPrefixes: Record<string, string> = {
+  createdAt: "Created",
+  updatedAt: "Updated",
+};
+
 export const DateSearchModal: FC<AutocompleteProps> = ({
+  dataKey,
   onClickControls,
   setIsActive,
 }) => {
+  const searchKeyPrefix = searchKeyPrefixes[dataKey] || "";
+  const dateToKey = `dateTo${searchKeyPrefix}`;
+  const dateFromKey = `dateFrom${searchKeyPrefix}`;
+
   const { setSearchParam, updateUrlWithSearchParams, searchParams } =
     useAppSeatchParams();
 
   const [valueTo, setValueTo] = useState<number | null>(
-    Number(searchParams.get("dateTo")) || null,
+    Number(searchParams.get(dateToKey)) || null,
   );
   const [valueFrom, setValueFrom] = useState<number | null>(
-    Number(searchParams.get("dateFrom")) || null,
+    Number(searchParams.get(dateFromKey)) || null,
   );
 
   const handleOnChangeDateFrom = (value: PickerValue) => {
@@ -36,8 +46,8 @@ export const DateSearchModal: FC<AutocompleteProps> = ({
   };
 
   const handleOnClickApplyButton = () => {
-    setSearchParam("dateTo", valueTo ? valueTo.toString() : "");
-    setSearchParam("dateFrom", valueFrom ? valueFrom.toString() : "");
+    setSearchParam(dateToKey, valueTo ? valueTo.toString() : "");
+    setSearchParam(dateFromKey, valueFrom ? valueFrom.toString() : "");
 
     updateUrlWithSearchParams();
     setIsActive(Boolean(valueFrom) || Boolean(valueTo));
@@ -47,8 +57,8 @@ export const DateSearchModal: FC<AutocompleteProps> = ({
   const handleOnClickResetButton = () => {
     setValueFrom(null);
     setValueTo(null);
-    setSearchParam("dateTo", "");
-    setSearchParam("dateFrom", "");
+    setSearchParam(dateToKey, "");
+    setSearchParam(dateFromKey, "");
 
     updateUrlWithSearchParams();
     setIsActive(false);

@@ -8,12 +8,12 @@ import { FormModalWrapper } from "@/components/form-modal-wrapper";
 import { UpdateOrderForm } from "@/forms/update-order";
 import { UpdateUserForm } from "@/forms/update-user";
 import { ORDERS_DATA } from "@/mocks";
-import { OrderData, User } from "@/types";
+import { Order, User } from "@/types";
 import { EUserStatuses } from "@/types/user";
 import { isOrderData, isUserData } from "@/utils/guards";
 
 interface Props extends TableRowProps {
-  data: OrderData | User;
+  data: Order | User;
 }
 
 const { ACTIVE, INACTIVE } = EUserStatuses;

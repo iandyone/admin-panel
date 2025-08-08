@@ -17,13 +17,13 @@ interface Props {
   tableClassName?: string;
 }
 export const DataGrid: FC<Props> = ({
-  config: { data, headers, pagination },
+  config: { data, headers, pagination, width },
   tableClassName,
 }) => {
   return (
     <Box>
       <TableContainer className={tableClassName}>
-        <Table stickyHeader aria-label="sticky table">
+        <Table stickyHeader aria-label="sticky table" sx={{ width }}>
           <TableHead>
             <TableRow>{headers}</TableRow>
           </TableHead>

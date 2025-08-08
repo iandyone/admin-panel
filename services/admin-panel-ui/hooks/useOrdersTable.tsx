@@ -10,7 +10,7 @@ import { useCallback, useMemo, useState } from "react";
 
 import { ColumnFilter } from "@/components/column-filter";
 import { OrdersTableHeaderConfig, SortOrder } from "@/types";
-import { OrderFilters } from "@/types/orders";
+import { OrderFilter } from "@/types/orders";
 
 interface Props {
   config: OrdersTableHeaderConfig;
@@ -21,9 +21,9 @@ const DEFAULT_ORDER: SortOrder = "asc";
 
 const ACTION_COLUMN_CONFIG = {
   title: "",
-  key: "" as keyof OrderFilters,
+  key: "" as keyof OrderFilter,
   withFilter: false,
-  width: "5%",
+  width: "1%",
   hideSortIcon: true,
 };
 
@@ -92,7 +92,7 @@ export const useOrdersTable = ({ config, withActionColumn = true }: Props) => {
                 <ColumnFilter
                   id="orders-table-filter"
                   title={title}
-                  dataKey={key as keyof OrderFilters}
+                  dataKey={key as keyof OrderFilter}
                 />
               )}
             </Stack>

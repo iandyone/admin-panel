@@ -7,7 +7,7 @@ import { DataGrid } from "@/components/data-grid";
 import { usersTableHeaderConfig } from "@/configs";
 import { ROWS_PER_PAGE_OPTIONS, USERS_SEARCH_FILTERS } from "@/constants";
 import { usePagination, useUsersTable } from "@/hooks";
-import { useGetUsersQuery } from '@/query';
+import { useGetUsersQuery } from "@/query";
 import { DataGridConfig, User } from "@/types";
 import { UsersFilter } from "@/types/orders";
 import { getFormattedDate, getSortedOrdersData } from "@/utils";
@@ -27,7 +27,7 @@ export const UsersTable: FC = () => {
 
   const { page, rowsPerPage, handleOnChangePage, handleChangeRowsPerPage } =
     usePagination();
-    
+
   const { data: usersFetchData, isSuccess: isUsersFetched } = useGetUsersQuery(
     page,
     rowsPerPage,

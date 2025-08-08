@@ -5,7 +5,7 @@ import { Form, Formik } from "formik";
 import { FC } from "react";
 
 import { InputField } from "@/components/ui/input-field";
-import { OrderData } from "@/types";
+import { Order } from "@/types";
 import { EOrderStatuses } from "@/types/orders";
 import { addOrderValidationSchema } from "@/validations";
 
@@ -16,7 +16,7 @@ interface Props {
 }
 
 export const AddOrderForm: FC<Props> = ({ orderItems, onCancel, onSubmit }) => {
-  const initialValues: Partial<OrderData> = {
+  const initialValues: Partial<Order> = {
     order: "",
     customer: "",
     location: "",

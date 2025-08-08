@@ -1,18 +1,20 @@
 import { OrdersTableHeaderConfig, UsersTableHeaderConfig } from '@/types';
 
 export const ordersTableHeaderConfig: OrdersTableHeaderConfig = [
-  {title: 'Id', key: "id", width: "5%", },
-  {title: 'Order', key: "order", width: "30%" },
-  {title: 'Price', key: "price", width: "7%" },
-  {title: 'Location', key: "location", width: "15%" },
-  {title: 'Customer', key: "customer", width: "10%" },
-  {title: 'Date', key: "date", width: "6%" },
-  {title: 'Manager', key: "manager", width: "15%" },
-  {title: 'Status', key: "status", width: "15%" },
+  {title: 'Id', key: "id", width: "1%", },
+  {title: 'Order', key: "order", width: "20%" },
+  {title: 'Amount', key: "totalAmount", width: "1%" },
+  {title: 'Location', key: "location", width: "10%" },
+  {title: 'Customer', key: "customer", width: "5%" },
+  {title: 'Created At', key: "createdAt", width: "7%" },
+  {title: 'Updated At', key: "updatedAt", width: "7%" },
+  {title: 'Manager', key: "manager", width: "10%" },
+  {title: 'Deliveryman', key: "deliveryman", width: "10%" },
+  {title: 'Status', key: "status", width: "5%" },
 ];
 
 export const usersTableHeaderConfig: UsersTableHeaderConfig = [
-  { title: 'Id', key: "id", width: "5%" },
+  { title: 'Id', key: "id", width: "1%" },
   { title: 'First Name', key: "firstName", width: "10%" },
   { title: 'Last Name', key: "lastName", width: "10%" },
   { title: 'Phone', key: "phone", width: "10%" },

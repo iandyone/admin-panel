@@ -1,6 +1,6 @@
 import { Dispatch, FC, JSX, SetStateAction } from "react";
 
-import { OrderData, OrderFilters, UsersFilter } from "@/types/orders";
+import { Order, OrderFilter, UsersFilter } from "@/types/orders";
 import { User } from "@/types/user";
 
 export type DataGridType = "orders" | "users";
@@ -14,7 +14,7 @@ export interface HeaderData {
 
 export type OrdersTableHeaderConfig = Array<
   HeaderData & {
-    key: keyof OrderFilters | "";
+    key: keyof OrderFilter | "";
   }
 >;
 
@@ -26,7 +26,8 @@ export type UsersTableHeaderConfig = Array<
 
 export interface DataGridConfig {
   headers: JSX.Element[];
-  data: User[] | OrderData[];
+  data: User[] | Order[];
+  width?: string | number;
   pagination?: {
     page: number;
     count: number;

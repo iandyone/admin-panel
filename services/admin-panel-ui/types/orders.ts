@@ -1,14 +1,18 @@
 export type SortOrder = "desc" | "asc";
 
-export interface OrderData {
-  id: number;
-  date: number | string;
-  customer: string;
-  manager: string;
-  location: string;
-  price: string;
-  status: string;
-  order: string;
+export interface Order {
+  id: number,
+  order: string,
+  totalAmount: string,
+  location: string,
+  customer: string,
+  createdAt: string,
+  updatedAt: string,
+  manager: string,
+  managerId?: number,
+  deliveryman?: string,
+  deliverymanId?: number,
+  status: string
 }
 
 export enum EOrderStatuses {
@@ -21,10 +25,10 @@ export enum EOrderStatuses {
   REFUNDED = "Refunded",
 }
 
-export interface OrderFilters {
+export interface OrderFilter {
   id: string;
   order: string;
-  price: string;
+  totalAmount: string;
   location: string;
   customer: string;
   date: string;
@@ -32,6 +36,9 @@ export interface OrderFilters {
   dateTo: string | number;
   manager: string;
   status: string;
+  createdAt: string;
+  updatedAt: string;
+  deliveryman: string;
 }
 
 export interface UsersFilter {
