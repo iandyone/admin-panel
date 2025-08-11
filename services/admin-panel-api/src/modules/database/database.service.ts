@@ -1,10 +1,6 @@
-import {
-  HttpStatus,
-  HttpException,
-  Injectable,
-  BadRequestException,
-} from '@nestjs/common';
-import { $Enums, OrderStatus, Prisma, Role } from '@prisma/client';
+import { HttpStatus, HttpException, Injectable } from '@nestjs/common';
+import { $Enums, OrderStatus } from '@prisma/client';
+import { Decimal } from '@prisma/client/runtime/library';
 import bcrypt from 'bcrypt';
 
 import { PrismaService } from './prisma.service';
@@ -353,56 +349,94 @@ export class DatabaseService {
       status,
     } = filterNullValues<UpdateOrderDto>(order);
 
-    const data: Prisma.OrderUpdateInput = {};
+    const products = await this.prisma.product.findMany();
+    const orderProducts = products.filter(({ id }) => productsIds.includes(id));
 
-    const productsData = getOrderItemsFromProductsIds(productsIds);
-
-    if (location) data.location = location;
-
-    if (customer) data.customer = customer;
-
-    if (status) data.status = OrderStatus[status];
-
-    if (deliverymanId) {
-      const newDeliveryman = await this.prisma.credentials.findUnique({
-        where: { id: deliverymanId, role: Role.DELIVERY },
-      });
-
-      if (!newDeliveryman) {
-        return new BadRequestException({
-          message: `Deliveryman with id ${deliverymanId} is not exists`,
-        });
-      }
-
-      data.Deliveryman = { connect: { id: newDeliveryman.id } };
-    }
-
-    if (managerId) {
-      const newManager = await this.prisma.credentials.findUnique({
-        where: { id: deliverymanId, role: Role.MANAGER },
-      });
-
-      if (!newManager) {
-        return new BadRequestException({
-          message: `Manager with id ${managerId} is not exists`,
-        });
-      }
-
-      data.Manager = { connect: { id: newManager.id } };
-    }
-
-    if (productsIds) {
-      data.OrderItems = { createMany: { data: productsData } };
-    }
+    const orderItemsData = orderProducts.map(({ id, amount }) => ({
+      orderId,
+      productId: id,
+      quantity: 1,
+      amount: amount,
+    }));
 
     const updatedOrderData = await this.prisma.$transaction([
       this.prisma.ordersItems.deleteMany({ where: { orderId } }),
       this.prisma.order.update({
         where: { id: orderId },
-        data: { ...data },
+        data: {
+          location,
+          customer,
+          status: $Enums.OrderStatus[status],
+          Manager: {
+            connect: { id: managerId },
+          },
+          Deliveryman: {
+            connect: {
+              id: deliverymanId,
+            },
+          },
+          totalAmount: orderProducts.reduce(
+            (acc, { amount }) => amount.plus(acc),
+            new Decimal(0),
+          ),
+        },
+      }),
+      this.prisma.ordersItems.createMany({
+        data: orderItemsData,
       }),
     ]);
 
     return updatedOrderData[1];
+  }
+
+  async getEmployees() {
+    const [managers, deliveryman] = await this.prisma.$transaction([
+      this.prisma.user.findMany({
+        where: {
+          Credentials: {
+            role: {
+              not: $Enums.Role.DELIVERY,
+            },
+          },
+        },
+
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          Credentials: {
+            select: {
+              role: true,
+            },
+          },
+        },
+      }),
+      this.prisma.user.findMany({
+        where: {
+          Credentials: {
+            role: $Enums.Role.DELIVERY,
+          },
+        },
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          Credentials: {
+            select: {
+              role: true,
+            },
+          },
+        },
+      }),
+    ]);
+
+    return {
+      managers,
+      deliveryman,
+    };
+  }
+
+  async getProducts() {
+    return await this.prisma.product.findMany();
   }
 }
