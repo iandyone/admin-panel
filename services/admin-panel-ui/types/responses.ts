@@ -16,15 +16,19 @@ export interface UpdateUserPayload {
   userData: UpdateUserDto;
 }
 
-export interface UpdateOrderPayload {
-  id: number,
+export interface CreateOrderPayload {
   customer: string;
   location: string;
-  deliverymanId?: number;
-  managerId: number;
+  productsIds: number[];
   status: EOrderStatuses;
-  productsIds: number[]
+  deliverymanId?: number;
+  managerId?: number;
 }
+
+export interface UpdateOrderPayload extends CreateOrderPayload {
+  id: number,
+}
+
 
 export interface EmployeeResponse {
   managers: Employee[];

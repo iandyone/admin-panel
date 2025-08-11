@@ -4,12 +4,9 @@ import { Button, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 
 import { FormModalWrapper } from "@/components/form-modal-wrapper";
-import { AddOrderForm } from "@/forms/add-order";
-import { ORDERS_DATA } from "@/mocks";
+import { CreateOrderForm } from "@/forms/create-order";
 
 export const OrdersHeader: FC = () => {
-  // TODO: получить список доступных для заказа блюд
-  const orderItems = new Set([...ORDERS_DATA.map(({ order }) => order)]);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOnClickAddButton = () => {
@@ -39,11 +36,7 @@ export const OrdersHeader: FC = () => {
         Add order
       </Button>
       <FormModalWrapper open={isOpen} onClose={onClose} title={`Add new order`}>
-        <AddOrderForm
-          onCancel={handleOnCancel}
-          onSubmit={handleOnSubmit}
-          orderItems={Array.from(orderItems)}
-        />
+        <CreateOrderForm onCancel={handleOnCancel} onSubmit={handleOnSubmit} />
       </FormModalWrapper>
     </Stack>
   );

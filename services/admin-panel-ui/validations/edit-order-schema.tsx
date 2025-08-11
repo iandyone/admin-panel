@@ -18,7 +18,7 @@ export const editOrderValidationSchema = yup.object({
   location: yup
     .string()
     .trim()
-    .min(4, getMinLengthErrorMessage(4))
+    .min(10, getMinLengthErrorMessage(10))
     .required(REQUIRED),
   status: yup
     .string()

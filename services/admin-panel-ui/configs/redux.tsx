@@ -1,12 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import { appSlice, ordersSlice, usersSlice } from "@/store";
+import { appSlice } from "@/store";
 
 export const store = configureStore({
   reducer: {
     [appSlice.name]: appSlice.reducer,
-    [ordersSlice.name]: ordersSlice.reducer,
-    [usersSlice.name]: usersSlice.reducer,
   },
 });
 

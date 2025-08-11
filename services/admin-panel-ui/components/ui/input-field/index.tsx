@@ -6,6 +6,7 @@ import { ErrorLabel } from "@/components/ui/error-label";
 
 interface Props {
   name: string;
+  disabled?: boolean;
   label?: string;
   type?: string;
   error: boolean;
@@ -17,6 +18,7 @@ export const InputField: FC<Props> = ({
   label,
   type,
   size = "small",
+  disabled,
   error,
 }) => {
   return (
@@ -26,6 +28,7 @@ export const InputField: FC<Props> = ({
         label={label ?? name}
         type={type}
         size={size}
+        disabled={disabled}
         as={TextField}
         error={error}
       />
