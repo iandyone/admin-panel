@@ -7,7 +7,6 @@ import { FC, useState } from "react";
 import { FormModalWrapper } from "@/components/form-modal-wrapper";
 import { UpdateOrderForm } from "@/forms/update-order";
 import { UpdateUserForm } from "@/forms/update-user";
-import { ORDERS_DATA } from "@/mocks";
 import { Order, User } from "@/types";
 import { EUserStatuses } from "@/types/user";
 import { isOrderData, isUserData } from "@/utils/guards";
@@ -22,8 +21,6 @@ export const TableRowItem: FC<Props> = ({ data, ...rowProps }) => {
   const [isOpen, setIsOpen] = useState(false);
   const isOrderModal = isOrderData(data);
   const isUserModal = isUserData(data);
-
-  const orderItems = new Set([...ORDERS_DATA.map(({ order }) => order)]);
 
   const handleOnClickEditButton = () => {
     setIsOpen(true);
@@ -69,7 +66,6 @@ export const TableRowItem: FC<Props> = ({ data, ...rowProps }) => {
             data={data}
             onCancel={handleOnCloseModal}
             onSubmit={handleOnCloseModal}
-            orderItems={Array.from(orderItems)}
           />
         )}
         {isUserModal && (

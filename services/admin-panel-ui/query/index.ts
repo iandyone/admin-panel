@@ -1,3 +1,6 @@
 export * from './useGetUsersQuery'
 export * from './useUpdateUserMutation'
 export * from './useGetOrdersQuery'
+export * from './useGetProductsQuery'
+export * from './useUpdateOrderMutation'
+export * from './useGetProductsQuery'

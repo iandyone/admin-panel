@@ -9,3 +9,5 @@ export {
   type OrdersTableHeaderConfig,
   type UsersTableHeaderConfig,
 } from "./table";
+
+export * from "./products";

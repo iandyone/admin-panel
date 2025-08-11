@@ -13,6 +13,8 @@ export enum ERoutes {
 export const FetchTags = {
   USERS: "users",
   ORDERS: "orders",
+  EMPLOYEE: 'employee',
+  PRODUCTS: 'products'
 };
 
 export const navigation: Navigation = [

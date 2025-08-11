@@ -1,19 +1,11 @@
 'use server'
 
-import { revalidateTag } from 'next/cache';
 
 import { $axios_server } from '@/configs';
-import { FetchTags, USERS_DEFAULT_FILTER } from '@/constants';
+import { USERS_DEFAULT_FILTER } from '@/constants';
 import { DEFAULT_ROWS_PER_PAGE, START_PAGE } from '@/constants/table';
-import { UsersResponse } from '@/types';
-import { UpdateUserDto } from '@/types/user';
+import { EmployeeResponse, UsersResponse } from '@/types';
 
-interface Props {
-  id: number;
-  userData: UpdateUserDto
-}
-
-const API_BASE_PATH = process.env.NEXT_PUBLIC_API_BASE_PATH;
 
 export const prefetchUsers = async (page = START_PAGE, perPage = DEFAULT_ROWS_PER_PAGE, filters = USERS_DEFAULT_FILTER) => {
   try {
@@ -38,32 +30,19 @@ export const prefetchUsers = async (page = START_PAGE, perPage = DEFAULT_ROWS_PE
 }
 
 
-export const updateUserAction = async ({ id, userData: { firstName, lastName, role, isActive, phone } }: Props) => {
-  const updatedUser = {
-    firstName,
-    lastName,
-    phone,
-    role: role.toUpperCase(),
-    isActive,
-  }
-
-
+export const prefetchEmployees = async () => {
   try {
-    const response = await fetch(`${API_BASE_PATH}/users/${id}`, {
-      method: 'PATCH',
-      body: JSON.stringify(updatedUser),
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    })
+    const response = await $axios_server.get<EmployeeResponse>('employee')
 
-    revalidateTag(FetchTags.USERS)
-
-    return response.json()
-
+    return response.data;
   } catch (error) {
-    return { error }
+    console.log({ error });
+
+    const nullResponse: EmployeeResponse = {
+      deliveryman: [],
+      managers: []
+    }
+
+    return nullResponse
   }
-
-
 }

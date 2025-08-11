@@ -5,6 +5,7 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 
+import { prefetchEmployees, prefetchProducts } from "@/actions";
 import { prefetchOrders } from "@/actions/orders.actions";
 import { OrdersHeader } from "@/components/orders-header";
 import { OrdersTable } from "@/components/orders-table";
@@ -15,18 +16,30 @@ import {
   START_PAGE,
 } from "@/constants";
 
+const { ORDERS, EMPLOYEE, PRODUCTS } = FetchTags;
+
 export default async function Page() {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
     queryKey: [
-      FetchTags.ORDERS,
+      ORDERS,
       START_PAGE,
       DEFAULT_ROWS_PER_PAGE,
       ORDERS_DEFAULT_FILTER,
     ],
     queryFn: async () =>
       await prefetchOrders(START_PAGE, DEFAULT_ROWS_PER_PAGE),
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: [EMPLOYEE],
+    queryFn: async () => prefetchEmployees(),
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: [PRODUCTS],
+    queryFn: async () => prefetchProducts(),
   });
 
   return (

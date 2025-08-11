@@ -24,3 +24,9 @@ export type UpdateUserDto = Pick<
   User,
   "firstName" | "lastName" | "role" | "isActive" | "phone"
 >;
+
+export interface Employee {
+  id: number;
+  name: string;
+  role: EUserRoles;
+}

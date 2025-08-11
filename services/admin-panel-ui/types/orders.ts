@@ -15,14 +15,15 @@ export interface Order {
   status: string
 }
 
-export enum EOrderStatuses {
-  COMPLETED = "Completed",
-  CANCELLED = "Cancelled",
-  PROCESSING = "Processing",
-  EXPIRED = "Expired",
-  PENDING = "Pending",
-  SHIPPED = "Shipped",
-  REFUNDED = "Refunded",
+export enum EOrderStatuses {  
+  CREATED = 'Created',
+  COMPLETED = 'Completed',
+  PROCESSING = 'Processing',
+  HOLD = 'Hold',
+  SHIPPED = 'Shipped',
+  DELIVERED = 'Delivered',
+  RETURNED = 'Returned',
+  CANCELLED = 'Cancelled'
 }
 
 export interface OrderFilter {

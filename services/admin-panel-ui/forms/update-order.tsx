@@ -2,31 +2,103 @@
 
 import { Autocomplete, Button, Stack, TextField } from "@mui/material";
 import { Form, Formik } from "formik";
-import { FC } from "react";
+import { FC, useMemo } from "react";
 
 import { InputField } from "@/components/ui/input-field";
-import { Order } from "@/types";
+import { useGetProductsQuery, useUpdateOrderMutation } from "@/query";
+import { useGetEmployeeQuery } from "@/query/useGetEmployeeQuery copy";
+import { Employee, Order, UpdateOrderPayload } from "@/types";
 import { EOrderStatuses } from "@/types/orders";
 import { editOrderValidationSchema } from "@/validations";
 
+const {
+  CANCELLED,
+  COMPLETED,
+  CREATED,
+  DELIVERED,
+  HOLD,
+  PROCESSING,
+  RETURNED,
+  SHIPPED,
+} = EOrderStatuses;
 interface Props {
   data: Order;
-  orderItems: string[];
   onSubmit: () => void;
   onCancel: () => void;
 }
 
+const orderStatusesMap: Record<string, EOrderStatuses> = {
+  created: CREATED,
+  completed: COMPLETED,
+  processing: PROCESSING,
+  hold: HOLD,
+  shipped: SHIPPED,
+  delivered: DELIVERED,
+  returned: RETURNED,
+  cancelled: CANCELLED,
+};
+
 export const UpdateOrderForm: FC<Props> = ({
-  data: { order, customer, location, status },
-  orderItems,
+  data: { id, order, customer, location, status, deliveryman, manager },
   onCancel,
   onSubmit,
 }) => {
-  const initialValues: Partial<Order> = {
+  const { data: employees } = useGetEmployeeQuery();
+  const { data: products } = useGetProductsQuery();
+  const { mutateAsync: updateOrder, isPending: isSubmitting } =
+    useUpdateOrderMutation();
+
+  const initialValues = {
     order,
     customer,
     location,
     status,
+    deliveryman:
+      employees?.deliveryman.find(({ name }) => name === deliveryman) ||
+      ({} as Employee),
+    manager:
+      employees?.managers.find(({ name }) => name === manager) ||
+      ({} as Employee),
+  };
+
+  const deliverymanOptions = useMemo(
+    () => employees?.deliveryman.map(({ name }) => name) || [],
+    [employees?.deliveryman],
+  );
+
+  const managersOptions = useMemo(
+    () => employees?.managers.map(({ name }) => name) || [],
+    [employees?.managers],
+  );
+
+  const productsOptions = useMemo(
+    () => products?.map(({ name }) => name) || [],
+    [products],
+  );
+
+  const handleOnSubmit = async (values: typeof initialValues) => {
+    const { customer, deliveryman, manager, location, order, status } = values;
+
+    const orderItems = order.split(", ");
+    const productsIds = products
+      ?.filter(({ name }) => orderItems.includes(name))
+      .map(({ id }) => id);
+
+    const payload: UpdateOrderPayload = {
+      id,
+      customer,
+      location,
+      status: orderStatusesMap[
+        status.toLowerCase()
+      ].toUpperCase() as EOrderStatuses,
+      deliverymanId: deliveryman.id,
+      managerId: manager.id,
+      productsIds: productsIds || [],
+    };
+
+    await updateOrder(payload);
+
+    onSubmit();
   };
 
   return (
@@ -35,15 +107,15 @@ export const UpdateOrderForm: FC<Props> = ({
         initialValues={initialValues}
         enableReinitialize
         validationSchema={editOrderValidationSchema}
-        onSubmit={onSubmit}
+        onSubmit={handleOnSubmit}
       >
         {({ values, touched, errors, setFieldValue }) => (
           <Form>
             <Stack direction="column" spacing={2}>
               <Autocomplete
                 multiple
-                options={orderItems}
-                value={values.order?.split(", ")}
+                options={productsOptions}
+                value={values.order ? values.order.split(", ") : []}
                 onChange={(_, newValue) => {
                   setFieldValue("order", newValue.join(", "));
                 }}
@@ -56,6 +128,7 @@ export const UpdateOrderForm: FC<Props> = ({
                   />
                 )}
               />
+
               <InputField
                 name="customer"
                 label="Customer"
@@ -70,6 +143,52 @@ export const UpdateOrderForm: FC<Props> = ({
                 type="text"
                 size="medium"
                 error={Boolean(touched.location && errors.location)}
+              />
+
+              <Autocomplete
+                options={deliverymanOptions}
+                value={values.deliveryman.name || ""}
+                onChange={(_, newValue) => {
+                  setFieldValue(
+                    "deliveryman",
+                    newValue
+                      ? employees?.deliveryman.find(
+                          ({ name }) => name === newValue,
+                        )
+                      : "",
+                  );
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    name="deliveryman"
+                    label="Deliveryman"
+                    error={Boolean(touched.deliveryman && errors.deliveryman)}
+                  />
+                )}
+              />
+
+              <Autocomplete
+                options={managersOptions}
+                value={values.manager.name || ""}
+                onChange={(_, newValue) => {
+                  setFieldValue(
+                    "manager",
+                    newValue
+                      ? employees?.managers.find(
+                          ({ name }) => name === newValue,
+                        )
+                      : "",
+                  );
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    name="manager"
+                    label="Manager"
+                    error={Boolean(touched.manager && errors.manager)}
+                  />
+                )}
               />
 
               <Autocomplete
@@ -92,6 +211,7 @@ export const UpdateOrderForm: FC<Props> = ({
                   type="submit"
                   variant="contained"
                   color="warning"
+                  disabled={isSubmitting}
                   sx={{ minWidth: 100 }}
                 >
                   Apply
@@ -101,6 +221,7 @@ export const UpdateOrderForm: FC<Props> = ({
                   variant="contained"
                   color="info"
                   onClick={onCancel}
+                  disabled={isSubmitting}
                   sx={{ minWidth: 100 }}
                 >
                   Cancel

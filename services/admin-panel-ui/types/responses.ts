@@ -1,5 +1,6 @@
-import { Order } from './orders';
-import { UpdateUserDto, User } from './user';
+import { EOrderStatuses, Order } from './orders';
+import { ProductCategory } from './products';
+import { Employee, UpdateUserDto, User } from './user';
 
 export interface OrdersResponse {
   orders: Array<Omit<Order, 'order'> & { order: string[] }>;
@@ -12,6 +13,29 @@ export interface UsersResponse {
 
 export interface UpdateUserPayload {
   id: number;
-  userData: UpdateUserDto
+  userData: UpdateUserDto;
 }
 
+export interface UpdateOrderPayload {
+  id: number,
+  customer: string;
+  location: string;
+  deliverymanId?: number;
+  managerId: number;
+  status: EOrderStatuses;
+  productsIds: number[]
+}
+
+export interface EmployeeResponse {
+  managers: Employee[];
+  deliveryman: Employee[]
+}
+
+export interface Product {
+  id: number;
+  name: string;
+  amount: number;
+  category: ProductCategory;
+  createdAt: string;
+  updatedAt: string;
+}
