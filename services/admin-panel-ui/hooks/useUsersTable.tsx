@@ -27,6 +27,7 @@ const ACTION_COLUMN_CONFIG = {
   hideSortIcon: true,
 };
 
+
 export const useUsersTable = ({ config, withActionColumn = true }: Props) => {
   const [sortKey, setSortKey] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<SortOrder>(DEFAULT_ORDER);

@@ -9,12 +9,14 @@ interface Props {
   open: boolean;
   onClose: () => void;
   children: ReactNode;
+  width?: string;
 }
 
 export const FormModalWrapper: FC<Props> = ({
   open,
   onClose,
   title,
+  width = '40vw',
   children,
 }) => {
   return (
@@ -28,7 +30,7 @@ export const FormModalWrapper: FC<Props> = ({
           left: "50%",
           transform: "translate(-50%, -50%)",
           p: 3,
-          width: "40vw",
+          width,
           minWidth: 400,
         }}
       >

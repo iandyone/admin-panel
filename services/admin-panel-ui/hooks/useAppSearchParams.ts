@@ -1,7 +1,7 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo } from "react";
 
-export const useAppSeatchParams = () => {
+export const useAppSearchParams = () => {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathName = usePathname();

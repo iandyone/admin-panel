@@ -5,38 +5,18 @@ import { Form, Formik } from "formik";
 import { FC, useMemo } from "react";
 
 import { InputField } from "@/components/ui/input-field";
+import { orderStatusesMap } from "@/constants";
 import { useGetProductsQuery, useUpdateOrderMutation } from "@/query";
 import { useGetEmployeeQuery } from "@/query/useGetEmployeeQuery copy";
 import { Employee, Order, UpdateOrderPayload } from "@/types";
 import { EOrderStatuses } from "@/types/orders";
 import { editOrderValidationSchema } from "@/validations";
 
-const {
-  CANCELLED,
-  COMPLETED,
-  CREATED,
-  DELIVERED,
-  HOLD,
-  PROCESSING,
-  RETURNED,
-  SHIPPED,
-} = EOrderStatuses;
 interface Props {
   data: Order;
   onSubmit: () => void;
   onCancel: () => void;
 }
-
-const orderStatusesMap: Record<string, EOrderStatuses> = {
-  created: CREATED,
-  completed: COMPLETED,
-  processing: PROCESSING,
-  hold: HOLD,
-  shipped: SHIPPED,
-  delivered: DELIVERED,
-  returned: RETURNED,
-  cancelled: CANCELLED,
-};
 
 export const UpdateOrderForm: FC<Props> = ({
   data: { id, order, customer, location, status, deliveryman, manager },
@@ -208,15 +188,6 @@ export const UpdateOrderForm: FC<Props> = ({
               />
               <Stack direction="row" justifyContent="space-between">
                 <Button
-                  type="submit"
-                  variant="contained"
-                  color="warning"
-                  disabled={isSubmitting}
-                  sx={{ minWidth: 100 }}
-                >
-                  Apply
-                </Button>
-                <Button
                   type="reset"
                   variant="contained"
                   color="info"
@@ -225,6 +196,15 @@ export const UpdateOrderForm: FC<Props> = ({
                   sx={{ minWidth: 100 }}
                 >
                   Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="warning"
+                  disabled={isSubmitting}
+                  sx={{ minWidth: 100 }}
+                >
+                  Apply
                 </Button>
               </Stack>
             </Stack>

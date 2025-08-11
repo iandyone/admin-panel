@@ -26,6 +26,13 @@ const ACTION_COLUMN_CONFIG = {
   width: "1%",
   hideSortIcon: true,
 };
+const REMOVE_COLUMN_CONFIG = {
+  title: "&nbsp;",
+  key: "&nbsp;" as keyof OrderFilter,
+  withFilter: false,
+  width: "1%",
+  hideSortIcon: true,
+};
 
 export const useOrdersTable = ({ config, withActionColumn = true }: Props) => {
   const [sortKey, setSortKey] = useState<string>("");
@@ -43,7 +50,7 @@ export const useOrdersTable = ({ config, withActionColumn = true }: Props) => {
 
   const headers = useMemo(() => {
     const headers = withActionColumn
-      ? config.concat([ACTION_COLUMN_CONFIG])
+      ? config.concat([ACTION_COLUMN_CONFIG, REMOVE_COLUMN_CONFIG])
       : config;
 
     return headers.map(

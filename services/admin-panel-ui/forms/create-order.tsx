@@ -184,28 +184,17 @@ export const CreateOrderForm: FC<Props> = ({ onCancel, onSubmit }) => {
                 )}
               />
               <Stack direction="row" justifyContent="space-between">
-               <Stack direction='row' spacing={2}>
-                  <Button
-                    type="reset"
-                    variant="contained"
-                    color="info"
-                    onClick={onCancel}
-                    disabled={isSubmitting}
-                    sx={{ minWidth: 100 }}
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    type="reset"
-                    variant="contained"
-                    color="error"
-                    onClick={onCancel}
-                    disabled={isSubmitting}
-                    sx={{ minWidth: 100 }}
-                  >
-                    Delete
-                  </Button>
-               </Stack>
+                <Button
+                  type="reset"
+                  variant="contained"
+                  color="info"
+                  onClick={onCancel}
+                  disabled={isSubmitting}
+                  sx={{ minWidth: 100 }}
+                >
+                  Cancel
+                </Button>
+
                 <Button
                   type="submit"
                   variant="contained"

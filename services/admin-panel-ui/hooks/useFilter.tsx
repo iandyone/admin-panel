@@ -1,10 +1,10 @@
 import { useCallback, useState } from "react";
 
-import { useAppSeatchParams } from "./useAppSearchParams";
+import { useAppSearchParams } from "./useAppSearchParams";
 
 export const useFilter = (key: string) => {
   const { setSearchParam, updateUrlWithSearchParams, searchParams } =
-    useAppSeatchParams();
+    useAppSearchParams();
 
   const [filterValue, setFilterValue] = useState<string>(
     searchParams.get(key) || "",

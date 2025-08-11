@@ -5,7 +5,7 @@ import { Form, Formik } from "formik";
 import { FC } from "react";
 
 import { InputField } from "@/components/ui/input-field";
-import { useUpdateUserMutation } from "@/query";
+import { useUpdateUserMutation } from "@/query/useUpdateUserMutation";
 import { EUserRoles, EUserStatuses, User } from "@/types";
 import { UpdateUserDto } from "@/types/user";
 import { updateUserValidationSchema } from "@/validations";
@@ -105,14 +105,6 @@ export const UpdateUserForm: FC<Props> = ({
               />
               <Stack direction="row" justifyContent="space-between">
                 <Button
-                  type="submit"
-                  variant="contained"
-                  color="warning"
-                  sx={{ minWidth: 100 }}
-                >
-                  Apply
-                </Button>
-                <Button
                   type="reset"
                   variant="contained"
                   color="info"
@@ -120,6 +112,14 @@ export const UpdateUserForm: FC<Props> = ({
                   sx={{ minWidth: 100 }}
                 >
                   Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="warning"
+                  sx={{ minWidth: 100 }}
+                >
+                  Apply
                 </Button>
               </Stack>
             </Stack>

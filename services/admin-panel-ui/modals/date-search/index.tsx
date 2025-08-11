@@ -3,7 +3,7 @@ import { PickerValue } from "@mui/x-date-pickers/internals";
 import { FC, useState } from "react";
 
 import { PeriodFilter } from "@/components/period-filter";
-import { useAppSeatchParams } from "@/hooks";
+import { useAppSearchParams } from "@/hooks";
 
 export interface AutocompleteProps {
   dataKey: string;
@@ -28,7 +28,7 @@ export const DateSearchModal: FC<AutocompleteProps> = ({
   const dateFromKey = `dateFrom${searchKeyPrefix}`;
 
   const { setSearchParam, updateUrlWithSearchParams, searchParams } =
-    useAppSeatchParams();
+    useAppSearchParams();
 
   const [valueTo, setValueTo] = useState<number | null>(
     Number(searchParams.get(dateToKey)) || null,

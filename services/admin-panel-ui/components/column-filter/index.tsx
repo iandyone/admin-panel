@@ -4,7 +4,7 @@ import { Button, Menu, useTheme } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import { FC, MouseEvent, useCallback, useMemo, useState } from "react";
 
-import { FilterIcon } from "@/svg/filter-icon";
+import { FilterIcon } from "@/svg";
 import { OrderFilter, UsersFilter } from "@/types/orders";
 import { getModalByLabelMap, getModalOptionsByLabel } from "@/utils";
 

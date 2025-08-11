@@ -4,7 +4,7 @@ import { Button, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 
 import { FormModalWrapper } from "@/components/form-modal-wrapper";
-import { CreateOrderForm } from "@/forms/create-order";
+import { CreateOrderForm } from "@/forms";
 
 export const OrdersHeader: FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,14 +14,6 @@ export const OrdersHeader: FC = () => {
   };
 
   const onClose = () => setIsOpen(false);
-
-  const handleOnCancel = () => {
-    // TODO: логика работы формы
-    onClose();
-  };
-  const handleOnSubmit = () => {
-    onClose();
-  };
 
   return (
     <Stack direction="row" justifyContent="space-between" alignItems="center">
@@ -36,7 +28,7 @@ export const OrdersHeader: FC = () => {
         Add order
       </Button>
       <FormModalWrapper open={isOpen} onClose={onClose} title={`Add new order`}>
-        <CreateOrderForm onCancel={handleOnCancel} onSubmit={handleOnSubmit} />
+        <CreateOrderForm onCancel={onClose} onSubmit={onClose} />
       </FormModalWrapper>
     </Stack>
   );
