@@ -7,7 +7,7 @@ export interface AppConfig {
 
 export type UserData = User & Credentials;
 
-export type OrderData = Order & { productsIds: string[] };
+export type OrderData = Order & { productsIds: number[] };
 
 export interface UserResponse {
   id: number;

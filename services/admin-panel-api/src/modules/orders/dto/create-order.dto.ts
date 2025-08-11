@@ -4,7 +4,7 @@ export class CreateOrderDto {
   location: string;
   customer: string;
   managerId: number;
-  productsIds: string[];
+  productsIds: number[];
   deliverymanId?: number;
   status?: string;
 

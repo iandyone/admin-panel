@@ -6,12 +6,14 @@ import { AppService } from './app.service';
 
 import { DatabaseModule } from '../database/database.module';
 import { OrdersModule } from '../orders/orders.module';
+import { ProductsModule } from '../products/products.module';
 import { UsersModule } from '../users/users.module';
 
 @Module({
   imports: [
     UsersModule,
     OrdersModule,
+    ProductsModule,
     DatabaseModule,
     ConfigModule.forRoot({
       // compose will load a .env file from the root dir

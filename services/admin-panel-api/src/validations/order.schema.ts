@@ -27,13 +27,10 @@ export const createOrderSchema = joi.object({
 });
 
 export const updateOrderSchema = joi.object({
-  customer: customerSchema.optional(),
-  location: locationSchema.optional(),
-  status: joi
-    .string()
-    .valid(...ORDER_STATUSES)
-    .optional(),
-  productsIds: productsIdsSchema.optional(),
+  customer: customerSchema,
+  location: locationSchema,
+  status: joi.string().valid(...ORDER_STATUSES),
+  productsIds: productsIdsSchema,
   deliverymanId: deliverymanIdSchema.optional(),
   managerId: managerIdSchema.optional(),
 });

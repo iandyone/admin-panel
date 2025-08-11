@@ -4,7 +4,7 @@ export class UpdateOrderDto {
   location?: string | null;
   customer?: string | null;
   managerId?: number | null;
-  productsIds?: string[] | null;
+  productsIds?: number[] | null;
   deliverymanId?: number | null;
   status?: string | null;
 
