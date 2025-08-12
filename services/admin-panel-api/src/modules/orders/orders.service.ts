@@ -52,7 +52,9 @@ export class OrdersService {
         updatedAt: order.updatedAt,
         manager: `${order.Manager.firstName} ${order.Manager.lastName}`,
         managerId: order.managerId,
-        deliveryman: `${order.Deliveryman.firstName} ${order.Deliveryman.lastName}`,
+        deliveryman: order.Deliveryman
+          ? `${order.Deliveryman.firstName} ${order.Deliveryman.lastName}`
+          : '—',
         deliverymanId: order.deliverymanId,
         status: order.status,
       };

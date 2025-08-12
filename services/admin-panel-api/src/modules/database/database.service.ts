@@ -313,15 +313,20 @@ export class DatabaseService {
 
     const productsData = getOrderItemsFromProductsIds(productsIds);
 
+    const config = {
+      location,
+      customer,
+      status: OrderStatus[status],
+      Manager: { connect: { id: managerId } },
+      OrderItems: { createMany: { data: productsData } },
+    };
+
+    if (deliverymanId) {
+      config['Deliveryman'] = { connect: { id: deliverymanId } };
+    }
+
     const order = await this.prisma.order.create({
-      data: {
-        location,
-        customer,
-        status: OrderStatus[status],
-        Manager: { connect: { id: managerId } },
-        OrderItems: { createMany: { data: productsData } },
-        Deliveryman: { connect: { id: deliverymanId } },
-      },
+      data: config,
     });
 
     return order;
@@ -359,27 +364,31 @@ export class DatabaseService {
       amount: amount,
     }));
 
+    const updateConfig = {
+      location,
+      customer,
+      status: $Enums.OrderStatus[status],
+      Manager: {
+        connect: { id: managerId },
+      },
+
+      totalAmount: orderProducts.reduce(
+        (acc, { amount }) => amount.plus(acc),
+        new Decimal(0),
+      ),
+    };
+
+    if (deliverymanId) {
+      updateConfig['Deliveryman'] = {
+        connect: { id: deliverymanId },
+      };
+    }
+
     const updatedOrderData = await this.prisma.$transaction([
       this.prisma.ordersItems.deleteMany({ where: { orderId } }),
       this.prisma.order.update({
         where: { id: orderId },
-        data: {
-          location,
-          customer,
-          status: $Enums.OrderStatus[status],
-          Manager: {
-            connect: { id: managerId },
-          },
-          Deliveryman: {
-            connect: {
-              id: deliverymanId,
-            },
-          },
-          totalAmount: orderProducts.reduce(
-            (acc, { amount }) => amount.plus(acc),
-            new Decimal(0),
-          ),
-        },
+        data: updateConfig,
       }),
       this.prisma.ordersItems.createMany({
         data: orderItemsData,

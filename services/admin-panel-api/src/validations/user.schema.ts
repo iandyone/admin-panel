@@ -19,12 +19,12 @@ export const createUserSchema = joi.object({
 });
 
 export const updateUserSchema = joi.object({
-  firstName: nameSchema.optional(),
-  lastName: nameSchema.optional(),
+  firstName: nameSchema,
+  lastName: nameSchema,
+  role: userRoleSchema,
+  phone: phoneSchema,
+  isActive: joi.bool(),
   email: emailSchema.optional(),
-  phone: phoneSchema.optional(),
-  isActive: joi.bool().optional(),
-  role: userRoleSchema.optional(),
 });
 
 export const findAllUsersSchema = joi.object({

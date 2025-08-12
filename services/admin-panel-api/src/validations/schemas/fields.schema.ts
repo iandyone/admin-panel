@@ -17,7 +17,7 @@ export const passwordSchema = joi
   .min(6)
   .pattern(new RegExp('^[a-zA-Z0-9]{6,30}$'));
 
-export const customerSchema = joi.string().min(2).max(50);
+export const customerSchema = joi.string().min(4).max(50);
 export const locationSchema = joi.string().min(10).max(80);
 export const productsIdsSchema = joi.array().items(joi.number());
 export const deliverymanIdSchema = joi.number().min(1).optional();
