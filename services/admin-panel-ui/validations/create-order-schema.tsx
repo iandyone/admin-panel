@@ -8,7 +8,7 @@ import {
 
 const { REQUIRED } = EValidationMessages;
 
-export const updateOrderSchema = yup.object({
+export const createOrderSchema = yup.object({
   order: yup
     .string()
     .trim()

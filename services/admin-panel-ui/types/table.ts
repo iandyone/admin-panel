@@ -20,7 +20,7 @@ export type OrdersTableHeaderConfig = Array<
 
 export type UsersTableHeaderConfig = Array<
   HeaderData & {
-    key: keyof UsersFilter | '';
+    key: keyof UsersFilter | "";
   }
 >;
 

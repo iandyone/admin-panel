@@ -1,17 +1,18 @@
 "use client";
 
 import { Autocomplete, Stack, TextField } from "@mui/material";
-import { Form, Formik } from "formik";
+import { ErrorMessage, Form, Formik } from "formik";
 import { FC, useMemo } from "react";
 
 import { FormControls } from "@/components/form-controls";
+import { ErrorLabel } from "@/components/ui/error-label";
 import { InputField } from "@/components/ui/input-field";
 import { orderStatusesMap } from "@/constants";
 import { useCreateOrderMutation, useGetProductsQuery } from "@/query";
 import { useGetEmployeeQuery } from "@/query/useGetEmployeeQuery copy";
 import { CreateOrderPayload, Employee } from "@/types";
 import { EOrderStatuses } from "@/types/orders";
-import { editOrderValidationSchema } from "@/validations";
+import { createOrderSchema } from "@/validations";
 
 interface Props {
   onSubmit: () => void;
@@ -78,29 +79,32 @@ export const CreateOrderForm: FC<Props> = ({ onCancel, onSubmit }) => {
       <Formik
         initialValues={initialValues}
         enableReinitialize
-        validationSchema={editOrderValidationSchema}
+        validationSchema={createOrderSchema}
         onSubmit={handleOnSubmit}
       >
         {({ values, touched, errors, setFieldValue }) => (
           <Form>
             <Stack direction="column" spacing={2}>
-              <Autocomplete
-                multiple
-                options={productsOptions}
-                value={values.order ? values.order.split(", ") : []}
-                disabled={isSubmitting}
-                onChange={(_, newValue) => {
-                  setFieldValue("order", newValue.join(", "));
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    name="order"
-                    label="Order"
-                    error={Boolean(touched.order && errors.order)}
-                  />
-                )}
-              />
+              <Stack>
+                <Autocomplete
+                  multiple
+                  options={productsOptions}
+                  value={values.order ? values.order.split(", ") : []}
+                  disabled={isSubmitting}
+                  onChange={(_, newValue) => {
+                    setFieldValue("order", newValue.join(", "));
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      name="order"
+                      label="Order"
+                      error={Boolean(touched.order && errors.order)}
+                    />
+                  )}
+                />
+                <ErrorMessage name="order" component={ErrorLabel} />
+              </Stack>
 
               <InputField
                 name="customer"
@@ -120,29 +124,32 @@ export const CreateOrderForm: FC<Props> = ({ onCancel, onSubmit }) => {
                 error={Boolean(touched.location && errors.location)}
               />
 
-              <Autocomplete
-                options={deliverymanOptions}
-                value={values.deliveryman.name || ""}
-                disabled={isSubmitting}
-                onChange={(_, newValue) => {
-                  setFieldValue(
-                    "deliveryman",
-                    newValue
-                      ? employees?.deliveryman.find(
-                          ({ name }) => name === newValue,
-                        )
-                      : "",
-                  );
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    name="deliveryman"
-                    label="Deliveryman"
-                    error={Boolean(touched.deliveryman && errors.deliveryman)}
-                  />
-                )}
-              />
+              <Stack>
+                <Autocomplete
+                  options={deliverymanOptions}
+                  value={values.deliveryman.name || ""}
+                  disabled={isSubmitting}
+                  onChange={(_, newValue) => {
+                    setFieldValue(
+                      "deliveryman",
+                      newValue
+                        ? employees?.deliveryman.find(
+                            ({ name }) => name === newValue,
+                          )
+                        : "",
+                    );
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      name="deliveryman"
+                      label="Deliveryman"
+                      error={Boolean(touched.deliveryman && errors.deliveryman)}
+                    />
+                  )}
+                />
+                <ErrorMessage name="deliveryman" component={ErrorLabel} />
+              </Stack>
 
               <Autocomplete
                 options={managersOptions}

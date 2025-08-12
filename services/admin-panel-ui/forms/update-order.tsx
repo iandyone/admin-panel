@@ -1,6 +1,6 @@
 "use client";
 
-import { Autocomplete,  Stack, TextField } from "@mui/material";
+import { Autocomplete, Stack, TextField } from "@mui/material";
 import { Form, Formik } from "formik";
 import { FC, useMemo } from "react";
 
@@ -9,9 +9,9 @@ import { InputField } from "@/components/ui/input-field";
 import { orderStatusesMap } from "@/constants";
 import { useGetProductsQuery, useUpdateOrderMutation } from "@/query";
 import { useGetEmployeeQuery } from "@/query/useGetEmployeeQuery copy";
-import { Employee, Order, UpdateOrderPayload } from "@/types";
+import { Order, UpdateOrderPayload } from "@/types";
 import { EOrderStatuses } from "@/types/orders";
-import { editOrderValidationSchema } from "@/validations";
+import { updateOrderSchema } from "@/validations";
 
 interface Props {
   data: Order;
@@ -34,12 +34,10 @@ export const UpdateOrderForm: FC<Props> = ({
     customer,
     location,
     status,
-    deliveryman:
-      employees?.deliveryman.find(({ name }) => name === deliveryman) ||
-      ({} as Employee),
-    manager:
-      employees?.managers.find(({ name }) => name === manager) ||
-      ({} as Employee),
+    deliveryman: employees?.deliveryman.find(
+      ({ name }) => name === deliveryman,
+    ),
+    manager: employees?.managers.find(({ name }) => name === manager),
   };
 
   const deliverymanOptions = useMemo(
@@ -72,8 +70,8 @@ export const UpdateOrderForm: FC<Props> = ({
       status: orderStatusesMap[
         status.toLowerCase()
       ].toUpperCase() as EOrderStatuses,
-      deliverymanId: deliveryman.id,
-      managerId: manager.id,
+      deliverymanId: deliveryman?.id,
+      managerId: manager?.id,
       productsIds: productsIds || [],
     };
 
@@ -87,7 +85,7 @@ export const UpdateOrderForm: FC<Props> = ({
       <Formik
         initialValues={initialValues}
         enableReinitialize
-        validationSchema={editOrderValidationSchema}
+        validationSchema={updateOrderSchema}
         onSubmit={handleOnSubmit}
       >
         {({ values, touched, errors, setFieldValue }) => (
@@ -128,7 +126,7 @@ export const UpdateOrderForm: FC<Props> = ({
 
               <Autocomplete
                 options={deliverymanOptions}
-                value={values.deliveryman.name || ""}
+                value={values.deliveryman?.name || ""}
                 onChange={(_, newValue) => {
                   setFieldValue(
                     "deliveryman",
@@ -151,7 +149,7 @@ export const UpdateOrderForm: FC<Props> = ({
 
               <Autocomplete
                 options={managersOptions}
-                value={values.manager.name || ""}
+                value={values.manager?.name || ""}
                 onChange={(_, newValue) => {
                   setFieldValue(
                     "manager",

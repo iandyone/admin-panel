@@ -27,4 +27,3 @@ export const TRENDS: TrendItem[] = [
     sales: 97,
   },
 ];
-

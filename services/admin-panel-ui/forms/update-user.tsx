@@ -9,7 +9,7 @@ import { InputField } from "@/components/ui/input-field";
 import { useUpdateUserMutation } from "@/query/useUpdateUserMutation";
 import { EUserRoles, EUserStatuses, User } from "@/types";
 import { UpdateUserDto } from "@/types/user";
-import { updateUserValidationSchema } from "@/validations";
+import { updateUserSchema } from "@/validations";
 
 interface Props {
   data: User;
@@ -44,7 +44,7 @@ export const UpdateUserForm: FC<Props> = ({
       <Formik
         initialValues={initialValues}
         enableReinitialize
-        validationSchema={updateUserValidationSchema}
+        validationSchema={updateUserSchema}
         onSubmit={handleOnSubmit}
       >
         {({ values, touched, errors, setFieldValue }) => (

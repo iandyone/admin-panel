@@ -10,7 +10,7 @@ const { REQUIRED } = EValidationMessages;
 
 const PHONE_REGEXP = /^\+375(25|29|33|44)\d{7}$/;
 
-export const updateUserValidationSchema = yup.object({
+export const updateUserSchema = yup.object({
   firstName: yup
     .string()
     .trim()
@@ -28,7 +28,7 @@ export const updateUserValidationSchema = yup.object({
     .string()
     .trim()
     .min(12, getMinLengthErrorMessage(12))
-    .matches(PHONE_REGEXP, {message: 'Invalid format (exampe: +375291111111)'})
+    .matches(PHONE_REGEXP, {message: 'Invalid format (example: +375291111111)'})
     .required(REQUIRED),
   isActive: yup.string().trim().required(REQUIRED),
 });

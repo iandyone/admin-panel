@@ -1,11 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AutocompleteSearchModal } from "@/modals/autocomplete-search";
 import { DateSearchModal } from "@/modals/date-search";
 import { PhoneSearchModal } from '@/modals/phone-search';
 import { TextSearchModal } from "@/modals/text-search";
 import { EUserRoles, EUserStatuses } from "@/types";
-import { EOrderStatuses, } from "@/types/orders";
+import { EOrderStatuses } from "@/types/orders";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 type SortOrder = "asc" | "desc";
 
 export function getSortedData<T extends Record<string, any>>(
