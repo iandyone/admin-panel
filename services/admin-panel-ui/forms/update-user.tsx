@@ -1,9 +1,10 @@
 "use client";
 
-import { Autocomplete, Button, Stack, TextField } from "@mui/material";
+import { Autocomplete, Stack, TextField } from "@mui/material";
 import { Form, Formik } from "formik";
 import { FC } from "react";
 
+import { FormControls } from "@/components/form-controls";
 import { InputField } from "@/components/ui/input-field";
 import { useUpdateUserMutation } from "@/query/useUpdateUserMutation";
 import { EUserRoles, EUserStatuses, User } from "@/types";
@@ -103,25 +104,8 @@ export const UpdateUserForm: FC<Props> = ({
                   />
                 )}
               />
-              <Stack direction="row" justifyContent="space-between">
-                <Button
-                  type="reset"
-                  variant="contained"
-                  color="info"
-                  onClick={onCancel}
-                  sx={{ minWidth: 100 }}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="warning"
-                  sx={{ minWidth: 100 }}
-                >
-                  Apply
-                </Button>
-              </Stack>
+
+              <FormControls onClickReset={onCancel} resetLabel="Cancel" />
             </Stack>
           </Form>
         )}

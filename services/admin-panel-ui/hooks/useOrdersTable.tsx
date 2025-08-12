@@ -11,33 +11,19 @@ import { useCallback, useMemo, useState } from "react";
 import { ColumnFilter } from "@/components/column-filter";
 import { OrdersTableHeaderConfig, SortOrder } from "@/types";
 import { OrderFilter } from "@/types/orders";
+import { getActionColumnConfig, getRemoveColumnConfig } from "@/types/table";
 
 interface Props {
   config: OrdersTableHeaderConfig;
-  withActionColumn?: boolean;
 }
 
 const DEFAULT_ORDER: SortOrder = "asc";
+const EDIT_COLUMN_CONFIG = getActionColumnConfig<OrderFilter>();
+const REMOVE_COLUMN_CONFIG = getRemoveColumnConfig<OrderFilter>();
 
-const ACTION_COLUMN_CONFIG = {
-  title: "",
-  key: "" as keyof OrderFilter,
-  withFilter: false,
-  width: "1%",
-  hideSortIcon: true,
-};
-const REMOVE_COLUMN_CONFIG = {
-  title: "&nbsp;",
-  key: "&nbsp;" as keyof OrderFilter,
-  withFilter: false,
-  width: "1%",
-  hideSortIcon: true,
-};
-
-export const useOrdersTable = ({ config, withActionColumn = true }: Props) => {
+export const useOrdersTable = ({ config }: Props) => {
   const [sortKey, setSortKey] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<SortOrder>(DEFAULT_ORDER);
-
   const theme = useTheme();
 
   const handleOnClickSortLabel = useCallback(
@@ -49,9 +35,7 @@ export const useOrdersTable = ({ config, withActionColumn = true }: Props) => {
   );
 
   const headers = useMemo(() => {
-    const headers = withActionColumn
-      ? config.concat([ACTION_COLUMN_CONFIG, REMOVE_COLUMN_CONFIG])
-      : config;
+    const headers = config.concat(EDIT_COLUMN_CONFIG, REMOVE_COLUMN_CONFIG);
 
     return headers.map(
       ({ title, hideSortIcon, key, withFilter = true, width = "auto" }) => (
@@ -107,14 +91,7 @@ export const useOrdersTable = ({ config, withActionColumn = true }: Props) => {
         </TableCell>
       ),
     );
-  }, [
-    config,
-    sortKey,
-    sortOrder,
-    theme,
-    withActionColumn,
-    handleOnClickSortLabel,
-  ]);
+  }, [config, sortKey, sortOrder, theme, handleOnClickSortLabel]);
 
   return {
     sortKey,

@@ -10,7 +10,7 @@ import { usePagination, useUsersTable } from "@/hooks";
 import { useGetUsersQuery } from "@/query";
 import { DataGridConfig, User } from "@/types";
 import { UsersFilter } from "@/types/orders";
-import { getFormattedDate, getSortedOrdersData } from "@/utils";
+import { getFormattedDate, getSortedData } from "@/utils";
 
 import styles from "./styles.module.css";
 
@@ -56,7 +56,7 @@ export const UsersTable: FC = () => {
       );
 
       return sortOrder
-        ? getSortedOrdersData(visibleRows, sortKey, sortOrder)
+        ? getSortedData(visibleRows, sortKey, sortOrder)
         : visibleRows;
     }
 

@@ -1,10 +1,11 @@
 "use client";
 
-import { Button, Stack, TextField } from "@mui/material";
+import { Stack, TextField } from "@mui/material";
 import { ChangeEvent, FC } from "react";
 
+import { FormControls } from "@/components/form-controls";
 import { LABELS_WITH_NUMERIC_FIELDS } from "@/constants";
-import { useFilter } from '@/hooks';
+import { useFilter } from "@/hooks";
 
 export interface TextModalProps {
   title: string;
@@ -54,26 +55,10 @@ export const TextSearchModal: FC<TextModalProps> = ({
         type={LABELS_WITH_NUMERIC_FIELDS.includes(dataKey) ? "number" : "text"}
       />
 
-      <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <Button
-          variant="contained"
-          color="warning"
-          size="small"
-          onClick={handleOnClickApplyButton}
-          sx={{ width: 80 }}
-        >
-          Apply
-        </Button>
-        <Button
-          variant="contained"
-          color="info"
-          onClick={handleOnClickResetButton}
-          size="small"
-          sx={{ width: 80 }}
-        >
-          Reset
-        </Button>
-      </Stack>
+      <FormControls
+        onClickApply={handleOnClickApplyButton}
+        onClickReset={handleOnClickResetButton}
+      />
     </Stack>
   );
 };

@@ -9,7 +9,7 @@ import { ORDERS_SEARCH_FILTERS, ROWS_PER_PAGE_OPTIONS } from "@/constants";
 import { useOrdersTable, usePagination } from "@/hooks";
 import { useGetOrdersQuery } from "@/query";
 import { DataGridConfig, Order, OrderFilter } from "@/types";
-import { getFormattedDate, getSortedOrdersData } from "@/utils";
+import { getFormattedDate, getSortedData } from "@/utils";
 
 import styles from "./styles.module.css";
 
@@ -57,7 +57,7 @@ export const OrdersTable: FC = () => {
       });
 
       return sortOrder
-        ? getSortedOrdersData(visibleRows, sortKey, sortOrder)
+        ? getSortedData(visibleRows, sortKey, sortOrder)
         : visibleRows;
     }
 

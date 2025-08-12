@@ -1,9 +1,10 @@
 "use client";
 
-import { Autocomplete, Button, Stack, TextField } from "@mui/material";
+import { Autocomplete, Stack, TextField } from "@mui/material";
 import { Form, Formik } from "formik";
 import { FC, useMemo } from "react";
 
+import { FormControls } from "@/components/form-controls";
 import { InputField } from "@/components/ui/input-field";
 import { orderStatusesMap } from "@/constants";
 import { useCreateOrderMutation, useGetProductsQuery } from "@/query";
@@ -183,28 +184,12 @@ export const CreateOrderForm: FC<Props> = ({ onCancel, onSubmit }) => {
                   />
                 )}
               />
-              <Stack direction="row" justifyContent="space-between">
-                <Button
-                  type="reset"
-                  variant="contained"
-                  color="info"
-                  onClick={onCancel}
-                  disabled={isSubmitting}
-                  sx={{ minWidth: 100 }}
-                >
-                  Cancel
-                </Button>
 
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="warning"
-                  disabled={isSubmitting}
-                  sx={{ minWidth: 100 }}
-                >
-                  Apply
-                </Button>
-              </Stack>
+              <FormControls
+                onClickReset={onCancel}
+                resetLabel="Cancel"
+                disabled={isSubmitting}
+              />
             </Stack>
           </Form>
         )}

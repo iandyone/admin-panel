@@ -11,27 +11,18 @@ import { useCallback, useMemo, useState } from "react";
 import { ColumnFilter } from "@/components/column-filter";
 import { SortOrder, UsersTableHeaderConfig } from "@/types";
 import { UsersFilter } from "@/types/orders";
+import { getActionColumnConfig } from "@/types/table";
 
 interface Props {
   config: UsersTableHeaderConfig;
-  withActionColumn?: boolean;
 }
 
 const DEFAULT_ORDER: SortOrder = "asc";
+const EDIT_COLUMN_CONFIG = getActionColumnConfig<UsersFilter>();
 
-const ACTION_COLUMN_CONFIG = {
-  title: "",
-  key: "" as keyof UsersFilter,
-  withFilter: false,
-  width: "5%",
-  hideSortIcon: true,
-};
-
-
-export const useUsersTable = ({ config, withActionColumn = true }: Props) => {
+export const useUsersTable = ({ config }: Props) => {
   const [sortKey, setSortKey] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<SortOrder>(DEFAULT_ORDER);
-
   const theme = useTheme();
 
   const handleOnClickSortLabel = useCallback(
@@ -43,9 +34,7 @@ export const useUsersTable = ({ config, withActionColumn = true }: Props) => {
   );
 
   const headers = useMemo(() => {
-    const headers = withActionColumn
-      ? config.concat([ACTION_COLUMN_CONFIG])
-      : config;
+    const headers = config.concat(EDIT_COLUMN_CONFIG);
 
     return headers.map(
       ({ title, key, hideSortIcon, width = "auto", withFilter = true }) => (
@@ -101,14 +90,7 @@ export const useUsersTable = ({ config, withActionColumn = true }: Props) => {
         </TableCell>
       ),
     );
-  }, [
-    config,
-    sortKey,
-    sortOrder,
-    theme,
-    withActionColumn,
-    handleOnClickSortLabel,
-  ]);
+  }, [config, sortKey, sortOrder, theme, handleOnClickSortLabel]);
 
   return {
     sortKey,

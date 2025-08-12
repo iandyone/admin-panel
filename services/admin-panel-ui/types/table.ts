@@ -20,7 +20,7 @@ export type OrdersTableHeaderConfig = Array<
 
 export type UsersTableHeaderConfig = Array<
   HeaderData & {
-    key: keyof UsersFilter | "";
+    key: keyof UsersFilter | '';
   }
 >;
 
@@ -47,3 +47,20 @@ export interface DataGridConfig {
     Component: FC;
   };
 }
+
+
+export const getActionColumnConfig = <T>() => ({
+  title: '',
+  key: "" as keyof T,
+  withFilter: false,
+  width: "1%",
+  hideSortIcon: true,
+})
+
+export const getRemoveColumnConfig = <T>() => ({
+  title: "&nbsp;",
+  key: "&nbsp;" as keyof T,
+  withFilter: false,
+  width: "1%",
+  hideSortIcon: true,
+})

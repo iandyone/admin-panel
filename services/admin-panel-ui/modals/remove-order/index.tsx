@@ -1,7 +1,8 @@
 "use client";
 
-import { Button, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 
+import { FormControls } from "@/components/form-controls";
 import { useRemoveOrderMutation } from "@/query";
 
 interface Props {
@@ -27,26 +28,13 @@ export const ConfirmRemoveModal = ({
   return (
     <Stack direction="column" spacing={4}>
       <Typography>{message}</Typography>
-      <Stack direction="row" justifyContent="space-between">
-        <Button
-          type="reset"
-          variant="contained"
-          color="info"
-          onClick={handleOnClickControls}
-          sx={{ minWidth: 100 }}
-        >
-          Cancel
-        </Button>
-        <Button
-          type="submit"
-          variant="contained"
-          color="warning"
-          onClick={handleOnConfirmRemove}
-          sx={{ minWidth: 100 }}
-        >
-          Confirm
-        </Button>
-      </Stack>
+
+      <FormControls
+        onClickApply={handleOnConfirmRemove}
+        onClickReset={handleOnClickControls}
+        applyLabel="Confirm"
+        resetLabel="Cancel"
+      />
     </Stack>
   );
 };

@@ -1,7 +1,8 @@
-import { Button, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { PickerValue } from "@mui/x-date-pickers/internals";
-import { FC, useState } from "react";
+import { FC, useCallback, useState } from "react";
 
+import { FormControls } from "@/components/form-controls";
 import { PeriodFilter } from "@/components/period-filter";
 import { useAppSearchParams } from "@/hooks";
 
@@ -33,6 +34,7 @@ export const DateSearchModal: FC<AutocompleteProps> = ({
   const [valueTo, setValueTo] = useState<number | null>(
     Number(searchParams.get(dateToKey)) || null,
   );
+  
   const [valueFrom, setValueFrom] = useState<number | null>(
     Number(searchParams.get(dateFromKey)) || null,
   );
@@ -45,16 +47,25 @@ export const DateSearchModal: FC<AutocompleteProps> = ({
     setValueTo(value ? value?.valueOf() : null);
   };
 
-  const handleOnClickApplyButton = () => {
+  const handleOnClickApplyButton = useCallback(() => {
     setSearchParam(dateToKey, valueTo ? valueTo.toString() : "");
     setSearchParam(dateFromKey, valueFrom ? valueFrom.toString() : "");
 
     updateUrlWithSearchParams();
     setIsActive(Boolean(valueFrom) || Boolean(valueTo));
     onClickControls();
-  };
+  }, [
+    valueTo,
+    valueFrom,
+    dateFromKey,
+    dateToKey,
+    onClickControls,
+    setSearchParam,
+    setIsActive,
+    updateUrlWithSearchParams,
+  ]);
 
-  const handleOnClickResetButton = () => {
+  const handleOnClickResetButton = useCallback(() => {
     setValueFrom(null);
     setValueTo(null);
     setSearchParam(dateToKey, "");
@@ -63,7 +74,14 @@ export const DateSearchModal: FC<AutocompleteProps> = ({
     updateUrlWithSearchParams();
     setIsActive(false);
     onClickControls();
-  };
+  }, [
+    dateFromKey,
+    dateToKey,
+    onClickControls,
+    setSearchParam,
+    setIsActive,
+    updateUrlWithSearchParams,
+  ]);
 
   return (
     <>
@@ -78,30 +96,11 @@ export const DateSearchModal: FC<AutocompleteProps> = ({
           onChangeDateFrom={handleOnChangeDateFrom}
           onChangeDateTo={handleOnChangeDateTo}
         />
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Button
-            variant="contained"
-            color="warning"
-            size="small"
-            onClick={handleOnClickApplyButton}
-            sx={{ width: 80 }}
-          >
-            Apply
-          </Button>
-          <Button
-            variant="contained"
-            color="info"
-            onClick={handleOnClickResetButton}
-            size="small"
-            sx={{ width: 80 }}
-          >
-            Reset
-          </Button>
-        </Stack>
+
+        <FormControls
+          onClickApply={handleOnClickApplyButton}
+          onClickReset={handleOnClickResetButton}
+        />
       </Stack>
     </>
   );

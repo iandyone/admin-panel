@@ -1,8 +1,9 @@
 "use client";
 
-import { Autocomplete, Button, Stack, TextField } from "@mui/material";
-import { FC, SyntheticEvent } from "react";
+import { Autocomplete, Stack, TextField } from "@mui/material";
+import { FC, SyntheticEvent, useCallback } from "react";
 
+import { FormControls } from "@/components/form-controls";
 import { useFilter } from "@/hooks";
 import { EUserStatuses } from "@/types";
 
@@ -35,19 +36,25 @@ export const AutocompleteSearchModal: FC<AutocompleteProps> = ({
     resetSearchFilterHandler,
   } = useFilter(dataKey);
 
-  const handleOnClickApplyButton = () => {
+  const handleOnClickApplyButton = useCallback(() => {
     const value = dataKey === "isActive" ? filterValue === ACTIVE : filterValue;
 
-    applySearchFilterHandler(String(value));
+    applySearchFilterHandler(String(value).toLowerCase());
     setIsActive(Boolean(filterValue));
     onClickControls();
-  };
+  }, [
+    applySearchFilterHandler,
+    dataKey,
+    filterValue,
+    onClickControls,
+    setIsActive,
+  ]);
 
-  const handleOnClickResetButton = () => {
+  const handleOnClickResetButton = useCallback(() => {
     resetSearchFilterHandler();
     setIsActive(false);
     onClickControls();
-  };
+  }, [resetSearchFilterHandler, onClickControls, setIsActive]);
 
   const handleOnChange = (event: SyntheticEvent, newValue: string | null) => {
     setFilterValue(String(newValue));
@@ -65,30 +72,11 @@ export const AutocompleteSearchModal: FC<AutocompleteProps> = ({
             <TextField {...params} name={title} label={title} />
           )}
         />
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Button
-            variant="contained"
-            color="warning"
-            size="small"
-            onClick={handleOnClickApplyButton}
-            sx={{ width: 80 }}
-          >
-            Apply
-          </Button>
-          <Button
-            variant="contained"
-            color="info"
-            onClick={handleOnClickResetButton}
-            size="small"
-            sx={{ width: 80 }}
-          >
-            Reset
-          </Button>
-        </Stack>
+
+        <FormControls
+          onClickApply={handleOnClickApplyButton}
+          onClickReset={handleOnClickResetButton}
+        />
       </Stack>
     </>
   );
