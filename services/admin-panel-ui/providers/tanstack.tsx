@@ -6,7 +6,7 @@ import { PropsWithChildren, useState } from "react";
 
 import { queryClient } from "@/configs";
 
-export const TanskackQueryProvider = ({ children }: PropsWithChildren) => {
+export const TanstackQueryProvider = ({ children }: PropsWithChildren) => {
   const [client] = useState<QueryClient>(queryClient);
 
   return (

@@ -43,3 +43,19 @@ export interface Product {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface StatisticDatasetItem {
+  data: number[];
+  days: number[];
+}
+
+export interface DashboardStatisticItem extends StatisticDatasetItem {
+  count: number;
+}
+
+export interface DashboardStatistic {
+  total: DashboardStatisticItem;
+  completed: DashboardStatisticItem;
+  cancelled: DashboardStatisticItem;
+  benefit: DashboardStatisticItem;
+}

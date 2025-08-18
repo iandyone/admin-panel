@@ -2,20 +2,27 @@ import { Box, Chip, Stack, Typography } from "@mui/material";
 import { FC, ReactNode } from "react";
 
 import { SparkLine } from "@/components/ui/spark-line";
+import { StatisticDatasetItem } from "@/types";
 
-interface Props {
+interface Props extends StatisticDatasetItem {
   title: string;
-  value: ReactNode;
-  data?: number[];
+  value: number;
+
   chip?: {
     isPositive: boolean;
     value: ReactNode;
   };
 }
 
-export const Showcase: FC<Props> = ({ title, value, chip, data }) => {
+export const StatisticCard: FC<Props> = ({
+  title,
+  value,
+  chip,
+  data,
+  days,
+}) => {
   return (
-    <Stack direction="column" gap={1}>
+    <Stack direction="column" gap={1} padding={2}>
       <Typography component="h2" variant="subtitle2" gutterBottom>
         {title}
       </Typography>
@@ -55,6 +62,7 @@ export const Showcase: FC<Props> = ({ title, value, chip, data }) => {
               <SparkLine
                 value={value}
                 data={data}
+                days={days}
                 type={chip?.isPositive ? "positive" : "negative"}
               />
             </Box>

@@ -8,7 +8,7 @@ import { FormControls } from "@/components/form-controls";
 import { InputField } from "@/components/ui/input-field";
 import { orderStatusesMap } from "@/constants";
 import { useGetProductsQuery, useUpdateOrderMutation } from "@/query";
-import { useGetEmployeeQuery } from "@/query/useGetEmployeeQuery copy";
+import { useGetEmployeeQuery } from "@/query/useGetEmployeeQuery";
 import { Order, UpdateOrderPayload } from "@/types";
 import { EOrderStatuses } from "@/types/orders";
 import { updateOrderSchema } from "@/validations";

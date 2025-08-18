@@ -18,9 +18,11 @@ import {
 
 const { ORDERS, EMPLOYEE, PRODUCTS } = FetchTags;
 
-export default async function Page() {
-  const queryClient = new QueryClient();
+const queryClient = new QueryClient({defaultOptions: {
+  
+}});
 
+export default async function Page() {
   await queryClient.prefetchQuery({
     queryKey: [
       ORDERS,

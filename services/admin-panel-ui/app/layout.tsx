@@ -5,7 +5,7 @@ import "./globals.css";
 import {
   MaterialUIProvider,
   ReduxProvider,
-  TanskackQueryProvider,
+  TanstackQueryProvider,
 } from "@/providers";
 
 
@@ -24,11 +24,11 @@ export default function RootLayout({
   return (
     <html lang="en" data-toolpad-color-scheme="light">
       <body className={inter.className}>
-        <TanskackQueryProvider>
+        <TanstackQueryProvider>
           <ReduxProvider>
             <MaterialUIProvider>{children}</MaterialUIProvider>
           </ReduxProvider>
-        </TanskackQueryProvider>
+        </TanstackQueryProvider>
       </body>
     </html>
   );

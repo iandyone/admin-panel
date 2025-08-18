@@ -9,7 +9,7 @@ import { ErrorLabel } from "@/components/ui/error-label";
 import { InputField } from "@/components/ui/input-field";
 import { orderStatusesMap } from "@/constants";
 import { useCreateOrderMutation, useGetProductsQuery } from "@/query";
-import { useGetEmployeeQuery } from "@/query/useGetEmployeeQuery copy";
+import { useGetEmployeeQuery } from "@/query/useGetEmployeeQuery";
 import { CreateOrderPayload, Employee } from "@/types";
 import { EOrderStatuses } from "@/types/orders";
 import { createOrderSchema } from "@/validations";

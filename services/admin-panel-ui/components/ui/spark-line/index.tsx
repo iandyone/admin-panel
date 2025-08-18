@@ -5,14 +5,14 @@ import { areaElementClasses, SparkLineChart } from "@mui/x-charts";
 import { FC, ReactNode } from "react";
 
 import { AreaGradient } from "@/components/ui/area-gradient";
+import { StatisticDatasetItem } from "@/types";
 
-interface Props {
-  data: number[];
+interface Props extends StatisticDatasetItem {
   value: ReactNode;
   type: "positive" | "negative";
 }
 
-export const SparkLine: FC<Props> = ({ data, value, type }) => {
+export const SparkLine: FC<Props> = ({ data, days, type, value }) => {
   const {
     palette: { success, error },
   } = useTheme();
@@ -28,6 +28,7 @@ export const SparkLine: FC<Props> = ({ data, value, type }) => {
       showTooltip
       xAxis={{
         scaleType: "band",
+        data: days,
       }}
       sx={{
         [`& .${areaElementClasses.root}`]: {

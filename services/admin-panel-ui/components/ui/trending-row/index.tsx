@@ -52,6 +52,7 @@ export const TrendingRow: FC<TrendItem & { index: number }> = ({
       <Grid alignContent="center" height={40} width={100}>
         <SparkLine
           data={[1, 200, 34, 4250, 50]}
+          days={[1,2,3,4,5]}
           type="positive"
           value={sales}
         />
