@@ -1,33 +1,33 @@
-import { Prisma } from '@prisma/client';
+import { OrderStatus, Prisma } from '@prisma/client';
 
 export const USERS: Array<
   Prisma.UserCreateInput & Prisma.CredentialsCreateInput
 > = [
-  {
-    firstName: 'admin',
-    lastName: 'admin',
-    phone: '+375291111111',
-    role: 'ADMIN',
-    password: 'root',
-    email: 'admin@test.com',
-  },
-  {
-    firstName: 'manager',
-    lastName: 'manager',
-    phone: '+375292222222',
-    role: 'MANAGER',
-    password: 'root',
-    email: 'manager@test.com',
-  },
-  {
-    firstName: 'deliveryman',
-    lastName: 'deliveryman',
-    phone: '+375293333333',
-    role: 'DELIVERY',
-    password: 'root',
-    email: 'delivery@test.com',
-  },
-];
+    {
+      firstName: 'admin',
+      lastName: 'admin',
+      phone: '+375291111111',
+      role: 'ADMIN',
+      password: 'root',
+      email: 'admin@test.com',
+    },
+    {
+      firstName: 'manager',
+      lastName: 'manager',
+      phone: '+375292222222',
+      role: 'MANAGER',
+      password: 'root',
+      email: 'manager@test.com',
+    },
+    {
+      firstName: 'deliveryman',
+      lastName: 'deliveryman',
+      phone: '+375293333333',
+      role: 'DELIVERY',
+      password: 'root',
+      email: 'delivery@test.com',
+    },
+  ];
 
 export const PRODUCTS: Array<Prisma.ProductCreateInput> = [
   // APPETIZERS
@@ -61,7 +61,7 @@ export const PRODUCTS: Array<Prisma.ProductCreateInput> = [
   {
     name: 'Herring Under a Fur Coat (Shuba)',
     category: 'SALADS',
-    amount: 7.99,
+    amount: 4.25,
   },
 
   // MAINS
@@ -77,7 +77,7 @@ export const PRODUCTS: Array<Prisma.ProductCreateInput> = [
     category: 'DESSERTS',
     amount: 7.25,
   },
-  { name: 'Chornitsa (Blueberry Kissel)', category: 'DESSERTS', amount: 5.99 },
+  { name: 'Chornitsa (Blueberry Kissel)', category: 'DESSERTS', amount: 5.75 },
   { name: 'Zefir (Light Fruit Confection)', category: 'DESSERTS', amount: 6.0 },
 
   // DRINKS
@@ -96,221 +96,3457 @@ export const PRODUCTS: Array<Prisma.ProductCreateInput> = [
 export const ORDERS: Array<Prisma.OrderCreateInput & { productIds: number[] }> =
   [
     {
-      customer: 'Ivan',
-      location: 'Minsk, Nemiga St 4-23',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 1 } },
-      productIds: [2, 4],
+      customer: "Maria",
+      location: "Minsk, Independence Ave 10-5",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        3,
+        6
+      ],
+      createdAt: "2025-01-06T16:51:31.000Z",
+      updatedAt: "2025-01-06T16:51:31.000Z",
+      status: OrderStatus.PROCESSING
     },
     {
-      customer: 'Maria',
-      location: 'Minsk, Independence Ave 10-5',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 2 } },
-      productIds: [3, 6],
+      customer: "Oleg",
+      location: "Minsk, Kirova St 12-8",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        1,
+        21
+      ],
+      createdAt: "2025-01-06T16:51:31.000Z",
+      updatedAt: "2025-01-06T16:51:31.000Z",
+      status: OrderStatus.COMPLETED
     },
     {
-      customer: 'Oleg',
-      location: 'Minsk, Kirova St 12-8',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 1 } },
-      productIds: [1, 21],
+      customer: "Elena",
+      location: "Zhodino, Lenina St 7-2",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        1,
+        3,
+        27
+      ],
+      createdAt: "2025-01-06T16:51:31.000Z",
+      updatedAt: "2025-01-06T16:51:31.000Z",
+      status: OrderStatus.SHIPPED
     },
     {
-      customer: 'Elena',
-      location: 'Zhodino, Lenina St 7-2',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 2 } },
-      productIds: [1, 3, 27],
+      customer: "Sergey",
+      location: "Smalyavichy, Sovetskaya St 15-1",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        20,
+        7,
+        4
+      ],
+      createdAt: "2025-06-17T21:58:13.000Z",
+      updatedAt: "2025-06-17T21:58:13.000Z",
+      status: OrderStatus.COMPLETED
     },
     {
-      customer: 'Sergey',
-      location: 'Smalyavichy, Sovetskaya St 15-1',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 1 } },
-      productIds: [20, 7, 4],
+      customer: "Olga",
+      location: "Zaslawye, Starominsky St 21-10",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        7,
+        10,
+        26
+      ],
+      createdAt: "2025-06-17T21:58:13.000Z",
+      updatedAt: "2025-06-17T21:58:13.000Z",
+      status: OrderStatus.DELIVERED
     },
     {
-      customer: 'Olga',
-      location: 'Zaslawye, Starominsky St 21-10',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 2 } },
-      productIds: [7, 10, 26],
+      customer: "Dmitry",
+      location: "Fanipol, Rizhevskaya St 3-2",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        18,
+        21
+      ],
+      createdAt: "2025-07-23T10:00:22.000Z",
+      updatedAt: "2025-07-23T10:00:22.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Natalia",
+      location: "Minsk, Franziska Skoriny St 5-4",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        13,
+        4,
+        20
+      ],
+      createdAt: "2025-07-23T10:00:22.000Z",
+      updatedAt: "2025-07-23T10:00:22.000Z",
+      status: OrderStatus.CREATED
+    },
+    {
+      customer: "Pavel",
+      location: "Minsk, Karla Marksa St 20-6",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        27,
+        2,
+        10
+      ],
+      createdAt: "2025-04-07T04:45:21.000Z",
+      updatedAt: "2025-04-07T04:45:21.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Irina",
+      location: "Minsk, Internatsionalnaya St 8-5",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        7,
+        13,
+        2
+      ],
+      createdAt: "2025-04-07T04:45:21.000Z",
+      updatedAt: "2025-04-07T04:45:21.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Andrei",
+      location: "Zhodino, Nemiga St 9-4",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        3,
+        19
+      ],
+      createdAt: "2025-04-07T04:45:21.000Z",
+      updatedAt: "2025-04-07T04:45:21.000Z",
+      status: OrderStatus.PROCESSING
+    },
+    {
+      customer: "Svetlana",
+      location: "Smalyavichy, Independence Ave 2-7",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        4,
+        12,
+        16,
+        20
+      ],
+      createdAt: "2025-04-07T04:45:21.000Z",
+      updatedAt: "2025-04-07T04:45:21.000Z",
+      status: OrderStatus.DELIVERED
+    },
+    {
+      customer: "Mikhail",
+      location: "Zaslawye, Kirova St 16-3",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        8,
+        22,
+        11,
+        3,
+        5
+      ],
+      createdAt: "2025-01-07T01:12:17.000Z",
+      updatedAt: "2025-01-07T01:12:17.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Yulia",
+      location: "Fanipol, Franziska Skoriny St 1-9",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        1,
+        2,
+        5,
+        13
+      ],
+      createdAt: "2025-01-07T01:12:17.000Z",
+      updatedAt: "2025-01-07T01:12:17.000Z",
+      status: OrderStatus.COMPLETED
     },
 
     {
-      customer: 'Dmitry',
-      location: 'Fanipol, Rizhevskaya St 3-2',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 1 } },
-      productIds: [18, 21],
+      customer: "Tatiana",
+      location: "Minsk, Starominsky St 6-11",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        7,
+        12,
+        12,
+        3
+      ],
+      createdAt: "2025-05-05T05:55:10.000Z",
+      updatedAt: "2025-05-05T05:55:10.000Z",
+      status: OrderStatus.COMPLETED
     },
     {
-      customer: 'Natalia',
-      location: 'Minsk, Franziska Skoriny St 5-4',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 2 } },
-      productIds: [13, 4, 20],
+      customer: "Vladimir",
+      location: "Zhodino, Karla Marksa St 5-8",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        1,
+        5,
+        22,
+        24
+      ],
+      createdAt: "2025-02-20T06:15:03.000Z",
+      updatedAt: "2025-02-20T06:15:03.000Z",
+      status: OrderStatus.SHIPPED
     },
     {
-      customer: 'Pavel',
-      location: 'Minsk, Karla Marksa St 20-6',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 1 } },
-      productIds: [27, 2, 10],
+      customer: "Daria",
+      location: "Smalyavichy, Nemiga St 3-6",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        1,
+        6,
+        15,
+        22,
+        14
+      ],
+      createdAt: "2025-02-20T06:15:03.000Z",
+      updatedAt: "2025-02-20T06:15:03.000Z",
+      status: OrderStatus.COMPLETED
     },
     {
-      customer: 'Irina',
-      location: 'Minsk, Internatsionalnaya St 8-5',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 2 } },
-      productIds: [7, 13, 2],
+      customer: "Alexei",
+      location: "Zaslawye, Independence Ave 12-1",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        6,
+        13
+      ],
+      createdAt: "2025-07-04T13:12:11.000Z",
+      updatedAt: "2025-07-04T13:12:11.000Z",
+      status: OrderStatus.CREATED
     },
     {
-      customer: 'Andrei',
-      location: 'Zhodino, Nemiga St 9-4',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 1 } },
-      productIds: [3, 19],
+      customer: "Irina",
+      location: "Fanipol, Kirova St 8-4",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        22,
+        12,
+        2
+      ],
+      createdAt: "2025-07-04T13:12:11.000Z",
+      updatedAt: "2025-07-04T13:12:11.000Z",
+      status: OrderStatus.RETURNED
     },
     {
-      customer: 'Svetlana',
-      location: 'Smalyavichy, Independence Ave 2-7',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 2 } },
-      productIds: [4, 12, 16, 20],
+      customer: "Irina",
+      location: "Fanipol, Kirova St 8-4",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        22,
+        12,
+        2,
+        13,
+        3
+      ],
+      createdAt: "2025-07-04T13:12:11.000Z",
+      updatedAt: "2025-07-04T13:12:11.000Z",
+      status: OrderStatus.COMPLETED
     },
     {
-      customer: 'Mikhail',
-      location: 'Zaslawye, Kirova St 16-3',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 1 } },
-      productIds: [8, 22, 11, 3, 5],
+      customer: "Lydia",
+      location: "Minsk, Rizhevskaya St 9-5",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        3,
+        13,
+        23
+      ],
+      createdAt: "2025-07-03T17:26:33.000Z",
+      updatedAt: "2025-07-03T17:26:33.000Z",
+      status: OrderStatus.SHIPPED
     },
     {
-      customer: 'Yulia',
-      location: 'Fanipol, Franziska Skoriny St 1-9',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 2 } },
-      productIds: [1, 2, 5, 13],
+      customer: "Eugene",
+      location: "Zhodino, Internatsionalnaya St 4-7",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        4,
+        14,
+        24
+      ],
+      createdAt: "2025-07-03T17:26:33.000Z",
+      updatedAt: "2025-07-03T17:26:33.000Z",
+      status: OrderStatus.PROCESSING
     },
     {
-      customer: 'Nikolai',
-      location: 'Minsk, Sovetskaya St 14-2',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 1 } },
-      productIds: [11, 23, 2, 8],
+      customer: "Sofia",
+      location: "Smalyavichy, Franziska Skoriny St 7-2",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        5,
+        15,
+        25
+      ],
+      createdAt: "2025-07-03T17:26:33.000Z",
+      updatedAt: "2025-07-03T17:26:33.000Z",
+      status: OrderStatus.DELIVERED
     },
     {
-      customer: 'Tatiana',
-      location: 'Minsk, Starominsky St 6-11',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 2 } },
-      productIds: [7, 12, 12, 3],
+      customer: "Konstantin",
+      location: "Zaslawye, Nemiga St 10-9",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        6,
+        16,
+        26
+      ],
+      createdAt: "2025-08-07T05:52:10.000Z",
+      updatedAt: "2025-08-07T05:52:10.000Z",
+      status: OrderStatus.SHIPPED
     },
     {
-      customer: 'Vladimir',
-      location: 'Zhodino, Karla Marksa St 5-8',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 1 } },
-      productIds: [1, 5, 22, 24],
+      customer: "Elena",
+      location: "Fanipol, Independence Ave 2-4",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        7,
+        17,
+        27
+      ],
+      createdAt: "2025-08-07T05:52:10.000Z",
+      updatedAt: "2025-08-07T05:52:10.000Z",
+      status: OrderStatus.COMPLETED
     },
     {
-      customer: 'Daria',
-      location: 'Smalyavichy, Nemiga St 3-6',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 2 } },
-      productIds: [1, 6, 15, 22, 14],
+      customer: "Victor",
+      location: "Minsk, Starominsky St 5-6",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        8,
+        18,
+        27
+      ],
+      createdAt: "2025-08-07T05:52:10.000Z",
+      updatedAt: "2025-08-07T05:52:10.000Z",
+      status: OrderStatus.CANCELLED
     },
     {
-      customer: 'Alexei',
-      location: 'Zaslawye, Independence Ave 12-1',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 1 } },
-      productIds: [6, 13],
+      customer: "Olga",
+      location: "Minsk, Kirova St 14-2",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        9,
+        19
+      ],
+      createdAt: "2025-08-07T05:52:10.000Z",
+      updatedAt: "2025-08-07T05:52:10.000Z",
+      status: OrderStatus.CREATED
     },
     {
-      customer: 'Irina',
-      location: 'Fanipol, Kirova St 8-4',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 2 } },
-      productIds: [22, 12, 2],
+      customer: "Pavel",
+      location: "Zhodino, Sovetskaya St 6-3",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        10,
+        20
+      ],
+      createdAt: "2025-08-07T05:52:10.000Z",
+      updatedAt: "2025-08-07T05:52:10.000Z",
+      status: OrderStatus.DELIVERED
     },
     {
-      customer: 'Boris',
-      location: 'Minsk, Lenina St 11-3',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 1 } },
-      productIds: [1, 11, 21],
+      customer: "Maria",
+      location: "Smalyavichy, Karla Marksa St 13-7",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        11,
+        21
+      ],
+      createdAt: "2025-05-18T15:35:19.000Z",
+      updatedAt: "2025-05-18T15:35:19.000Z",
+      status: OrderStatus.RETURNED
     },
     {
-      customer: 'Lydia',
-      location: 'Minsk, Rizhevskaya St 9-5',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 2 } },
-      productIds: [3, 13, 23],
+      customer: "Dmitry",
+      location: "Zaslawye, Internatsionalnaya St 1-8",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        12,
+        22
+      ],
+      createdAt: "2025-05-18T15:35:19.000Z",
+      updatedAt: "2025-05-18T15:35:19.000Z",
+      status: OrderStatus.COMPLETED
     },
     {
-      customer: 'Eugene',
-      location: 'Zhodino, Internatsionalnaya St 4-7',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 1 } },
-      productIds: [4, 14, 24],
+      customer: "Anastasia",
+      location: "Minsk, Kalvariyskaya St 19-7",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        7,
+        9
+      ],
+      createdAt: "2025-05-26T12:47:15.000Z",
+      updatedAt: "2025-05-26T12:47:15.000Z",
+      status: OrderStatus.CANCELLED
+    },
+
+    {
+      customer: "Artem",
+      location: "Minsk, Dzerzhinskogo Ave 8-3",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        1,
+        6,
+        13
+      ],
+      createdAt: "2025-01-06T08:26:10.000Z",
+      updatedAt: "2025-01-06T08:26:10.000Z",
+      status: OrderStatus.CANCELLED
     },
     {
-      customer: 'Sofia',
-      location: 'Smalyavichy, Franziska Skoriny St 7-2',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 2 } },
-      productIds: [5, 15, 25],
+      customer: "Valeria",
+      location: "Minsk, Masherova Ave 22-10",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        4,
+        12
+      ],
+      createdAt: "2025-01-06T13:41:33.000Z",
+      updatedAt: "2025-01-06T13:41:33.000Z",
+      status: OrderStatus.COMPLETED
     },
     {
-      customer: 'Konstantin',
-      location: 'Zaslawye, Nemiga St 10-9',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 1 } },
-      productIds: [6, 16, 26],
+      customer: "German",
+      location: "Minsk, Yakuba Kolasa St 5-5",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        19,
+        25
+      ],
+      createdAt: "2025-01-06T18:59:52.000Z",
+      updatedAt: "2025-01-06T18:59:52.000Z",
+      status: OrderStatus.COMPLETED
     },
     {
-      customer: 'Elena',
-      location: 'Fanipol, Independence Ave 2-4',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 2 } },
-      productIds: [7, 17, 27],
+      customer: "Nadezhda",
+      location: "Smalyavichy, Mira St 2-4",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        8,
+        15,
+        23
+      ],
+      createdAt: "2025-06-17T07:05:30.000Z",
+      updatedAt: "2025-06-17T07:05:30.000Z",
+      status: OrderStatus.CANCELLED
     },
     {
-      customer: 'Victor',
-      location: 'Minsk, Starominsky St 5-6',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 1 } },
-      productIds: [8, 18, 27],
+      customer: "Stanislav",
+      location: "Zaslawye, Lenina St 10-6",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        11,
+        20
+      ],
+      createdAt: "2025-06-17T11:22:18.000Z",
+      updatedAt: "2025-06-17T11:22:18.000Z",
+      status: OrderStatus.COMPLETED
     },
     {
-      customer: 'Olga',
-      location: 'Minsk, Kirova St 14-2',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 2 } },
-      productIds: [9, 19],
+      customer: "Larisa",
+      location: "Minsk, Nemiga St 1-2",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        3,
+        7,
+        26
+      ],
+      createdAt: "2025-06-17T16:48:03.000Z",
+      updatedAt: "2025-06-17T16:48:03.000Z",
+      status: OrderStatus.COMPLETED
     },
     {
-      customer: 'Pavel',
-      location: 'Zhodino, Sovetskaya St 6-3',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 1 } },
-      productIds: [10, 20],
+      customer: "Yaroslav",
+      location: "Minsk, Surhanava St 12-1",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        6,
+        18
+      ],
+      createdAt: "2025-07-23T08:15:11.000Z",
+      updatedAt: "2025-07-23T08:15:11.000Z",
+      status: OrderStatus.CANCELLED
     },
     {
-      customer: 'Maria',
-      location: 'Smalyavichy, Karla Marksa St 13-7',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 2 } },
-      productIds: [11, 21],
+      customer: "Inna",
+      location: "Minsk, Timiryazeva St 9-9",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        2,
+        10,
+        27
+      ],
+      createdAt: "2025-07-23T12:44:39.000Z",
+      updatedAt: "2025-07-23T12:44:39.000Z",
+      status: OrderStatus.COMPLETED
     },
     {
-      customer: 'Dmitry',
-      location: 'Zaslawye, Internatsionalnaya St 1-8',
-      Deliveryman: { connect: { id: 3 } },
-      Manager: { connect: { id: 1 } },
-      productIds: [12, 22],
+      customer: "Viktoria",
+      location: "Minsk, Gikalo St 6-8",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        9,
+        21,
+        24
+      ],
+      createdAt: "2025-07-23T17:58:27.000Z",
+      updatedAt: "2025-07-23T17:58:27.000Z",
+      status: OrderStatus.COMPLETED
     },
-  ];
+    {
+      customer: "Denis",
+      location: "Minsk, Kalinina St 3-8",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        7,
+        13
+      ],
+      createdAt: "2025-05-05T07:41:10.000Z",
+      updatedAt: "2025-05-05T07:41:10.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Polina",
+      location: "Minsk, Revolyutsionnaya St 17-6",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        2,
+        6,
+        15
+      ],
+      createdAt: "2025-05-05T12:10:55.000Z",
+      updatedAt: "2025-05-05T12:10:55.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Igor",
+      location: "Minsk, Platonova St 4-1",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        8,
+        11,
+        22
+      ],
+      createdAt: "2025-05-05T18:23:32.000Z",
+      updatedAt: "2025-05-05T18:23:32.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Margarita",
+      location: "Zhodino, Mira St 9-2",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        4,
+        14,
+        24
+      ],
+      createdAt: "2025-02-20T08:02:00.000Z",
+      updatedAt: "2025-02-20T08:02:00.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Olesya",
+      location: "Smalyavichy, Partizanskaya St 2-9",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        6,
+        10
+      ],
+      createdAt: "2025-02-20T13:19:20.000Z",
+      updatedAt: "2025-02-20T13:19:20.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Fedor",
+      location: "Minsk, Mayakovskogo St 18-7",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        9,
+        21,
+        27
+      ],
+      createdAt: "2025-02-20T17:44:59.000Z",
+      updatedAt: "2025-02-20T17:44:59.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Alyona",
+      location: "Fanipol, Lesnaya St 7-4",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        3,
+        5,
+        12
+      ],
+      createdAt: "2025-07-04T09:09:09.000Z",
+      updatedAt: "2025-07-04T09:09:09.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Bogdan",
+      location: "Zaslawye, Gagarina St 2-6",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        7,
+        16
+      ],
+      createdAt: "2025-07-04T12:34:56.000Z",
+      updatedAt: "2025-07-04T12:34:56.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Kristina",
+      location: "Minsk, Filimonova St 11-5",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        1,
+        18,
+        23
+      ],
+      createdAt: "2025-07-04T19:20:30.000Z",
+      updatedAt: "2025-07-04T19:20:30.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Petr",
+      location: "Minsk, Kropotkina St 9-8",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        2,
+        9
+      ],
+      createdAt: "2025-07-03T08:02:44.000Z",
+      updatedAt: "2025-07-03T08:02:44.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Tatiana S.",
+      location: "Minsk, Bogdanovicha St 21-2",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        10,
+        15,
+        20
+      ],
+      createdAt: "2025-07-03T13:30:01.000Z",
+      updatedAt: "2025-07-03T13:30:01.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Grigory",
+      location: "Minsk, Volgogradskaya St 4-3",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        6,
+        12,
+        26
+      ],
+      createdAt: "2025-07-03T18:18:18.000Z",
+      updatedAt: "2025-07-03T18:18:18.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Raisa",
+      location: "Zhodino, Oktyabrskaya St 3-5",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        4,
+        7,
+        11
+      ],
+      createdAt: "2025-05-18T09:00:00.000Z",
+      updatedAt: "2025-05-18T09:00:00.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Vadim",
+      location: "Smalyavichy, Sovetskaya St 8-2",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        14,
+        19
+      ],
+      createdAt: "2025-05-18T13:22:45.000Z",
+      updatedAt: "2025-05-18T13:22:45.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Zoya",
+      location: "Minsk, Kotovskogo St 6-9",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        5,
+        16,
+        25
+      ],
+      createdAt: "2025-05-18T20:11:10.000Z",
+      updatedAt: "2025-05-18T20:11:10.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Anastasia",
+      location: "Minsk, Kalvariyskaya St 19-7",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        7,
+        9
+      ],
+      createdAt: "2025-05-26T12:47:15.000Z",
+      updatedAt: "2025-05-26T12:47:15.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Kirill",
+      location: "Minsk, Pobediteley Ave 45-2",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        2,
+        17,
+        24
+      ],
+      createdAt: "2025-05-26T19:03:44.000Z",
+      updatedAt: "2025-05-26T19:03:44.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Artem",
+      location: "Minsk, Dzerzhinskogo Ave 8-3",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        1,
+        6,
+        13
+      ],
+      createdAt: "2025-01-06T08:26:10.000Z",
+      updatedAt: "2025-01-06T08:26:10.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Valeria",
+      location: "Minsk, Masherova Ave 22-10",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        4,
+        12
+      ],
+      createdAt: "2025-01-06T13:41:33.000Z",
+      updatedAt: "2025-01-06T13:41:33.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "German",
+      location: "Minsk, Yakuba Kolasa St 5-5",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        19,
+        25
+      ],
+      createdAt: "2025-01-06T18:59:52.000Z",
+      updatedAt: "2025-01-06T18:59:52.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Nadezhda",
+      location: "Smalyavichy, Mira St 2-4",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        8,
+        15,
+        23
+      ],
+      createdAt: "2025-06-17T07:05:30.000Z",
+      updatedAt: "2025-06-17T07:05:30.000Z",
+      status: OrderStatus.CANCELLED
+    },
+
+    {
+      customer: "Yaroslav",
+      location: "Minsk, Surhanava St 12-1",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        6,
+        18
+      ],
+      createdAt: "2025-07-23T08:15:11.000Z",
+      updatedAt: "2025-07-23T08:15:11.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Inna",
+      location: "Minsk, Timiryazeva St 9-9",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        2,
+        10,
+        27
+      ],
+      createdAt: "2025-07-23T12:44:39.000Z",
+      updatedAt: "2025-07-23T12:44:39.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Viktoria",
+      location: "Minsk, Gikalo St 6-8",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        9,
+        21,
+        24
+      ],
+      createdAt: "2025-07-23T17:58:27.000Z",
+      updatedAt: "2025-07-23T17:58:27.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Alena",
+      location: "Minsk, Komsomolskaya St 7-1",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        5,
+        16
+      ],
+      createdAt: "2025-05-29T09:03:05.000Z",
+      updatedAt: "2025-05-29T09:03:05.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Oksana",
+      location: "Minsk, Rakovskaya St 14-5",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        1,
+        3,
+        20
+      ],
+      createdAt: "2025-05-29T14:22:49.000Z",
+      updatedAt: "2025-05-29T14:22:49.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Timur",
+      location: "Minsk, Zaslavskaya St 2-3",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        12,
+        18,
+        23
+      ],
+      createdAt: "2025-05-29T19:57:33.000Z",
+      updatedAt: "2025-05-29T19:57:33.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Denis",
+      location: "Minsk, Kalinina St 3-8",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        7,
+        13
+      ],
+      createdAt: "2025-05-05T07:41:10.000Z",
+      updatedAt: "2025-05-05T07:41:10.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Polina",
+      location: "Minsk, Revolyutsionnaya St 17-6",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        2,
+        6,
+        15
+      ],
+      createdAt: "2025-05-05T12:10:55.000Z",
+      updatedAt: "2025-05-05T12:10:55.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Igor",
+      location: "Minsk, Platonova St 4-1",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        8,
+        11,
+        22
+      ],
+      createdAt: "2025-05-05T18:23:32.000Z",
+      updatedAt: "2025-05-05T18:23:32.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Margarita",
+      location: "Zhodino, Mira St 9-2",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        4,
+        14,
+        24
+      ],
+      createdAt: "2025-02-20T08:02:00.000Z",
+      updatedAt: "2025-02-20T08:02:00.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Olesya",
+      location: "Smalyavichy, Partizanskaya St 2-9",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        6,
+        10
+      ],
+      createdAt: "2025-02-20T13:19:20.000Z",
+      updatedAt: "2025-02-20T13:19:20.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Fedor",
+      location: "Minsk, Mayakovskogo St 18-7",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        9,
+        21,
+        27
+      ],
+      createdAt: "2025-02-20T17:44:59.000Z",
+      updatedAt: "2025-02-20T17:44:59.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Alyona",
+      location: "Fanipol, Lesnaya St 7-4",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        3,
+        5,
+        12
+      ],
+      createdAt: "2025-07-04T09:09:09.000Z",
+      updatedAt: "2025-07-04T09:09:09.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Bogdan",
+      location: "Zaslawye, Gagarina St 2-6",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        7,
+        16
+      ],
+      createdAt: "2025-07-04T12:34:56.000Z",
+      updatedAt: "2025-07-04T12:34:56.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Kristina",
+      location: "Minsk, Filimonova St 11-5",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        1,
+        18,
+        23
+      ],
+      createdAt: "2025-07-04T19:20:30.000Z",
+      updatedAt: "2025-07-04T19:20:30.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Petr",
+      location: "Minsk, Kropotkina St 9-8",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        2,
+        9
+      ],
+      createdAt: "2025-07-03T08:02:44.000Z",
+      updatedAt: "2025-07-03T08:02:44.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Tatiana S.",
+      location: "Minsk, Bogdanovicha St 21-2",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        10,
+        15,
+        20
+      ],
+      createdAt: "2025-07-03T13:30:01.000Z",
+      updatedAt: "2025-07-03T13:30:01.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Grigory",
+      location: "Minsk, Volgogradskaya St 4-3",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        6,
+        12,
+        26
+      ],
+      createdAt: "2025-07-03T18:18:18.000Z",
+      updatedAt: "2025-07-03T18:18:18.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Raisa",
+      location: "Zhodino, Oktyabrskaya St 3-5",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        4,
+        7,
+        11
+      ],
+      createdAt: "2025-05-18T09:00:00.000Z",
+      updatedAt: "2025-05-18T09:00:00.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Vadim",
+      location: "Smalyavichy, Sovetskaya St 8-2",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        14,
+        19
+      ],
+      createdAt: "2025-05-18T13:22:45.000Z",
+      updatedAt: "2025-05-18T13:22:45.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Zoya",
+      location: "Minsk, Kotovskogo St 6-9",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        5,
+        16,
+        25
+      ],
+      createdAt: "2025-05-18T20:11:10.000Z",
+      updatedAt: "2025-05-18T20:11:10.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Roman",
+      location: "Minsk, Engelsa St 3-12",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        5,
+        14,
+        22
+      ],
+      createdAt: "2025-05-26T09:12:00.000Z",
+      updatedAt: "2025-05-26T09:12:00.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Anastasia",
+      location: "Minsk, Kalvariyskaya St 19-7",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        7,
+        9
+      ],
+      createdAt: "2025-05-26T12:47:15.000Z",
+      updatedAt: "2025-05-26T12:47:15.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Kirill",
+      location: "Minsk, Pobediteley Ave 45-2",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        2,
+        17,
+        24
+      ],
+      createdAt: "2025-05-26T19:03:44.000Z",
+      updatedAt: "2025-05-26T19:03:44.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Artem",
+      location: "Minsk, Dzerzhinskogo Ave 8-3",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        1,
+        6,
+        13
+      ],
+      createdAt: "2025-01-06T08:26:10.000Z",
+      updatedAt: "2025-01-06T08:26:10.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Valeria",
+      location: "Minsk, Masherova Ave 22-10",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        4,
+        12
+      ],
+      createdAt: "2025-01-06T13:41:33.000Z",
+      updatedAt: "2025-01-06T13:41:33.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "German",
+      location: "Minsk, Yakuba Kolasa St 5-5",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        19,
+        25
+      ],
+      createdAt: "2025-01-06T18:59:52.000Z",
+      updatedAt: "2025-01-06T18:59:52.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Nadezhda",
+      location: "Smalyavichy, Mira St 2-4",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        8,
+        15,
+        23
+      ],
+      createdAt: "2025-06-17T07:05:30.000Z",
+      updatedAt: "2025-06-17T07:05:30.000Z",
+      status: OrderStatus.CANCELLED
+    },
+
+
+    {
+      customer: "Yaroslav",
+      location: "Minsk, Surhanava St 12-1",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        6,
+        18
+      ],
+      createdAt: "2025-07-23T08:15:11.000Z",
+      updatedAt: "2025-07-23T08:15:11.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Inna",
+      location: "Minsk, Timiryazeva St 9-9",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        2,
+        10,
+        27
+      ],
+      createdAt: "2025-07-23T12:44:39.000Z",
+      updatedAt: "2025-07-23T12:44:39.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Viktoria",
+      location: "Minsk, Gikalo St 6-8",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        9,
+        21,
+        24
+      ],
+      createdAt: "2025-07-23T17:58:27.000Z",
+      updatedAt: "2025-07-23T17:58:27.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Alena",
+      location: "Minsk, Komsomolskaya St 7-1",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        5,
+        16
+      ],
+      createdAt: "2025-05-29T09:03:05.000Z",
+      updatedAt: "2025-05-29T09:03:05.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Oksana",
+      location: "Minsk, Rakovskaya St 14-5",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        1,
+        3,
+        20
+      ],
+      createdAt: "2025-05-29T14:22:49.000Z",
+      updatedAt: "2025-05-29T14:22:49.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Timur",
+      location: "Minsk, Zaslavskaya St 2-3",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        12,
+        18,
+        23
+      ],
+      createdAt: "2025-05-29T19:57:33.000Z",
+      updatedAt: "2025-05-29T19:57:33.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Denis",
+      location: "Minsk, Kalinina St 3-8",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        7,
+        13
+      ],
+      createdAt: "2025-05-05T07:41:10.000Z",
+      updatedAt: "2025-05-05T07:41:10.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Polina",
+      location: "Minsk, Revolyutsionnaya St 17-6",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        2,
+        6,
+        15
+      ],
+      createdAt: "2025-05-05T12:10:55.000Z",
+      updatedAt: "2025-05-05T12:10:55.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Igor",
+      location: "Minsk, Platonova St 4-1",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        8,
+        11,
+        22
+      ],
+      createdAt: "2025-05-05T18:23:32.000Z",
+      updatedAt: "2025-05-05T18:23:32.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Margarita",
+      location: "Zhodino, Mira St 9-2",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        4,
+        14,
+        24
+      ],
+      createdAt: "2025-02-20T08:02:00.000Z",
+      updatedAt: "2025-02-20T08:02:00.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Olesya",
+      location: "Smalyavichy, Partizanskaya St 2-9",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        6,
+        10
+      ],
+      createdAt: "2025-02-20T13:19:20.000Z",
+      updatedAt: "2025-02-20T13:19:20.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Fedor",
+      location: "Minsk, Mayakovskogo St 18-7",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        9,
+        21,
+        27
+      ],
+      createdAt: "2025-02-20T17:44:59.000Z",
+      updatedAt: "2025-02-20T17:44:59.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Alyona",
+      location: "Fanipol, Lesnaya St 7-4",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        3,
+        5,
+        12
+      ],
+      createdAt: "2025-07-04T09:09:09.000Z",
+      updatedAt: "2025-07-04T09:09:09.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Bogdan",
+      location: "Zaslawye, Gagarina St 2-6",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        7,
+        16
+      ],
+      createdAt: "2025-07-04T12:34:56.000Z",
+      updatedAt: "2025-07-04T12:34:56.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Kristina",
+      location: "Minsk, Filimonova St 11-5",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        1,
+        18,
+        23
+      ],
+      createdAt: "2025-07-04T19:20:30.000Z",
+      updatedAt: "2025-07-04T19:20:30.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Petr",
+      location: "Minsk, Kropotkina St 9-8",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        2,
+        9
+      ],
+      createdAt: "2025-07-03T08:02:44.000Z",
+      updatedAt: "2025-07-03T08:02:44.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Tatiana S.",
+      location: "Minsk, Bogdanovicha St 21-2",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        10,
+        15,
+        20
+      ],
+      createdAt: "2025-07-03T13:30:01.000Z",
+      updatedAt: "2025-07-03T13:30:01.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Grigory",
+      location: "Minsk, Volgogradskaya St 4-3",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        6,
+        12,
+        26
+      ],
+      createdAt: "2025-07-03T18:18:18.000Z",
+      updatedAt: "2025-07-03T18:18:18.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Raisa",
+      location: "Zhodino, Oktyabrskaya St 3-5",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        4,
+        7,
+        11
+      ],
+      createdAt: "2025-05-18T09:00:00.000Z",
+      updatedAt: "2025-05-18T09:00:00.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Vadim",
+      location: "Smalyavichy, Sovetskaya St 8-2",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        14,
+        19
+      ],
+      createdAt: "2025-05-18T13:22:45.000Z",
+      updatedAt: "2025-05-18T13:22:45.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Zoya",
+      location: "Minsk, Kotovskogo St 6-9",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        5,
+        16,
+        25
+      ],
+      createdAt: "2025-05-18T20:11:10.000Z",
+      updatedAt: "2025-05-18T20:11:10.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Stepan",
+      location: "Minsk, Nemiga St 22-4",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        3,
+        12,
+        21
+      ],
+      createdAt: "2025-08-07T08:14:20.000Z",
+      updatedAt: "2025-08-07T08:14:20.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Irina V.",
+      location: "Minsk, Independence Ave 33-7",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        7,
+        14
+      ],
+      createdAt: "2025-08-07T09:55:02.000Z",
+      updatedAt: "2025-08-07T09:55:02.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Ruslan",
+      location: "Zhodino, Lenina St 4-6",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        2,
+        8,
+        25
+      ],
+      createdAt: "2025-08-07T11:30:41.000Z",
+      updatedAt: "2025-08-07T11:30:41.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Karina",
+      location: "Smalyavichy, Sovetskaya St 19-5",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        4,
+        10,
+        13
+      ],
+      createdAt: "2025-08-07T13:47:09.000Z",
+      updatedAt: "2025-08-07T13:47:09.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Oskar",
+      location: "Zaslawye, Kirova St 6-1",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        5,
+        16
+      ],
+      createdAt: "2025-08-07T16:12:33.000Z",
+      updatedAt: "2025-08-07T16:12:33.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Ulyana",
+      location: "Fanipol, Franziska Skoriny St 3-8",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        11,
+        18,
+        27
+      ],
+      createdAt: "2025-08-07T18:20:18.000Z",
+      updatedAt: "2025-08-07T18:20:18.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Gleb",
+      location: "Minsk, Karla Marksa St 7-9",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        6,
+        9,
+        22
+      ],
+      createdAt: "2025-08-07T20:41:55.000Z",
+      updatedAt: "2025-08-07T20:41:55.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Elvira",
+      location: "Minsk, Surhanava St 15-4",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        1,
+        7,
+        19
+      ],
+      createdAt: "2025-07-23T09:05:30.000Z",
+      updatedAt: "2025-07-23T09:05:30.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Matvei",
+      location: "Minsk, Gikalo St 9-2",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        12,
+        20
+      ],
+      createdAt: "2025-07-23T19:44:44.000Z",
+      updatedAt: "2025-07-23T19:44:44.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Semen",
+      location: "Minsk, Internatsionalnaya St 3-4",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        4,
+        6,
+        17
+      ],
+      createdAt: "2025-04-07T09:22:11.000Z",
+      updatedAt: "2025-04-07T09:22:11.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Roman",
+      location: "Minsk, Engelsa St 3-12",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        5,
+        14,
+        22
+      ],
+      createdAt: "2025-05-26T09:12:00.000Z",
+      updatedAt: "2025-05-26T09:12:00.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Anastasia",
+      location: "Minsk, Kalvariyskaya St 19-7",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        7,
+        9
+      ],
+      createdAt: "2025-05-26T12:47:15.000Z",
+      updatedAt: "2025-05-26T12:47:15.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Kirill",
+      location: "Minsk, Pobediteley Ave 45-2",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        2,
+        17,
+        24
+      ],
+      createdAt: "2025-05-26T19:03:44.000Z",
+      updatedAt: "2025-05-26T19:03:44.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Artem",
+      location: "Minsk, Dzerzhinskogo Ave 8-3",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        1,
+        6,
+        13
+      ],
+      createdAt: "2025-01-06T08:26:10.000Z",
+      updatedAt: "2025-01-06T08:26:10.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Valeria",
+      location: "Minsk, Masherova Ave 22-10",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        4,
+        12
+      ],
+      createdAt: "2025-01-06T13:41:33.000Z",
+      updatedAt: "2025-01-06T13:41:33.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "German",
+      location: "Minsk, Yakuba Kolasa St 5-5",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        19,
+        25
+      ],
+      createdAt: "2025-01-06T18:59:52.000Z",
+      updatedAt: "2025-01-06T18:59:52.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Nadezhda",
+      location: "Smalyavichy, Mira St 2-4",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        8,
+        15,
+        23
+      ],
+      createdAt: "2025-06-17T07:05:30.000Z",
+      updatedAt: "2025-06-17T07:05:30.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Yaroslav",
+      location: "Minsk, Surhanava St 12-1",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        6,
+        18
+      ],
+      createdAt: "2025-07-23T08:15:11.000Z",
+      updatedAt: "2025-07-23T08:15:11.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Inna",
+      location: "Minsk, Timiryazeva St 9-9",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        2,
+        10,
+        27
+      ],
+      createdAt: "2025-07-23T12:44:39.000Z",
+      updatedAt: "2025-07-23T12:44:39.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Viktoria",
+      location: "Minsk, Gikalo St 6-8",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        9,
+        21,
+        24
+      ],
+      createdAt: "2025-07-23T17:58:27.000Z",
+      updatedAt: "2025-07-23T17:58:27.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Alena",
+      location: "Minsk, Komsomolskaya St 7-1",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        5,
+        16
+      ],
+      createdAt: "2025-05-29T09:03:05.000Z",
+      updatedAt: "2025-05-29T09:03:05.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Oksana",
+      location: "Minsk, Rakovskaya St 14-5",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        1,
+        3,
+        20
+      ],
+      createdAt: "2025-05-29T14:22:49.000Z",
+      updatedAt: "2025-05-29T14:22:49.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Timur",
+      location: "Minsk, Zaslavskaya St 2-3",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        12,
+        18,
+        23
+      ],
+      createdAt: "2025-05-29T19:57:33.000Z",
+      updatedAt: "2025-05-29T19:57:33.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Denis",
+      location: "Minsk, Kalinina St 3-8",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        7,
+        13
+      ],
+      createdAt: "2025-05-05T07:41:10.000Z",
+      updatedAt: "2025-05-05T07:41:10.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Polina",
+      location: "Minsk, Revolyutsionnaya St 17-6",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        2,
+        6,
+        15
+      ],
+      createdAt: "2025-05-05T12:10:55.000Z",
+      updatedAt: "2025-05-05T12:10:55.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Igor",
+      location: "Minsk, Platonova St 4-1",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        8,
+        11,
+        22
+      ],
+      createdAt: "2025-05-05T18:23:32.000Z",
+      updatedAt: "2025-05-05T18:23:32.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Margarita",
+      location: "Zhodino, Mira St 9-2",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        4,
+        14,
+        24
+      ],
+      createdAt: "2025-02-20T08:02:00.000Z",
+      updatedAt: "2025-02-20T08:02:00.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Olesya",
+      location: "Smalyavichy, Partizanskaya St 2-9",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        6,
+        10
+      ],
+      createdAt: "2025-02-20T13:19:20.000Z",
+      updatedAt: "2025-02-20T13:19:20.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Fedor",
+      location: "Minsk, Mayakovskogo St 18-7",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        9,
+        21,
+        27
+      ],
+      createdAt: "2025-02-20T17:44:59.000Z",
+      updatedAt: "2025-02-20T17:44:59.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Alyona",
+      location: "Fanipol, Lesnaya St 7-4",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        3,
+        5,
+        12
+      ],
+      createdAt: "2025-07-04T09:09:09.000Z",
+      updatedAt: "2025-07-04T09:09:09.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Bogdan",
+      location: "Zaslawye, Gagarina St 2-6",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        7,
+        16
+      ],
+      createdAt: "2025-07-04T12:34:56.000Z",
+      updatedAt: "2025-07-04T12:34:56.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Kristina",
+      location: "Minsk, Filimonova St 11-5",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        1,
+        18,
+        23
+      ],
+      createdAt: "2025-07-04T19:20:30.000Z",
+      updatedAt: "2025-07-04T19:20:30.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Petr",
+      location: "Minsk, Kropotkina St 9-8",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        2,
+        9
+      ],
+      createdAt: "2025-07-03T08:02:44.000Z",
+      updatedAt: "2025-07-03T08:02:44.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Raisa",
+      location: "Zhodino, Oktyabrskaya St 3-5",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        4,
+        7,
+        11
+      ],
+      createdAt: "2025-05-18T09:00:00.000Z",
+      updatedAt: "2025-05-18T09:00:00.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Vadim",
+      location: "Smalyavichy, Sovetskaya St 8-2",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        14,
+        19
+      ],
+      createdAt: "2025-05-18T13:22:45.000Z",
+      updatedAt: "2025-05-18T13:22:45.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Zoya",
+      location: "Minsk, Kotovskogo St 6-9",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        5,
+        16,
+        25
+      ],
+      createdAt: "2025-05-18T20:11:10.000Z",
+      updatedAt: "2025-05-18T20:11:10.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Miroslava",
+      location: "Minsk, Nemiga St 18-3",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        3,
+        8
+      ],
+      createdAt: "2025-07-03T07:12:05.000Z",
+      updatedAt: "2025-07-03T07:12:05.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Arseny",
+      location: "Minsk, Independence Ave 27-6",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        6,
+        17,
+        22
+      ],
+      createdAt: "2025-07-03T19:49:44.000Z",
+      updatedAt: "2025-07-03T19:49:44.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Elizaveta",
+      location: "Minsk, Yakuba Kolasa St 4-7",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        7,
+        21
+      ],
+      createdAt: "2025-06-17T08:33:21.000Z",
+      updatedAt: "2025-06-17T08:33:21.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Diana",
+      location: "Smalyavichy, Sovetskaya St 11-1",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        2,
+        12,
+        25
+      ],
+      createdAt: "2025-06-17T14:05:10.000Z",
+      updatedAt: "2025-06-17T14:05:10.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Ilya",
+      location: "Zaslawye, Lenina St 8-9",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        5,
+        9,
+        24
+      ],
+      createdAt: "2025-06-17T22:18:59.000Z",
+      updatedAt: "2025-06-17T22:18:59.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Nikita",
+      location: "Minsk, Timiryazeva St 4-2",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        1,
+        14
+      ],
+      createdAt: "2025-05-05T09:14:33.000Z",
+      updatedAt: "2025-05-05T09:14:33.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Alla",
+      location: "Minsk, Kalinina St 12-8",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        8,
+        18,
+        23
+      ],
+      createdAt: "2025-05-05T20:40:02.000Z",
+      updatedAt: "2025-05-05T20:40:02.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Mark",
+      location: "Minsk, Masherova Ave 5-3",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        4,
+        10
+      ],
+      createdAt: "2025-01-06T17:02:40.000Z",
+      updatedAt: "2025-01-06T17:02:40.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Ksenia",
+      location: "Minsk, Komsomolskaya St 9-6",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        11,
+        16
+      ],
+      createdAt: "2025-05-29T18:03:55.000Z",
+      updatedAt: "2025-05-29T18:03:55.000Z",
+      status: OrderStatus.COMPLETED
+    },
+    {
+      customer: "Georgy",
+      location: "Minsk, Internatsionalnaya St 6-4",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        3,
+        20,
+        27
+      ],
+      createdAt: "2025-04-07T11:26:00.000Z",
+      updatedAt: "2025-04-07T11:26:00.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Rimma",
+      location: "Minsk, Karla Marksa St 16-7",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        6,
+        7
+      ],
+      createdAt: "2025-04-07T16:40:41.000Z",
+      updatedAt: "2025-04-07T16:40:41.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Sofya",
+      location: "Minsk, Surhanava St 20-1",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        2,
+        13
+      ],
+      createdAt: "2025-07-23T21:03:22.000Z",
+      updatedAt: "2025-07-23T21:03:22.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Taisia",
+      location: "Zhodino, Oktyabrskaya St 2-5",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 2
+        }
+      },
+      productIds: [
+        5,
+        15,
+        23
+      ],
+      createdAt: "2025-05-18T18:44:10.000Z",
+      updatedAt: "2025-05-18T18:44:10.000Z",
+      status: OrderStatus.CANCELLED
+    },
+    {
+      customer: "Yakov",
+      location: "Minsk, Pobediteley Ave 51-9",
+      Deliveryman: {
+        connect: {
+          id: 3
+        }
+      },
+      Manager: {
+        connect: {
+          id: 1
+        }
+      },
+      productIds: [
+        1,
+        22,
+        24
+      ],
+      createdAt: "2025-08-07T23:55:40.000Z",
+      updatedAt: "2025-08-07T23:55:40.000Z",
+      status: OrderStatus.CANCELLED
+    }
+  ]

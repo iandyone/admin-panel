@@ -448,4 +448,159 @@ export class DatabaseService {
   async getProducts() {
     return await this.prisma.product.findMany();
   }
+
+  async getStatistic() {
+    const statisticData = await this.prisma.order.groupBy({
+      by: ['status'],
+      _count: { _all: true },
+      _sum: { totalAmount: true },
+    });
+
+    const chartData = await this.prisma.$queryRaw<
+      Array<{
+        day: string;
+        benefit: Decimal;
+        total: number;
+        completed: number;
+        cancelled: number;
+      }>
+    >`
+    SELECT
+      created_at::date as order_date,
+      to_char(created_at::date, 'DD.MM.YYYY') AS day,
+      COALESCE(SUM(total_amount) FILTER (WHERE status = ${OrderStatus.COMPLETED}::"OrderStatus"), 0) AS benefit,
+      COUNT(*)::int AS total,
+      COUNT(*) FILTER (WHERE status = ${OrderStatus.COMPLETED}::"OrderStatus")::int AS completed,
+      COUNT(*) FILTER (WHERE status = ${OrderStatus.CANCELLED}::"OrderStatus")::int AS cancelled
+    FROM "orders"
+    GROUP BY order_date
+    ORDER BY order_date
+  `;
+
+    const statistic = statisticData.reduce(
+      (acc, { status, _count, _sum }) => {
+        acc.total += _count._all;
+
+        if (status === OrderStatus.COMPLETED) {
+          acc.completed += _count._all;
+          acc.benefit = acc.benefit.plus(_sum.totalAmount ?? 0);
+        }
+
+        if (status === OrderStatus.CANCELLED) {
+          acc.cancelled += _count._all;
+        }
+
+        return acc;
+      },
+      { total: 0, completed: 0, cancelled: 0, benefit: new Decimal(0) },
+    );
+
+    const charts = chartData.reduce(
+      (acc, { total, cancelled, completed, benefit, day }) => {
+        acc.total.data.push(total);
+        acc.total.days.push(day);
+
+        acc.completed.data.push(completed);
+        acc.completed.days.push(day);
+
+        acc.cancelled.data.push(cancelled);
+        acc.cancelled.days.push(day);
+
+        acc.benefit.data.push(benefit.toNumber());
+        acc.benefit.days.push(day);
+
+        return acc;
+      },
+      {
+        total: { data: [] as number[], days: [] as string[] },
+        completed: { data: [] as number[], days: [] as string[] },
+        cancelled: { data: [] as number[], days: [] as string[] },
+        benefit: { data: [] as number[], days: [] as string[] },
+      },
+    );
+
+    return {
+      total: { count: statistic.total, ...charts.total },
+      completed: { count: statistic.completed, ...charts.completed },
+      cancelled: { count: statistic.cancelled, ...charts.cancelled },
+      benefit: { count: statistic.benefit, ...charts.benefit },
+    };
+  }
+
+  async getStatisticTest() {
+    const statisticData = await this.prisma.order.groupBy({
+      by: ['status'],
+      _count: { _all: true },
+      _sum: { totalAmount: true },
+    });
+
+    const chartData = await this.prisma.$queryRaw<
+      Array<{
+        day: string;
+        benefit: Decimal;
+        total: number;
+        completed: number;
+        cancelled: number;
+      }>
+    >`
+    SELECT
+      to_char(created_at::date, 'DD.MM.YYYY') AS day,
+      SUM(total_amount) AS benefit,
+      COUNT(*)::int AS total,
+      COUNT(*) FILTER (WHERE status = ${OrderStatus.COMPLETED}::"OrderStatus")::int AS completed,
+      COUNT(*) FILTER (WHERE status = ${OrderStatus.CANCELLED}::"OrderStatus")::int AS cancelled
+    FROM "orders"
+    GROUP BY 1
+    ORDER BY 1
+  `;
+
+    const statistic = statisticData.reduce(
+      (acc, { status, _count, _sum }) => {
+        acc.total += _count._all;
+
+        if (status === OrderStatus.COMPLETED) {
+          acc.completed += _count._all;
+          acc.benefit = acc.benefit.plus(_sum.totalAmount ?? 0);
+        }
+
+        if (status === OrderStatus.CANCELLED) {
+          acc.cancelled += _count._all;
+        }
+
+        return acc;
+      },
+      { total: 0, completed: 0, cancelled: 0, benefit: new Decimal(0) },
+    );
+
+    const test = chartData.reduce(
+      (acc, { total, cancelled, completed, benefit, day }) => {
+        acc.total.data.push(total);
+        acc.total.days.push(day);
+
+        acc.completed.data.push(completed);
+        acc.completed.days.push(day);
+
+        acc.cancelled.data.push(cancelled);
+        acc.cancelled.days.push(day);
+
+        acc.benefit.data.push(benefit.toNumber());
+        acc.benefit.days.push(day);
+
+        return acc;
+      },
+      {
+        total: { data: [] as number[], days: [] as string[] },
+        completed: { data: [] as number[], days: [] as string[] },
+        cancelled: { data: [] as number[], days: [] as string[] },
+        benefit: { data: [] as number[], days: [] as string[] },
+      },
+    );
+
+    return {
+      total: { count: statistic.total, ...test.total },
+      completed: { count: statistic.completed, ...test.completed },
+      cancelled: { count: statistic.cancelled, ...test.cancelled },
+      benefit: { count: statistic.benefit, ...test.benefit },
+    };
+  }
 }

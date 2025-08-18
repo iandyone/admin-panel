@@ -61,11 +61,22 @@ async function seedOrdersOptimized() {
     location,
     Deliveryman,
     Manager,
+    createdAt,
+    updatedAt,
+    status,
     productIds = [],
   } of ORDERS) {
     await prisma.$transaction(async (tx) => {
       const order = await tx.order.create({
-        data: { customer, location, Deliveryman, Manager },
+        data: {
+          customer,
+          location,
+          Deliveryman,
+          Manager,
+          createdAt,
+          updatedAt,
+          status,
+        },
         select: { id: true },
       });
 
