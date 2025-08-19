@@ -30,7 +30,8 @@ export const PeriodFilter: FC<Props> = ({
           <DatePicker
             sx={{ width: "100%" }}
             openTo="day"
-            value={valueFrom ? moment(valueFrom) :null}
+            value={valueFrom ? moment(valueFrom) : null}
+            format="DD.MM.YYYY"
             slotProps={{
               textField: { size: "small" },
               field: { clearable: true },
@@ -43,7 +44,8 @@ export const PeriodFilter: FC<Props> = ({
           <DatePicker
             sx={{ width: "100%" }}
             openTo="day"
-            value={valueTo ? moment(valueTo) :null}
+            format="DD.MM.YYYY"
+            value={valueTo ? moment(valueTo) : null}
             slotProps={{
               textField: { size: "small" },
               field: { clearable: true },

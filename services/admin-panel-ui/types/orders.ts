@@ -54,3 +54,8 @@ export interface UsersFilter {
   dateFrom?: string | number;
   dateTo?: string | number;
 }
+
+export interface DashboardFilter {
+  dateFrom?: string | null;
+  dateTo?: string | null;
+}

@@ -55,17 +55,17 @@ export const StatisticCard: FC<Props> = ({
         {data?.length && (
           <Box sx={{ height: "100%" }}>
             <Typography variant="caption" sx={{ color: "text.secondary" }}>
-              Last 30 days
+              Current period
             </Typography>
 
-            <Box sx={{ width: "100%", height: 50 }}>
+            <Stack justifyContent='flex-start' sx={{ width: "100%", height: 50 }}>
               <SparkLine
                 value={value}
                 data={data}
                 days={days}
                 type={chip?.isPositive ? "positive" : "negative"}
               />
-            </Box>
+            </Stack>
           </Box>
         )}
       </Stack>

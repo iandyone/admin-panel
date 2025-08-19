@@ -6,19 +6,19 @@ import {
 } from "@tanstack/react-query";
 
 import { getDashboardStats } from "@/actions";
+import { DashboardFilter } from "@/components/dashboard-filter";
 import { DashboardStatistics } from "@/components/dashboard-statistics";
-import { PeriodFilter } from "@/components/period-filter";
 import { Trending } from "@/components/trending";
 import { Card } from "@/components/ui/card";
 import { OrdersChart } from "@/components/ui/orders-chart";
-import { FetchTags } from "@/constants";
+import { DASHBOARD_DEFAULT_FILTER, FetchTags } from "@/constants";
 
 export default async function Page() {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: [FetchTags.DASHBOARD],
-    queryFn: async () => await getDashboardStats(),
+    queryKey: [FetchTags.DASHBOARD, DASHBOARD_DEFAULT_FILTER],
+    queryFn: async () => await getDashboardStats(DASHBOARD_DEFAULT_FILTER),
   });
 
   return (
@@ -28,12 +28,7 @@ export default async function Page() {
           Overview
         </Typography>
 
-        <PeriodFilter
-          containerProps={{
-            spacing: { md: 3, xs: 2 },
-            columns: { md: 4, xs: 2 },
-          }}
-        />
+        <DashboardFilter />
 
         <DashboardStatistics />
 

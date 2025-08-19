@@ -3,12 +3,18 @@
 import { Card, Grid } from "@mui/material";
 import { FC, useMemo } from "react";
 
+import { useAppSearchParams } from "@/hooks";
 import { useGetDashboardStatistics } from "@/query";
 
 import { StatisticCard } from "../ui/statistic-card";
 
 export const DashboardStatistics: FC = () => {
-  const { data: statistics } = useGetDashboardStatistics();
+  const { searchParams } = useAppSearchParams();
+
+  const { data: statistics } = useGetDashboardStatistics({
+    dateFrom: searchParams.get("dateFrom"),
+    dateTo: searchParams.get("dateTo"),
+  });
 
   const STATISTICS_DATA = useMemo(() => {
     return [
@@ -29,7 +35,7 @@ export const DashboardStatistics: FC = () => {
         title: "Completed",
         value: statistics?.completed.count || 0,
         chip: {
-          isPositive: false,
+          isPositive: true,
           value: 9,
         },
         key: "completed",
@@ -41,7 +47,7 @@ export const DashboardStatistics: FC = () => {
         title: "Canceled",
         value: statistics?.cancelled.count || 0,
         chip: {
-          isPositive: true,
+          isPositive: false,
           value: 3,
         },
         key: "cancelled",

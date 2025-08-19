@@ -31,6 +31,12 @@ export const ORDERS_SEARCH_FILTERS = [
   "dateToUpdated",
 ]
 
+export const DASHBOARD_SEARCH_FILTERS = [
+  'dateFrom',
+  'dateTo',
+]
+
+
 export const USERS_DEFAULT_FILTER = {
   id: null,
   firstName: null,
@@ -60,4 +66,9 @@ export const ORDERS_DEFAULT_FILTER = {
   dateToCreated: null,
   dateFromUpdated: null,
   dateToUpdated: null,
+}
+
+export const DASHBOARD_DEFAULT_FILTER = {
+  dateFrom: null,
+  dateTo: null,
 }
