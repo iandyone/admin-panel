@@ -16,3 +16,5 @@ node_modules
 
 assignment.md
 shared
+
+**/prisma/constants/*.json

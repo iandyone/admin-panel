@@ -79,3 +79,7 @@ export interface OrdersFindAllProps {
   manager?: string;
   status?: string;
 }
+export interface DashboardStatisticProps {
+  dateFrom?: string;
+  dateTo?: string;
+}

@@ -7,6 +7,7 @@ import { PrismaService } from './prisma.service';
 
 import { DEFAULT_PER_PAGE, START_PAGE } from '../../constants';
 import { filterNullValues, getOrderItemsFromProductsIds } from '../../utils';
+import { DashboardStatisticDto } from '../dashboard/dto/get-statistic.dto';
 import { CreateOrderDto } from '../orders/dto/create-order.dto';
 import { FindAllOrdersDto } from '../orders/dto/find-all-orders.dto';
 import { UpdateOrderDto } from '../orders/dto/update-order.dto';
@@ -449,11 +450,21 @@ export class DatabaseService {
     return await this.prisma.product.findMany();
   }
 
-  async getStatistic() {
+  async getStatistic({ dateFrom, dateTo }: DashboardStatisticDto) {
+    const fromDate: Date | null = dateFrom ? new Date(dateFrom) : null;
+
+    const toDate: Date | null = dateTo ? new Date(dateTo) : null;
+
     const statisticData = await this.prisma.order.groupBy({
       by: ['status'],
       _count: { _all: true },
       _sum: { totalAmount: true },
+      where: {
+        createdAt: {
+          gte: fromDate ?? undefined,
+          lte: toDate ?? undefined,
+        },
+      },
     });
 
     const chartData = await this.prisma.$queryRaw<
@@ -466,13 +477,20 @@ export class DatabaseService {
       }>
     >`
     SELECT
-      created_at::date as order_date,
+      created_at::date AS order_date,
       to_char(created_at::date, 'DD.MM.YYYY') AS day,
-      COALESCE(SUM(total_amount) FILTER (WHERE status = ${OrderStatus.COMPLETED}::"OrderStatus"), 0) AS benefit,
+      COALESCE(
+        SUM(total_amount) FILTER (WHERE status = ${OrderStatus.COMPLETED}::"OrderStatus"),
+        0
+      ) AS benefit,
       COUNT(*)::int AS total,
       COUNT(*) FILTER (WHERE status = ${OrderStatus.COMPLETED}::"OrderStatus")::int AS completed,
       COUNT(*) FILTER (WHERE status = ${OrderStatus.CANCELLED}::"OrderStatus")::int AS cancelled
     FROM "orders"
+  
+    WHERE
+      (${fromDate}::timestamp IS NULL OR created_at >= ${fromDate}::timestamp)
+      AND (${toDate}::timestamp   IS NULL OR created_at <= ${toDate}::timestamp)
     GROUP BY order_date
     ORDER BY order_date
   `;
