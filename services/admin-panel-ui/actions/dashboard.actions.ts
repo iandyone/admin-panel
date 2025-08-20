@@ -14,12 +14,32 @@ export const getDashboardStats = async (filters = DASHBOARD_DEFAULT_FILTER) => {
   return response.data
 }
 
-export const getTrandingProducts = async (filters = DASHBOARD_DEFAULT_FILTER) => {
+export const getTrandingTrends = async (filters = DASHBOARD_DEFAULT_FILTER, limit?: number) => {
   const response = await $axios_server.get<TrendProduct[]>('/dashboard/trends', {
     params: {
       ...filters
     }
   });
 
-  return response.data
+  return limit ? response.data.splice(0, limit) : response.data;
+}
+
+export const getDashboardOrders= async (filters = DASHBOARD_DEFAULT_FILTER) => {
+  const response = await $axios_server.get<TrendProduct[]>('/dashboard/orders', {
+    params: {
+      ...filters
+    }
+  });
+
+  return response.data;
+}
+
+export const getDashboardProducts= async (filters = DASHBOARD_DEFAULT_FILTER) => {
+  const response = await $axios_server.get<TrendProduct[]>('/dashboard/products', {
+    params: {
+      ...filters
+    }
+  });
+
+  return response.data;
 }

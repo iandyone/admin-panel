@@ -2,14 +2,14 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query'
 
 import { $axios } from '@/configs'
 import { FetchTags } from '@/constants'
-import { DashboardFilter, TrendProduct } from '@/types'
+import { DashboardFilter, DashboardOrders } from '@/types'
 
-export const useGetDashboardTrends = (filters?: DashboardFilter) => {
+export const useGetDashboardOrders = (filters?: DashboardFilter) => {
   return useQuery({
-    queryKey: [FetchTags.TRENDS, filters],
+    queryKey: [FetchTags.DASHBOARD_ORDERS, filters],
     queryFn: async () => {
       try {
-        const response = await $axios.get<TrendProduct[]>('/dashboard/trends', {
+        const response = await $axios.get<DashboardOrders[]>('/dashboard/orders', {
           params: {
             ...filters
           }
@@ -20,7 +20,7 @@ export const useGetDashboardTrends = (filters?: DashboardFilter) => {
       } catch (error) {
         console.log({ error });
 
-        return [] as TrendProduct[];
+        return [] as DashboardOrders[];
       }
     },
     placeholderData: keepPreviousData,

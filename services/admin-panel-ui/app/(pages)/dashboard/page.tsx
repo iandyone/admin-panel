@@ -5,25 +5,47 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 
-import { getDashboardStats, getTrandingProducts } from "@/actions";
+import {
+  getDashboardStats,
+  getDashboardOrders,
+  getTrandingTrends,
+  getDashboardProducts,
+} from "@/actions";
 import { DashboardFilter } from "@/components/dashboard-filter";
 import { DashboardStatistics } from "@/components/dashboard-statistics";
 import { Trending } from "@/components/trending";
 import { Card } from "@/components/ui/card";
 import { OrdersChart } from "@/components/ui/orders-chart";
-import { DASHBOARD_DEFAULT_FILTER, FetchTags } from "@/constants";
+import {
+  DASHBOARD_DEFAULT_FILTER,
+  FetchTags,
+} from "@/constants";
+
+const { STATISTIC, TRENDS, DASHBOARD_ORDERS, DASHBOARD_PRODUCTS } = FetchTags;
 
 export default async function Page() {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: [FetchTags.STATISTIC, DASHBOARD_DEFAULT_FILTER],
+    queryKey: [STATISTIC, DASHBOARD_DEFAULT_FILTER],
     queryFn: async () => await getDashboardStats(DASHBOARD_DEFAULT_FILTER),
   });
 
   await queryClient.prefetchQuery({
-    queryKey: [FetchTags.TRENDS, DASHBOARD_DEFAULT_FILTER],
-    queryFn: async () => await getTrandingProducts(DASHBOARD_DEFAULT_FILTER),
+    queryKey: [TRENDS, DASHBOARD_DEFAULT_FILTER],
+    queryFn: async () => await getTrandingTrends(DASHBOARD_DEFAULT_FILTER),
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: [DASHBOARD_ORDERS, DASHBOARD_DEFAULT_FILTER],
+    queryFn: async () =>
+      await getDashboardOrders(DASHBOARD_DEFAULT_FILTER),
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: [DASHBOARD_PRODUCTS, DASHBOARD_DEFAULT_FILTER],
+    queryFn: async () =>
+      await getDashboardProducts(DASHBOARD_DEFAULT_FILTER),
   });
 
   return (

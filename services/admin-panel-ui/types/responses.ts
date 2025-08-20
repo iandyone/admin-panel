@@ -69,3 +69,15 @@ export interface TrendProduct {
   totalQuantity: number;
   totalAmount: number;
 }
+
+
+export interface DashboardOrders {
+  status: string;
+  total: number;
+  percent: number;
+}
+
+export interface DashboardProducts {
+  category: ProductCategory;
+  percent: number;
+}

@@ -13,10 +13,12 @@ export enum ERoutes {
 export const FetchTags = {
   USERS: "users",
   ORDERS: "orders",
-  EMPLOYEE: 'employee',
-  PRODUCTS: 'products',
-  STATISTIC: 'statistic',
-  TRENDS: 'trends'
+  EMPLOYEE: "employee",
+  PRODUCTS: "products",
+  STATISTIC: "statistic",
+  TRENDS: "trends",
+  DASHBOARD_ORDERS: "dashboard-orders",
+  DASHBOARD_PRODUCTS: "dashboard-products",
 };
 
 export const navigation: Navigation = [
