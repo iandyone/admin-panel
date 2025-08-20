@@ -59,3 +59,13 @@ export interface DashboardStatistic {
   cancelled: DashboardStatisticItem;
   benefit: DashboardStatisticItem;
 }
+
+export interface TrendProduct {
+  category: ProductCategory;
+  productId: number;
+  name: string;
+  amount: string;
+  orderCount: number;
+  totalQuantity: number;
+  totalAmount: number;
+}

@@ -5,7 +5,7 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 
-import { getDashboardStats } from "@/actions";
+import { getDashboardStats, getTrandingProducts } from "@/actions";
 import { DashboardFilter } from "@/components/dashboard-filter";
 import { DashboardStatistics } from "@/components/dashboard-statistics";
 import { Trending } from "@/components/trending";
@@ -17,8 +17,13 @@ export default async function Page() {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: [FetchTags.DASHBOARD, DASHBOARD_DEFAULT_FILTER],
+    queryKey: [FetchTags.STATISTIC, DASHBOARD_DEFAULT_FILTER],
     queryFn: async () => await getDashboardStats(DASHBOARD_DEFAULT_FILTER),
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: [FetchTags.TRENDS, DASHBOARD_DEFAULT_FILTER],
+    queryFn: async () => await getTrandingProducts(DASHBOARD_DEFAULT_FILTER),
   });
 
   return (

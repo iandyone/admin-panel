@@ -15,7 +15,8 @@ export const FetchTags = {
   ORDERS: "orders",
   EMPLOYEE: 'employee',
   PRODUCTS: 'products',
-  DASHBOARD: 'dashboard'
+  STATISTIC: 'statistic',
+  TRENDS: 'trends'
 };
 
 export const navigation: Navigation = [
