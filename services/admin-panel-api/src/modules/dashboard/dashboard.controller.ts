@@ -1,4 +1,4 @@
-import { Controller, Get, Put, Query, UsePipes } from '@nestjs/common';
+import { Controller, Get, Query, UsePipes } from '@nestjs/common';
 
 import { DashboardService } from './dashboard.service';
 
@@ -16,8 +16,9 @@ export class DashboardController {
     return this.dashboardService.getStatistic(query);
   }
 
-  @Put()
-  getStatisticTest() {
-    return this.dashboardService.getStatisticTest();
+  @Get('/trends')
+  @UsePipes(new JoiValidationPipe(dashboardStatisticSchema))
+  getTrends(@Query() query: DashboardStatisticProps) {
+    return this.dashboardService.getTrends(query);
   }
 }
