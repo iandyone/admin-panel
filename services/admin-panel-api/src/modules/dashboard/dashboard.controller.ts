@@ -13,12 +13,24 @@ export class DashboardController {
   @Get()
   @UsePipes(new JoiValidationPipe(dashboardStatisticSchema))
   getStatistic(@Query() query: DashboardStatisticProps) {
-    return this.dashboardService.getStatistic(query);
+    return this.dashboardService.getDashboardStatistic(query);
   }
 
   @Get('/trends')
   @UsePipes(new JoiValidationPipe(dashboardStatisticSchema))
   getTrends(@Query() query: DashboardStatisticProps) {
-    return this.dashboardService.getTrends(query);
+    return this.dashboardService.getDashboardTrends(query);
+  }
+
+  @Get('/orders')
+  @UsePipes(new JoiValidationPipe(dashboardStatisticSchema))
+  getOrdersStatisticByStatus(@Query() query: DashboardStatisticProps) {
+    return this.dashboardService.getDashboardOrders(query);
+  }
+
+  @Get('/products')
+  @UsePipes(new JoiValidationPipe(dashboardStatisticSchema))
+  getSoldProductsByCategory(@Query() query: DashboardStatisticProps) {
+    return this.dashboardService.getDashboardSoldProducts(query);
   }
 }

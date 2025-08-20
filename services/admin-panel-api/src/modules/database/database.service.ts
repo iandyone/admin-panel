@@ -3,8 +3,10 @@ import { $Enums, OrderStatus } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
 import bcrypt from 'bcrypt';
 
-import { TrendsItemEntity } from './entities/get-trends.entity';
+import { OrdersStatisticByStatus } from './entities/orders-statistic-by-status.entity';
+import { SoldProductStatistic } from './entities/sold-product.entity';
 import { StatisticChart } from './entities/statistic-chart.entity';
+import { TrendsItemEntity } from './entities/trends.entity';
 import { PrismaService } from './prisma.service';
 
 import { DEFAULT_PER_PAGE, START_PAGE } from '../../constants';
@@ -452,7 +454,7 @@ export class DatabaseService {
     return await this.prisma.product.findMany();
   }
 
-  async getStatistic({ dateFrom, dateTo }: DashboardStatisticDto) {
+  async getDashboardStatistic({ dateFrom, dateTo }: DashboardStatisticDto) {
     const fromDate: Date | null = dateFrom ? new Date(dateFrom) : null;
     const toDate: Date | null = dateTo ? new Date(dateTo) : null;
 
@@ -537,7 +539,7 @@ export class DatabaseService {
     };
   }
 
-  async getTrends({ dateFrom, dateTo }: DashboardStatisticDto) {
+  async getDashboardTrends({ dateFrom, dateTo }: DashboardStatisticDto) {
     const fromDate: Date | null = dateFrom ? new Date(dateFrom) : null;
     const toDate: Date | null = dateTo ? new Date(dateTo) : null;
 
@@ -556,10 +558,49 @@ export class DatabaseService {
       WHERE (${fromDate}::timestamp IS NULL OR o.created_at >= ${fromDate}::timestamp)
         AND (${toDate}::timestamp   IS NULL OR o.created_at <  ${toDate}::timestamp)
       GROUP BY oi.product_id, p.name, p.category, p.amount
-      ORDER BY total_quantity DESC
+      ORDER BY total_quantity DESC, total_amount DESC, p.name DESC
       LIMIT 5
     `;
 
     return data;
+  }
+
+  async getDashboardOrders({ dateFrom, dateTo }: DashboardStatisticDto) {
+    const fromDate: Date | null = dateFrom ? new Date(dateFrom) : null;
+    const toDate: Date | null = dateTo ? new Date(dateTo) : null;
+
+    const stats = await this.prisma.$queryRaw<OrdersStatisticByStatus[]>`
+      SELECT
+        status,
+        COUNT(*)::INT AS total,
+        ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER (), 2) AS percent
+      FROM orders o
+      WHERE (${fromDate}::timestamp IS NULL OR o.created_at >= ${fromDate}::timestamp)
+        AND (${toDate}::timestamp   IS NULL OR o.created_at <  ${toDate}::timestamp)
+      GROUP BY status
+    `;
+
+    return stats;
+  }
+
+  async getDashboardSoldProducts({ dateFrom, dateTo }: DashboardStatisticDto) {
+    const fromDate: Date | null = dateFrom ? new Date(dateFrom) : null;
+    const toDate: Date | null = dateTo ? new Date(dateTo) : null;
+
+    const stats = await this.prisma.$queryRaw<SoldProductStatistic[]>`
+      SELECT
+        p.category,
+        ROUND(SUM(oi.quantity) * 100.0 / SUM(SUM(oi.quantity)) OVER (), 2) AS percent
+      FROM products p
+      JOIN orders_items oi ON p.id = oi.product_id
+      JOIN orders o ON o.id = oi.order_id
+      WHERE o.status IN ('COMPLETED')
+        AND (${fromDate}::timestamp IS NULL OR o.created_at >= ${fromDate}::timestamp)
+        AND (${toDate}::timestamp   IS NULL OR o.created_at <  ${toDate}::timestamp)
+      GROUP BY p.category, oi.quantity
+      ORDER BY percent DESC;
+    `;
+
+    return stats;
   }
 }

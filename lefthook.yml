@@ -1,7 +1,7 @@
 pre-commit:
   # parallel: true
   commands:
-    check-scripts:
+    linters:
       glob: "*.{js,ts,jsx,tsx,mts,mjs}"
       run: yarn workspaces foreach --all --topological --parallel run lint
     check-ts-ui:

@@ -11,18 +11,18 @@ import { DatabaseService } from '../database/database.service';
 export class DashboardService {
   constructor(private readonly db: DatabaseService) {}
 
-  async getStatistic(filter: DashboardStatisticProps) {
+  async getDashboardStatistic(filter: DashboardStatisticProps) {
     const dashboardStatisticDto = new DashboardStatisticDto(filter);
 
-    return await this.db.getStatistic(
+    return await this.db.getDashboardStatistic(
       filterNullValues<DashboardStatisticDto>(dashboardStatisticDto),
     );
   }
 
-  async getTrends(filter: DashboardStatisticProps) {
+  async getDashboardTrends(filter: DashboardStatisticProps) {
     const dashboardFilterDto = new DashboardStatisticDto(filter);
 
-    const result = await this.db.getTrends(
+    const result = await this.db.getDashboardTrends(
       filterNullValues<DashboardStatisticDto>(dashboardFilterDto),
     );
 
@@ -47,5 +47,21 @@ export class DashboardService {
     );
 
     return data;
+  }
+
+  async getDashboardOrders(filter: DashboardStatisticProps) {
+    const dashboardStatisticDto = new DashboardStatisticDto(filter);
+
+    return await this.db.getDashboardOrders(
+      filterNullValues<DashboardStatisticDto>(dashboardStatisticDto),
+    );
+  }
+
+  async getDashboardSoldProducts(filter: DashboardStatisticProps) {
+    const dashboardStatisticDto = new DashboardStatisticDto(filter);
+
+    return await this.db.getDashboardSoldProducts(
+      filterNullValues<DashboardStatisticDto>(dashboardStatisticDto),
+    );
   }
 }
