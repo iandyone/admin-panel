@@ -1,4 +1,4 @@
-import { $Enums, Credentials, Order, User } from '@prisma/client';
+import { $Enums, Credentials, User } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
 
 export interface AppConfig {
@@ -6,8 +6,6 @@ export interface AppConfig {
 }
 
 export type UserData = User & Credentials;
-
-export type OrderData = Order & { productsIds: number[] };
 
 export interface UserResponse {
   id: number;
@@ -78,8 +76,4 @@ export interface OrdersFindAllProps {
   dateToUpdated?: string;
   manager?: string;
   status?: string;
-}
-export interface DashboardStatisticProps {
-  dateFrom?: string;
-  dateTo?: string;
 }

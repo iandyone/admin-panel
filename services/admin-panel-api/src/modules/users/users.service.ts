@@ -1,34 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '@prisma/client';
 
 import { CreateUserDto } from './dto/create-user.dto';
 import { FindAllUsersDto } from './dto/find-all-users.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
-import {
-  UserData,
-  UserResponse,
-  UsersFindAllProps,
-  UsersResponse,
-} from '../../types';
-import { filterNullValues } from '../../utils';
+import { UserResponse, UsersResponse } from '../../types';
 import { DatabaseService } from '../database/database.service';
 
 @Injectable()
 export class UsersService {
   constructor(private readonly db: DatabaseService) {}
 
-  async create(userData: UserData) {
-    const createUserDto = new CreateUserDto(userData);
-
+  async create(createUserDto: CreateUserDto) {
     return await this.db.createUser(createUserDto);
   }
 
-  async findAll(usersFindAllData: UsersFindAllProps): Promise<UsersResponse> {
-    const findAllUserDto = new FindAllUsersDto(usersFindAllData);
-    const { users, total } = await this.db.getUsers(
-      filterNullValues<FindAllUsersDto>(findAllUserDto),
-    );
+  async findAll(findAllUserDto: FindAllUsersDto): Promise<UsersResponse> {
+    const { users, total } = await this.db.getUsers(findAllUserDto);
 
     const formattedUsers: UserResponse[] = users.map(
       ({
@@ -59,9 +47,7 @@ export class UsersService {
     return await this.db.getUser(id);
   }
 
-  async update(id: number, user: Partial<User> & { role: string }) {
-    const updateUserDto = new UpdateUserDto(user);
-
+  async update(id: number, updateUserDto: UpdateUserDto) {
     return await this.db.updateUser(id, updateUserDto);
   }
 

@@ -1,26 +1,21 @@
-import { OrderData } from '../../../types';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class UpdateOrderDto {
-  location?: string | null;
-  customer?: string | null;
-  managerId?: number | null;
-  productsIds?: number[] | null;
-  deliverymanId?: number | null;
-  status?: string | null;
+  @ApiProperty()
+  location?: string;
 
-  constructor({
-    location,
-    customer,
-    managerId,
-    status,
-    productsIds,
-    deliverymanId,
-  }: Partial<OrderData>) {
-    this.location = location || null;
-    this.customer = customer || null;
-    this.managerId = managerId || null;
-    this.deliverymanId = deliverymanId || null;
-    this.productsIds = productsIds || null;
-    this.status = status || null;
-  }
+  @ApiProperty()
+  customer?: string;
+
+  @ApiProperty()
+  managerId?: number;
+
+  @ApiProperty()
+  productsIds?: number[];
+
+  @ApiPropertyOptional()
+  deliverymanId?: number;
+
+  @ApiProperty()
+  status?: string;
 }

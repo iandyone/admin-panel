@@ -10,7 +10,7 @@ import { TrendsItemEntity } from './entities/trends.entity';
 import { PrismaService } from './prisma.service';
 
 import { DEFAULT_PER_PAGE, START_PAGE } from '../../constants';
-import { filterNullValues, getOrderItemsFromProductsIds } from '../../utils';
+import { getOrderItemsFromProductsIds } from '../../utils';
 import { DashboardStatisticDto } from '../dashboard/dto/get-statistic.dto';
 import { CreateOrderDto } from '../orders/dto/create-order.dto';
 import { FindAllOrdersDto } from '../orders/dto/find-all-orders.dto';
@@ -139,7 +139,7 @@ export class DatabaseService {
 
   async updateUser(id: number, user: UpdateUserDto) {
     const { id: userId } = await this.getUser(id);
-    const { role, ...updateUserData } = filterNullValues<UpdateUserDto>(user);
+    const { role, ...updateUserData } = user;
 
     const updatedUser = await this.prisma.user.update({
       where: { id: userId },
@@ -314,7 +314,7 @@ export class DatabaseService {
       productsIds,
       status,
       deliverymanId,
-    } = filterNullValues<CreateOrderDto>(createOrderDto);
+    } = createOrderDto;
 
     const productsData = getOrderItemsFromProductsIds(productsIds);
 
@@ -357,7 +357,7 @@ export class DatabaseService {
       customer,
       location,
       status,
-    } = filterNullValues<UpdateOrderDto>(order);
+    } = order;
 
     const products = await this.prisma.product.findMany();
     const orderProducts = products.filter(({ id }) => productsIds.includes(id));

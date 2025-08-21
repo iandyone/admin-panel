@@ -1,11 +1,9 @@
-import { DashboardStatisticProps } from 'src/types';
+import { ApiPropertyOptional } from '@nestjs/swagger';
 
 export class DashboardStatisticDto {
+  @ApiPropertyOptional({ description: 'timestamp' })
   dateFrom?: number;
-  dateTo?: number;
 
-  constructor({ dateFrom, dateTo }: DashboardStatisticProps) {
-    this.dateFrom = Number(dateFrom);
-    this.dateTo = Number(dateTo);
-  }
+  @ApiPropertyOptional({ description: 'timestamp' })
+  dateTo?: number;
 }

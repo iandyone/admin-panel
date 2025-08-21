@@ -6,7 +6,7 @@ export class JoiValidationPipe implements PipeTransform {
   constructor(private schema: Schema) {}
 
   transform(value?: any) {
-    const { error } = this.schema.validate(value, {
+    const { value: validatedValue, error } = this.schema.validate(value, {
       abortEarly: false,
       convert: true,
       stripUnknown: true,
@@ -19,6 +19,6 @@ export class JoiValidationPipe implements PipeTransform {
       });
     }
 
-    return value;
+    return validatedValue;
   }
 }

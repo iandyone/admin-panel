@@ -5,27 +5,15 @@ import { CreateOrderDto } from './dto/create-order.dto';
 import { FindAllOrdersDto } from './dto/find-all-orders.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 
-import {
-  OrderData,
-  OrderResponse,
-  OrdersFindAllProps,
-  OrdersResponse,
-} from '../../types';
-import { filterNullValues } from '../../utils';
+import { OrderResponse, OrdersResponse } from '../../types';
 import { DatabaseService } from '../database/database.service';
 
 @Injectable()
 export class OrdersService {
   constructor(private readonly db: DatabaseService) {}
 
-  async findAll(
-    ordersFindAllData: OrdersFindAllProps,
-  ): Promise<OrdersResponse> {
-    const findAllOrdersDto = new FindAllOrdersDto(ordersFindAllData);
-
-    const orderData = await this.db.getOrders(
-      filterNullValues<FindAllOrdersDto>(findAllOrdersDto),
-    );
+  async findAll(findAllOrdersDto: FindAllOrdersDto): Promise<OrdersResponse> {
+    const orderData = await this.db.getOrders(findAllOrdersDto);
 
     const orders: OrderResponse[] = orderData.orders.map((order) => {
       const { orderItems, totalPrice } = order.OrderItems.reduce(
@@ -70,15 +58,11 @@ export class OrdersService {
     return await this.db.getOrder(id);
   }
 
-  async create(orderData: OrderData) {
-    const createOrderDto = new CreateOrderDto(orderData);
-
+  async create(createOrderDto: CreateOrderDto) {
     return await this.db.createOrder(createOrderDto);
   }
 
-  async update(id: number, orderData: Partial<OrderData>) {
-    const updateOrderDto = new UpdateOrderDto(orderData);
-
+  async update(id: number, updateOrderDto: UpdateOrderDto) {
     return await this.db.updateOrder(id, updateOrderDto);
   }
 

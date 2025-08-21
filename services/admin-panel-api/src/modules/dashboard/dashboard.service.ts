@@ -3,28 +3,18 @@ import { Injectable } from '@nestjs/common';
 import { DashboardStatisticDto } from './dto/get-statistic.dto';
 import { TrendItem } from './entities/trend-item.entity';
 
-import { DashboardStatisticProps } from '../../types';
-import { filterNullValues } from '../../utils';
 import { DatabaseService } from '../database/database.service';
 
 @Injectable()
 export class DashboardService {
   constructor(private readonly db: DatabaseService) {}
 
-  async getDashboardStatistic(filter: DashboardStatisticProps) {
-    const dashboardStatisticDto = new DashboardStatisticDto(filter);
-
-    return await this.db.getDashboardStatistic(
-      filterNullValues<DashboardStatisticDto>(dashboardStatisticDto),
-    );
+  async getDashboardStatistic(dashboardStatisticDto: DashboardStatisticDto) {
+    return await this.db.getDashboardStatistic(dashboardStatisticDto);
   }
 
-  async getDashboardTrends(filter: DashboardStatisticProps) {
-    const dashboardFilterDto = new DashboardStatisticDto(filter);
-
-    const result = await this.db.getDashboardTrends(
-      filterNullValues<DashboardStatisticDto>(dashboardFilterDto),
-    );
+  async getDashboardTrends(dashboardFilterDto: DashboardStatisticDto) {
+    const result = await this.db.getDashboardTrends(dashboardFilterDto);
 
     const data: TrendItem[] = result.map(
       ({
@@ -49,19 +39,11 @@ export class DashboardService {
     return data;
   }
 
-  async getDashboardOrders(filter: DashboardStatisticProps) {
-    const dashboardStatisticDto = new DashboardStatisticDto(filter);
-
-    return await this.db.getDashboardOrders(
-      filterNullValues<DashboardStatisticDto>(dashboardStatisticDto),
-    );
+  async getDashboardOrders(dashboardStatisticDto: DashboardStatisticDto) {
+    return await this.db.getDashboardOrders(dashboardStatisticDto);
   }
 
-  async getDashboardSoldProducts(filter: DashboardStatisticProps) {
-    const dashboardStatisticDto = new DashboardStatisticDto(filter);
-
-    return await this.db.getDashboardSoldProducts(
-      filterNullValues<DashboardStatisticDto>(dashboardStatisticDto),
-    );
+  async getDashboardSoldProducts(dashboardStatisticDto: DashboardStatisticDto) {
+    return await this.db.getDashboardSoldProducts(dashboardStatisticDto);
   }
 }

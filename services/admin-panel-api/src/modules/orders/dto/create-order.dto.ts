@@ -1,26 +1,21 @@
-import { OrderData } from '../../../types';
-
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { OrderStatus } from '@prisma/client';
 export class CreateOrderDto {
-  location: string;
+  @ApiProperty()
   customer: string;
-  managerId: number;
-  productsIds: number[];
-  deliverymanId?: number;
-  status?: string;
 
-  constructor({
-    location,
-    customer,
-    managerId,
-    status,
-    productsIds,
-    deliverymanId,
-  }: OrderData) {
-    this.location = location;
-    this.customer = customer;
-    this.managerId = managerId;
-    this.deliverymanId = deliverymanId;
-    this.productsIds = productsIds;
-    this.status = status;
-  }
+  @ApiProperty()
+  location: string;
+
+  @ApiProperty()
+  managerId: number;
+
+  @ApiProperty()
+  productsIds: number[];
+
+  @ApiPropertyOptional()
+  deliverymanId?: number;
+
+  @ApiPropertyOptional({ default: OrderStatus.CREATED })
+  status?: string;
 }

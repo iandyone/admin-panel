@@ -1,23 +1,19 @@
-import { CreateUserDto } from './create-user.dto';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { $Enums } from '@prisma/client';
 
 export class UpdateUserDto {
-  firstName: string | null;
-  lastName: string | null;
-  phone: string | null;
-  role: string | null;
-  isActive: boolean | null;
+  @ApiPropertyOptional()
+  firstName: string;
 
-  constructor({
-    firstName,
-    lastName,
-    role,
-    phone,
-    isActive,
-  }: Partial<CreateUserDto & { isActive: boolean; role: string }>) {
-    this.firstName = firstName ?? null;
-    this.lastName = lastName ?? null;
-    this.phone = phone ?? null;
-    this.role = role ?? null;
-    this.isActive = isActive ?? null;
-  }
+  @ApiPropertyOptional()
+  lastName: string;
+
+  @ApiPropertyOptional()
+  phone: string;
+
+  @ApiPropertyOptional({ enum: $Enums.Role })
+  role: string;
+
+  @ApiPropertyOptional()
+  isActive: boolean;
 }

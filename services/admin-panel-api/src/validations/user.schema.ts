@@ -24,7 +24,6 @@ export const updateUserSchema = joi.object({
   role: userRoleSchema,
   phone: phoneSchema,
   isActive: joi.bool(),
-  email: emailSchema.optional(),
 });
 
 export const findAllUsersSchema = joi.object({
@@ -37,4 +36,6 @@ export const findAllUsersSchema = joi.object({
   role: userRoleSchema.optional(),
   isActive: joi.bool().optional(),
   orders: joi.number().min(0).optional(),
+  dateFrom: joi.number().optional(),
+  dateTo: joi.number().optional(),
 });

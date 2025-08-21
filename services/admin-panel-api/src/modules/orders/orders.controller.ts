@@ -10,19 +10,20 @@ import {
   UsePipes,
   Query,
 } from '@nestjs/common';
-import { Order } from '@prisma/client';
 
+import { CreateOrderDto } from './dto/create-order.dto';
+import { FindAllOrdersDto } from './dto/find-all-orders.dto';
+import { UpdateOrderDto } from './dto/update-order.dto';
 import { OrdersService } from './orders.service';
 
+import { UseId } from '../../decorators';
 import { JoiValidationPipe } from '../../pipes/joi-validation.pipe';
-import { OrderData, OrdersFindAllProps } from '../../types';
 import {
   idSchema,
   createOrderSchema,
   updateOrderSchema,
   findAllOrdersSchema,
 } from '../../validations';
-import { UseId } from '../decorators';
 
 @Controller('orders')
 export class OrdersController {
@@ -30,28 +31,28 @@ export class OrdersController {
 
   @Get()
   @UsePipes(new JoiValidationPipe(findAllOrdersSchema))
-  findAll(@Query() query: OrdersFindAllProps) {
+  findAll(@Query() query: FindAllOrdersDto) {
     return this.ordersService.findAll(query);
   }
 
   @Get(':id')
   @UseId()
-  findOne(@Param('id') id: string) {
-    return this.ordersService.findOne(+id);
+  findOne(@Param('id') id: number) {
+    return this.ordersService.findOne(id);
   }
 
   @Post()
   @UsePipes(new JoiValidationPipe(createOrderSchema))
-  create(@Body() orderData: OrderData) {
+  create(@Body() orderData: CreateOrderDto) {
     return this.ordersService.create(orderData);
   }
 
   @Patch(':id')
   update(
     @Param('id', new JoiValidationPipe(idSchema), ParseIntPipe) id: number,
-    @Body(new JoiValidationPipe(updateOrderSchema)) order: Partial<Order>,
+    @Body(new JoiValidationPipe(updateOrderSchema)) orderData: UpdateOrderDto,
   ) {
-    return this.ordersService.update(id, order);
+    return this.ordersService.update(id, orderData);
   }
 
   @Delete(':id')

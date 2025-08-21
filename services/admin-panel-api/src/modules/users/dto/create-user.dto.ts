@@ -1,17 +1,18 @@
-import { UserData } from '../../../types';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUserDto {
+  @ApiProperty()
   firstName: string;
-  lastName: string;
-  phone: string;
-  email: string;
-  password: string;
 
-  constructor({ firstName, lastName, phone, email, password }: UserData) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.phone = phone;
-    this.email = email;
-    this.password = password;
-  }
+  @ApiProperty()
+  lastName: string;
+
+  @ApiProperty()
+  phone: string;
+
+  @ApiProperty()
+  email: string;
+
+  @ApiProperty()
+  password: string;
 }
