@@ -79,7 +79,20 @@ export class DatabaseService {
     const [users, total] = await this.prisma.$transaction([
       this.prisma.user.findMany({
         where: usersFilter,
-        include: { Credentials: true },
+        include: {
+          Credentials: true,
+          _count: {
+            select: {
+              DeliveredOrders: {
+                where: {
+                  status: {
+                    equals: OrderStatus.COMPLETED,
+                  },
+                },
+              },
+            },
+          },
+        },
         orderBy: { id: 'asc' },
         skip: page * perPage,
         take: perPage,

@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { DEFAULT_PER_PAGE } from 'src/constants';
+
+import { DEFAULT_PER_PAGE } from '../../../constants';
 
 export class FindAllUsersDto {
   @ApiProperty({ default: 0 })

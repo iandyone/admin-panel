@@ -25,9 +25,9 @@ export class UsersService {
         lastName,
         phone,
         lastActivity,
-        orders,
         isActive,
         Credentials: { role },
+        _count: { DeliveredOrders },
       }) => ({
         id,
         firstName,
@@ -35,7 +35,7 @@ export class UsersService {
         phone,
         role,
         lastActivity: lastActivity ? new Date(lastActivity).getTime() : null,
-        orders,
+        orders: DeliveredOrders,
         isActive,
       }),
     );
