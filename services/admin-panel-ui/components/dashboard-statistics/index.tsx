@@ -11,7 +11,7 @@ import { StatisticCard } from "../ui/statistic-card";
 export const DashboardStatistics: FC = () => {
   const { searchParams } = useAppSearchParams();
 
-  const { data: statistics } = useGetDashboardStatistics({
+  const { data: statistics, isLoading } = useGetDashboardStatistics({
     dateFrom: searchParams.get("dateFrom"),
     dateTo: searchParams.get("dateTo"),
   });
@@ -84,6 +84,7 @@ export const DashboardStatistics: FC = () => {
               data={data}
               title={title}
               value={value}
+              isLoading={isLoading}
             />
           </Card>
         </Grid>

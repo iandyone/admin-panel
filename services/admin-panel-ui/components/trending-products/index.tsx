@@ -7,7 +7,7 @@ import { TrendingRow } from "@/components/ui/trending-row";
 import { useAppSearchParams } from "@/hooks";
 import { useGetDashboardTrends } from "@/query";
 
-export const Trending: FC = () => {
+export const TrendingProductsBar: FC = () => {
   const { searchParams } = useAppSearchParams();
 
   const { data, isSuccess } = useGetDashboardTrends(

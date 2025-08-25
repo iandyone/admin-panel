@@ -7,7 +7,7 @@ import { StatisticDatasetItem } from "@/types";
 interface Props extends StatisticDatasetItem {
   title: string;
   value: number;
-
+  isLoading: boolean;
   chip?: {
     isPositive: boolean;
     value: ReactNode;
@@ -20,7 +20,9 @@ export const StatisticCard: FC<Props> = ({
   chip,
   data,
   days,
+  // isLoading
 }) => {
+  // TODO: loader
   return (
     <Stack direction="column" gap={1} padding={2}>
       <Typography component="h2" variant="subtitle2" gutterBottom>
@@ -58,7 +60,10 @@ export const StatisticCard: FC<Props> = ({
               Current period
             </Typography>
 
-            <Stack justifyContent='flex-start' sx={{ width: "100%", height: 50 }}>
+            <Stack
+              justifyContent="flex-start"
+              sx={{ width: "100%", height: 50 }}
+            >
               <SparkLine
                 value={value}
                 data={data}

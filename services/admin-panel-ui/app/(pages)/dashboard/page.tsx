@@ -4,6 +4,7 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
+import { Suspense } from "react";
 
 import {
   getDashboardStats,
@@ -13,13 +14,10 @@ import {
 } from "@/actions";
 import { DashboardFilter } from "@/components/dashboard-filter";
 import { DashboardStatistics } from "@/components/dashboard-statistics";
-import { Trending } from "@/components/trending";
+import { StatisticChartsBar } from "@/components/statistic-charts-bar";
+import { TrendingProductsBar } from "@/components/trending-products";
 import { Card } from "@/components/ui/card";
-import { OrdersChart } from "@/components/ui/orders-chart";
-import {
-  DASHBOARD_DEFAULT_FILTER,
-  FetchTags,
-} from "@/constants";
+import { DASHBOARD_DEFAULT_FILTER, FetchTags } from "@/constants";
 
 const { STATISTIC, TRENDS, DASHBOARD_ORDERS, DASHBOARD_PRODUCTS } = FetchTags;
 
@@ -38,14 +36,12 @@ export default async function Page() {
 
   await queryClient.prefetchQuery({
     queryKey: [DASHBOARD_ORDERS, DASHBOARD_DEFAULT_FILTER],
-    queryFn: async () =>
-      await getDashboardOrders(DASHBOARD_DEFAULT_FILTER),
+    queryFn: async () => await getDashboardOrders(DASHBOARD_DEFAULT_FILTER),
   });
 
   await queryClient.prefetchQuery({
     queryKey: [DASHBOARD_PRODUCTS, DASHBOARD_DEFAULT_FILTER],
-    queryFn: async () =>
-      await getDashboardProducts(DASHBOARD_DEFAULT_FILTER),
+    queryFn: async () => await getDashboardProducts(DASHBOARD_DEFAULT_FILTER),
   });
 
   return (
@@ -62,12 +58,14 @@ export default async function Page() {
         <Grid container columns={{ md: 2, xs: 1 }} spacing={{ md: 3, xs: 2 }}>
           <Grid size={1}>
             <Card>
-              <OrdersChart />
+              <StatisticChartsBar />
             </Card>
           </Grid>
           <Grid size={1}>
             <Card>
-              <Trending />
+              <Suspense fallback={<div>loading</div>}>
+                <TrendingProductsBar />
+              </Suspense>
             </Card>
           </Grid>
         </Grid>

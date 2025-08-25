@@ -15,7 +15,6 @@ export const useGetDashboardOrders = (filters?: DashboardFilter) => {
           }
         });
 
-
         return response.data;
       } catch (error) {
         console.log({ error });
