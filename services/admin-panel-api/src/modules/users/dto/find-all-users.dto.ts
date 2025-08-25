@@ -1,6 +1,11 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
-import { DEFAULT_PER_PAGE } from '../../../constants';
+import {
+  DEFAULT_PER_PAGE,
+  NAME_MAX_LENGTH,
+  NAME_MIN_LENGTH,
+  PHONE_MIN_LENGTH,
+} from '../../../constants';
 
 export class FindAllUsersDto {
   @ApiProperty({ default: 0 })
@@ -12,13 +17,19 @@ export class FindAllUsersDto {
   @ApiPropertyOptional()
   id?: number;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    minLength: NAME_MIN_LENGTH,
+    maxLength: NAME_MAX_LENGTH,
+  })
   firstName?: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    minLength: NAME_MIN_LENGTH,
+    maxLength: NAME_MAX_LENGTH,
+  })
   lastName?: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ minLength: PHONE_MIN_LENGTH })
   phone?: string;
 
   @ApiPropertyOptional()
@@ -30,7 +41,7 @@ export class FindAllUsersDto {
   @ApiPropertyOptional({ description: 'timestamp' })
   dateTo?: number;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ minimum: 0 })
   orders?: number;
 
   @ApiPropertyOptional()

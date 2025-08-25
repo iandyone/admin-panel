@@ -1,6 +1,17 @@
 import { $Enums } from '@prisma/client';
 import joi from 'joi';
 
+import {
+  CUSTOMER_MAX_LENGTH,
+  CUSTOMER_MIN_LENGTH,
+  LOCATION_MAX_LENGTH,
+  LOCATION_MIN_LENGTH,
+  NAME_MAX_LENGTH,
+  NAME_MIN_LENGTH,
+  PASSWORD_MIN_LENGTH,
+  PHONE_MIN_LENGTH,
+} from '../../constants';
+
 const ROLES = Object.values($Enums.Role).map((role) => role.toLowerCase());
 const STATUSES = Object.values($Enums.OrderStatus).map((role) =>
   role.toLowerCase(),
@@ -10,16 +21,25 @@ export const idSchema = joi.number().required();
 
 export const passwordSchema = joi
   .string()
-  .min(6)
+  .min(PASSWORD_MIN_LENGTH)
   .pattern(new RegExp('^[a-zA-Z0-9]{6,30}$'));
 
-export const customerSchema = joi.string().min(2).max(50);
-export const locationSchema = joi.string().min(10).max(80);
+export const customerSchema = joi
+  .string()
+  .min(CUSTOMER_MIN_LENGTH)
+  .max(CUSTOMER_MAX_LENGTH);
+export const locationSchema = joi
+  .string()
+  .min(LOCATION_MIN_LENGTH)
+  .max(LOCATION_MAX_LENGTH);
 export const productsIdsSchema = joi.array().items(joi.number().min(1));
 export const deliverymanIdSchema = joi.number().min(1).optional();
 export const managerIdSchema = joi.number().min(1);
-export const nameSchema = joi.string().min(4).max(15);
-export const phoneSchema = joi.string().min(12).trim();
+export const nameSchema = joi
+  .string()
+  .min(NAME_MIN_LENGTH)
+  .max(NAME_MAX_LENGTH);
+export const phoneSchema = joi.string().min(PHONE_MIN_LENGTH).trim();
 export const emailSchema = joi.string().email({ minDomainSegments: 2 });
 
 export const pageSchema = joi.number().min(0);

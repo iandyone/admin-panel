@@ -1,14 +1,26 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { $Enums } from '@prisma/client';
 
+import {
+  NAME_MAX_LENGTH,
+  NAME_MIN_LENGTH,
+  PHONE_MIN_LENGTH,
+} from '../../../constants';
+
 export class UpdateUserDto {
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    minLength: NAME_MIN_LENGTH,
+    maxLength: NAME_MAX_LENGTH,
+  })
   firstName: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    minLength: NAME_MIN_LENGTH,
+    maxLength: NAME_MAX_LENGTH,
+  })
   lastName: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ minLength: PHONE_MIN_LENGTH })
   phone: string;
 
   @ApiPropertyOptional({ enum: $Enums.Role })

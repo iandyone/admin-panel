@@ -1,21 +1,38 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { OrderStatus } from '@prisma/client';
+import { $Enums, OrderStatus } from '@prisma/client';
+
+import {
+  CUSTOMER_MAX_LENGTH,
+  CUSTOMER_MIN_LENGTH,
+  LOCATION_MAX_LENGTH,
+  LOCATION_MIN_LENGTH,
+} from '../../../constants';
+
 export class CreateOrderDto {
-  @ApiProperty()
+  @ApiProperty({
+    minLength: CUSTOMER_MIN_LENGTH,
+    maxLength: CUSTOMER_MAX_LENGTH,
+  })
   customer: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    minLength: LOCATION_MIN_LENGTH,
+    maxLength: LOCATION_MAX_LENGTH,
+  })
   location: string;
 
-  @ApiProperty()
+  @ApiProperty({ minimum: 1 })
   managerId: number;
 
   @ApiProperty()
   productsIds: number[];
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ minimum: 1 })
   deliverymanId?: number;
 
-  @ApiPropertyOptional({ default: OrderStatus.CREATED })
+  @ApiPropertyOptional({
+    enum: $Enums.OrderStatus,
+    default: OrderStatus.CREATED,
+  })
   status?: string;
 }

@@ -1,6 +1,14 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { $Enums } from '@prisma/client';
 
-import { DEFAULT_PER_PAGE } from '../../../constants';
+import {
+  CUSTOMER_MAX_LENGTH,
+  CUSTOMER_MIN_LENGTH,
+  DEFAULT_PER_PAGE,
+  LOCATION_MAX_LENGTH,
+  LOCATION_MIN_LENGTH,
+  STRING_FILTER_MIN_LENGTH,
+} from '../../../constants';
 
 export class FindAllOrdersDto {
   @ApiProperty({ default: 0 })
@@ -9,25 +17,34 @@ export class FindAllOrdersDto {
   @ApiProperty({ default: DEFAULT_PER_PAGE })
   perPage: number;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ minimum: 1 })
   id: number;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ minLength: STRING_FILTER_MIN_LENGTH })
   order: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    minLength: CUSTOMER_MIN_LENGTH,
+    maxLength: CUSTOMER_MAX_LENGTH,
+  })
   customer: string;
 
   @ApiPropertyOptional()
   deliveryman: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    minLength: LOCATION_MIN_LENGTH,
+    maxLength: LOCATION_MAX_LENGTH,
+  })
   location: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    minLength: CUSTOMER_MIN_LENGTH,
+    maxLength: CUSTOMER_MAX_LENGTH,
+  })
   manager: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ minimum: 0 })
   totalAmount: number;
 
   @ApiPropertyOptional({ description: 'timestamp' })
@@ -42,6 +59,6 @@ export class FindAllOrdersDto {
   @ApiPropertyOptional({ description: 'timestamp' })
   dateToUpdated: number;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ enum: $Enums.OrderStatus })
   status: string;
 }

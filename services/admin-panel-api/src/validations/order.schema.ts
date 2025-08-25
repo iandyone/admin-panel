@@ -1,5 +1,6 @@
 import { $Enums } from '@prisma/client';
 import joi from 'joi';
+import { STRING_FILTER_MIN_LENGTH } from 'src/constants';
 
 import {
   customerSchema,
@@ -39,9 +40,9 @@ export const findAllOrdersSchema = joi.object({
   page: pageSchema,
   perPage: pageSchema,
   id: idSchema.optional(),
-  order: joi.string().min(2).optional(),
-  totalAmount: joi.number().min(1).optional(),
-  location: joi.string().min(2).optional(),
+  order: joi.string().min(STRING_FILTER_MIN_LENGTH).optional(),
+  totalAmount: joi.number().min(0).optional(),
+  location: joi.string().min(STRING_FILTER_MIN_LENGTH).optional(),
   customer: customerSchema.optional(),
   deliveryman: customerSchema.optional(),
   dateFromCreated: joi.number().optional(),
