@@ -4,24 +4,24 @@ export const USERS: Array<
   Prisma.UserCreateInput & Prisma.CredentialsCreateInput
 > = [
   {
-    firstName: 'admin',
-    lastName: 'admin',
+    firstName: 'Admin',
+    lastName: 'Admin',
     phone: '+375291111111',
     role: 'ADMIN',
     password: 'adminroot',
     email: 'admin@test.com',
   },
   {
-    firstName: 'manager',
-    lastName: 'manager',
+    firstName: 'Manager',
+    lastName: 'Manager',
     phone: '+375292222222',
     role: 'MANAGER',
     password: 'manager',
     email: 'manager@test.com',
   },
   {
-    firstName: 'deliveryman',
-    lastName: 'deliveryman',
+    firstName: 'Deliveryman',
+    lastName: 'Deliveryman',
     phone: '+375293333333',
     role: 'DELIVERY',
     password: 'delivery',

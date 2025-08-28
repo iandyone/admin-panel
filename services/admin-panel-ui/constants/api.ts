@@ -7,5 +7,5 @@ export enum API_PATH {
   ORDERS = '/orders',
   PRODUCTS = '/products',
   USERS = '/users',
-  EMPLOYEE = ''
+  EMPLOYEE = 'employee'
 }
