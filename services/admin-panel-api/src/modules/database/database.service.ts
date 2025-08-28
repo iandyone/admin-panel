@@ -111,8 +111,32 @@ export class DatabaseService {
 
     if (!user) {
       throw new HttpException(
-        `User with id ${id} was not founded`,
+        `User with id ${id} was not found`,
         HttpStatus.NOT_FOUND,
+      );
+    }
+
+    return user;
+  }
+
+  async getUserByEmail(email: string) {
+    const user = await this.prisma.credentials.findUnique({
+      where: { email },
+      include: {
+        User: {
+          select: {
+            firstName: true,
+            lastName: true,
+            isActive: true,
+          },
+        },
+      },
+    });
+
+    if (!user) {
+      throw new HttpException(
+        { field: 'email', message: `User with email ${email} was not found` },
+        HttpStatus.UNAUTHORIZED,
       );
     }
 
@@ -311,7 +335,7 @@ export class DatabaseService {
 
     if (!user) {
       throw new HttpException(
-        `Order with id ${id} was not founded`,
+        `Order with id ${id} was not found`,
         HttpStatus.NOT_FOUND,
       );
     }

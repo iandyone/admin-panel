@@ -39,3 +39,8 @@ export const findAllUsersSchema = joi.object({
   dateFrom: joi.number().optional(),
   dateTo: joi.number().optional(),
 });
+
+export const signInUserSchema = joi.object({
+  email: emailSchema.required(),
+  password: passwordSchema.required(),
+});

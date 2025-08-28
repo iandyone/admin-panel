@@ -13,7 +13,7 @@ export interface UserResponse {
   lastName: string;
   role: $Enums.Role;
   phone: string;
-  lastActivity: number | null;
+  lastActivity: string | null;
   orders: number;
   isActive: boolean;
 }
@@ -24,8 +24,8 @@ export interface OrderResponse {
   totalAmount: number | Decimal;
   location: string;
   customer: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   manager: string;
   managerId: number;
   deliveryman: string;

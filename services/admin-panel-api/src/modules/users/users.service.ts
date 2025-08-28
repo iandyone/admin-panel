@@ -5,6 +5,7 @@ import { FindAllUsersDto } from './dto/find-all-users.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 import { UserResponse, UsersResponse } from '../../types';
+import { formatDateISO } from '../../utils';
 import { DatabaseService } from '../database/database.service';
 
 @Injectable()
@@ -34,13 +35,17 @@ export class UsersService {
         lastName,
         phone,
         role,
-        lastActivity: lastActivity ? new Date(lastActivity).getTime() : null,
+        lastActivity: lastActivity ? formatDateISO(lastActivity) : null,
         orders: DeliveredOrders,
         isActive,
       }),
     );
 
     return { users: formattedUsers, total };
+  }
+
+  async findByEmail(email: string) {
+    return await this.db.getUserByEmail(email);
   }
 
   async findOne(id: number) {

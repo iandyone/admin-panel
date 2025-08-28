@@ -6,6 +6,7 @@ import { FindAllOrdersDto } from './dto/find-all-orders.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 
 import { OrderResponse, OrdersResponse } from '../../types';
+import { formatDateISO } from '../../utils';
 import { DatabaseService } from '../database/database.service';
 
 @Injectable()
@@ -36,8 +37,8 @@ export class OrdersService {
         totalAmount: totalPrice.toNumber(),
         location: order.location,
         customer: order.customer,
-        createdAt: order.createdAt,
-        updatedAt: order.updatedAt,
+        updatedAt: formatDateISO(order.updatedAt, { timeZone: 'Europe/Minsk' }),
+        createdAt: formatDateISO(order.createdAt, { timeZone: 'Europe/Minsk' }),
         manager: `${order.Manager.firstName} ${order.Manager.lastName}`,
         managerId: order.managerId,
         deliveryman: order.Deliveryman

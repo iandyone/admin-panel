@@ -1,6 +1,5 @@
 import { $Enums } from '@prisma/client';
 import joi from 'joi';
-import { STRING_FILTER_MIN_LENGTH } from 'src/constants';
 
 import {
   customerSchema,
@@ -12,6 +11,8 @@ import {
   idSchema,
   orderStatusSchema,
 } from './schemas';
+
+import { STRING_FILTER_MIN_LENGTH } from '../constants';
 
 const ORDER_STATUSES = Object.values($Enums.OrderStatus);
 
