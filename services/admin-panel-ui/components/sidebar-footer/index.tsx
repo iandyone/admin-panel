@@ -26,7 +26,7 @@ export const SidebarFooter: FC<SidebarFooterProps> = ({ mini }) => {
 
   const handleOnClickSignOutButton = async () => {
     await signOut({ redirect: false });
-    router.replace("/signin");
+    router.push("/signin");
   };
 
   return (

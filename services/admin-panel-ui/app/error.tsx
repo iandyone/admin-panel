@@ -1,27 +1,27 @@
 "use client";
+import { FC, useEffect } from "react";
 
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { ErrorPlaceholder } from "@/components/ui/error-placeholder";
+import { ERoutes } from "@/constants";
 
-import { ERoutes } from '@/constants';
-
-export default function Error({
-  error,
-}: {
+interface Props {
   error: Error & { digest?: string };
   reset: () => void;
-}) {
-  const { replace } = useRouter();
+}
 
+const Error: FC<Props> = ({ error }) => {
   useEffect(() => {
     console.error(error);
   }, [error]);
 
   return (
-    <div>
-      <h2>Something went wrong!</h2>
-      <p>{error.message}</p>
-      <button onClick={() => replace(ERoutes.DASHBOARD)}>Go to main page</button>
-    </div>
+    <ErrorPlaceholder
+      title="Something went wrong"
+      subtitle="Please, try again latter"
+      buttonText="Go to the main page"
+      redirectTo={ERoutes.ORDERS}
+    />
   );
-}
+};
+
+export default Error;

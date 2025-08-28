@@ -15,11 +15,11 @@ export const Authorized: FC = () => {
 
   return (
     <Stack gap={2} alignItems='center'>
-      <Typography variant="h2">Authorizes</Typography>
+      <Typography variant="h2">Authorized</Typography>
 
       <Typography variant="h5">You are already logged in</Typography>
 
-      <Button onClick={handleOnClickButton}>Go to main page</Button>
+      <Button variant='contained' color='info' onClick={handleOnClickButton}>Go to main page</Button>
     </Stack>
   );
 };

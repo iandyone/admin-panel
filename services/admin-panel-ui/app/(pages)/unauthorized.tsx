@@ -1,13 +1,13 @@
-//TODO: make a layout
-
-import { SignInRedirectButton } from "@/components/ui/sign-in-redirect-button";
+import { ErrorPlaceholder } from "@/components/ui/error-placeholder";
+import { ERoutes } from "@/constants";
 
 export default function Unauthorized() {
   return (
-    <main>
-      <h1>401 - Unauthorized</h1>
-      <p>Please log in to access this page</p>
-      <SignInRedirectButton />
-    </main>
+    <ErrorPlaceholder
+      title="You are not authorized"
+      subtitle="Please, sign in and try again"
+      buttonText="Go to the sign in page"
+      redirectTo={ERoutes.SIGN_IN}
+    />
   );
 }

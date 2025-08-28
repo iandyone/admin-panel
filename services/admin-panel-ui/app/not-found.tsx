@@ -1,11 +1,11 @@
 import { ErrorPlaceholder } from "@/components/ui/error-placeholder";
 import { ERoutes } from "@/constants";
 
-export default function Unauthorized() {
+export default function NotFound() {
   return (
     <ErrorPlaceholder
-      title="Forbidden"
-      subtitle="You have no permissions for this page"
+      title="Page not found"
+      subtitle="Could not find requested resource"
       buttonText="Go to the main page"
       redirectTo={ERoutes.ORDERS}
     />

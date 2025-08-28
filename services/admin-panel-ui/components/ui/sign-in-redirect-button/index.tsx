@@ -1,17 +1,26 @@
 "use client";
 
-import { Button } from '@mui/material';
-import { useRouter } from 'next/navigation';
+import { Button } from "@mui/material";
+import { useRouter } from "next/navigation";
 import { FC } from "react";
 
-import { ERoutes } from '@/constants';
+import { ERoutes } from "@/constants";
 
-export const SignInRedirectButton: FC = () => {
-  const router = useRouter()
-  
+interface Props {
+  title: string;
+  redirectTo: ERoutes;
+}
+
+export const RedirectButton: FC<Props> = ({ title, redirectTo }) => {
+  const router = useRouter();
+
   const handleOnClick = () => {
-    router.replace(ERoutes.SIGN_IN)
+    router.replace(redirectTo);
   };
 
-  return <Button variant='outlined' onClick={handleOnClick}>Go to sign in page</Button>;
+  return (
+    <Button variant="contained" color="info" onClick={handleOnClick}>
+      {title}
+    </Button>
+  );
 };
