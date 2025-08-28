@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { $axios } from '@/configs'
-import { FetchTags } from '@/constants'
+import { API_PATH, FetchTags } from '@/constants'
 import { UpdateUserPayload, User } from '@/types'
 
 export const useUpdateUserMutation = () => {
@@ -9,7 +9,7 @@ export const useUpdateUserMutation = () => {
 
   return useMutation({
     mutationFn: async ({ id, userData }: UpdateUserPayload) => {
-      const response = await $axios.patch<User>(`/users/${id}`, { ...userData },);
+      const response = await $axios.patch<User>(`${API_PATH.USERS}/${id}`, { ...userData },);
 
       return response.data;
     },

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { $axios } from '@/configs';
-import { FetchTags } from '@/constants';
+import { API_PATH, FetchTags } from '@/constants';
 import { Product } from '@/types';
 
 export const useGetProductsQuery = () => (
@@ -9,7 +9,7 @@ export const useGetProductsQuery = () => (
     queryKey: [FetchTags.PRODUCTS],
     queryFn: async () => {
       try {
-        const response = await $axios.get<Product[]>('products');
+        const response = await $axios.get<Product[]>(API_PATH.PRODUCTS);
 
         return response.data;
       } catch (error) {

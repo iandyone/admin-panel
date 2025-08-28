@@ -1,30 +1,48 @@
 "use client";
 
 import { Button, Stack } from "@mui/material";
-import { Form, Formik } from "formik";
+import { Form, Formik, FormikHelpers } from "formik";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 import { FC } from "react";
 
 import { InputField } from "@/components/ui/input-field";
-import { signInValidationSchema } from '@/validations/signin-schema';
-
-interface Props {
-  handleOnSubmit: () => void;
-}
+import { ERoutes } from "@/constants";
+import { signInValidationSchema } from "@/validations/signin-schema";
 
 const initialState = {
   email: "",
   password: "",
 };
 
-export const SignInForm: FC<Props> = ({ handleOnSubmit }) => {
+export const SignInForm: FC = () => {
+  const router = useRouter();
+
+  const handleOnSubmit = async (
+    { email, password }: typeof initialState,
+    { setFieldError }: FormikHelpers<typeof initialState>,
+  ) => {
+    const data = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+      redirectTo: `/${ERoutes.ORDERS}`,
+    });
+
+    if (data.code === "credentials") {
+      // TODO: toast notification
+      return setFieldError("password", "Wrong user email or password");
+    }
+
+    router.push(data.url!);
+  };
+
   return (
     <Formik
       initialValues={initialState}
       initialErrors={initialState}
       validationSchema={signInValidationSchema}
-      onSubmit={() => {
-        handleOnSubmit();
-      }}
+      onSubmit={handleOnSubmit}
     >
       {({ touched, errors }) => (
         <Form>

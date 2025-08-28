@@ -4,6 +4,7 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
+import { forbidden, unauthorized } from "next/navigation";
 import { Suspense } from "react";
 
 import {
@@ -17,11 +18,29 @@ import { DashboardStatistics } from "@/components/dashboard-statistics";
 import { StatisticChartsBar } from "@/components/statistic-charts-bar";
 import { TrendingProductsBar } from "@/components/trending-products";
 import { Card } from "@/components/ui/card";
-import { DASHBOARD_DEFAULT_FILTER, FetchTags } from "@/constants";
+import { auth } from "@/configs";
+import {
+  DASHBOARD_DEFAULT_FILTER,
+  FetchTags,
+  PAGES_ACCESSING_MAP,
+} from "@/constants";
+import { EUserRoles } from "@/types";
 
 const { STATISTIC, TRENDS, DASHBOARD_ORDERS, DASHBOARD_PRODUCTS } = FetchTags;
 
 export default async function Page() {
+  const session = await auth();
+
+  if (!session) {
+    unauthorized();
+  }
+
+  const role = session?.user.role.toLowerCase() as EUserRoles;
+
+  if (!PAGES_ACCESSING_MAP.dashboard?.includes(role as EUserRoles)) {
+    forbidden();
+  }
+
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({

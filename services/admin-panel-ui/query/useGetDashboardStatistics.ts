@@ -1,7 +1,7 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 
 import { $axios } from '@/configs'
-import { FetchTags } from '@/constants'
+import { API_PATH, FetchTags } from '@/constants'
 import { DashboardFilter, DashboardStatistic } from '@/types'
 
 
@@ -10,7 +10,7 @@ export const useGetDashboardStatistics = (filters?: DashboardFilter) => {
     queryKey: [FetchTags.STATISTIC, filters],
     queryFn: async () => {
       try {
-        const response = await $axios.get<DashboardStatistic>('/dashboard', {
+        const response = await $axios.get<DashboardStatistic>(API_PATH.DASHBOARD, {
           params: {
             ...filters
           }

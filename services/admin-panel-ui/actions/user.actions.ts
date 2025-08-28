@@ -2,14 +2,15 @@
 
 
 import { $axios_server } from '@/configs';
-import { USERS_DEFAULT_FILTER } from '@/constants';
+import { API_PATH, USERS_DEFAULT_FILTER } from '@/constants';
 import { DEFAULT_ROWS_PER_PAGE, START_PAGE } from '@/constants/table';
 import { EmployeeResponse, UsersResponse } from '@/types';
 
+const {USERS, EMPLOYEE} = API_PATH;
 
 export const prefetchUsers = async (page = START_PAGE, perPage = DEFAULT_ROWS_PER_PAGE, filters = USERS_DEFAULT_FILTER) => {
   try {
-    const response = await $axios_server.get<UsersResponse>(`/users`, {
+    const response = await $axios_server.get<UsersResponse>(USERS, {
       params: {
         page,
         perPage,
@@ -32,7 +33,7 @@ export const prefetchUsers = async (page = START_PAGE, perPage = DEFAULT_ROWS_PE
 
 export const prefetchEmployees = async () => {
   try {
-    const response = await $axios_server.get<EmployeeResponse>('employee')
+    const response = await $axios_server.get<EmployeeResponse>(EMPLOYEE)
 
     return response.data;
   } catch (error) {

@@ -3,11 +3,11 @@ import { Inter } from "next/font/google";
 
 import "./globals.css";
 import {
+  AuthProvider,
   MaterialUIProvider,
   ReduxProvider,
   TanstackQueryProvider,
 } from "@/providers";
-
 
 export const metadata: Metadata = {
   title: "Admin panel",
@@ -24,11 +24,13 @@ export default function RootLayout({
   return (
     <html lang="en" data-toolpad-color-scheme="light">
       <body className={inter.className}>
-        <TanstackQueryProvider>
-          <ReduxProvider>
-            <MaterialUIProvider>{children}</MaterialUIProvider>
-          </ReduxProvider>
-        </TanstackQueryProvider>
+        <AuthProvider>
+          <TanstackQueryProvider>
+            <ReduxProvider>
+              <MaterialUIProvider>{children}</MaterialUIProvider>
+            </ReduxProvider>
+          </TanstackQueryProvider>
+        </AuthProvider>
       </body>
     </html>
   );

@@ -3,27 +3,36 @@ import PersonIcon from "@mui/icons-material/Person";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Navigation } from "@toolpad/core";
 
+import { EUserRoles } from "@/types";
+
+const { ADMIN, DELIVERY, MANAGER } = EUserRoles;
+
 export enum ERoutes {
   DASHBOARD = "dashboard",
   ORDERS = "orders",
   USERS = "users",
-  AUTH = "auth",
+  SIGN_IN = "signin",
 }
 
-export const FetchTags = {
-  USERS: "users",
-  ORDERS: "orders",
-  EMPLOYEE: "employee",
-  PRODUCTS: "products",
-  STATISTIC: "statistic",
-  TRENDS: "trends",
-  DASHBOARD_ORDERS: "dashboard-orders",
-  DASHBOARD_PRODUCTS: "dashboard-products",
+export const navigation: Record<string, Navigation> = {
+  ADMIN: [
+    { title: "Dashboard", segment: ERoutes.DASHBOARD, icon: <DashboardIcon /> },
+    { title: "Orders", segment: ERoutes.ORDERS, icon: <ShoppingCartIcon /> },
+    { kind: "divider" },
+    { title: "Users", segment: ERoutes.USERS, icon: <PersonIcon /> },
+  ],
+  MANAGER: [
+    { title: "Dashboard", segment: ERoutes.DASHBOARD, icon: <DashboardIcon /> },
+    { title: "Orders", segment: ERoutes.ORDERS, icon: <ShoppingCartIcon /> },
+  ],
+  DELIVERY: [
+    { title: "Orders", segment: ERoutes.ORDERS, icon: <ShoppingCartIcon /> },
+  ],
 };
 
-export const navigation: Navigation = [
-  { title: "Dashboard", segment: ERoutes.DASHBOARD, icon: <DashboardIcon /> },
-  { title: "Orders", segment: ERoutes.ORDERS, icon: <ShoppingCartIcon /> },
-  { kind: "divider" },
-  { title: "Users", segment: ERoutes.USERS, icon: <PersonIcon /> },
-];
+export const PAGES_ACCESSING_MAP: Record<ERoutes, EUserRoles[] | null> = {
+  dashboard: [ADMIN, MANAGER],
+  orders: [ADMIN, MANAGER, DELIVERY],
+  users: [ADMIN],
+  signin: null,
+};

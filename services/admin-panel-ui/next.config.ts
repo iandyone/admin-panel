@@ -7,11 +7,14 @@ const nextConfig: NextConfig = {
       "next/navigation.js": "next/navigation",
     },
   },
+  experimental: {
+    authInterrupts: true
+  },
   redirects: async () => {
     return [
       {
         source: "/",
-        destination: "/signup",
+        destination: "/signin",
         permanent: true,
       },
     ];

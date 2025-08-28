@@ -9,7 +9,7 @@ import { ORDERS_SEARCH_FILTERS, ROWS_PER_PAGE_OPTIONS } from "@/constants";
 import { useOrdersTable, usePagination } from "@/hooks";
 import { useGetOrdersQuery } from "@/query";
 import { DataGridConfig, Order, OrderFilter } from "@/types";
-import { getFormattedDate, getSortedData } from "@/utils";
+import { getSortedData } from "@/utils";
 
 import styles from "./styles.module.css";
 
@@ -46,8 +46,8 @@ export const OrdersTable: FC = () => {
           totalAmount: order.totalAmount,
           location: order.location,
           customer: order.customer,
-          createdAt: getFormattedDate(order.createdAt.toString()),
-          updatedAt: getFormattedDate(order.updatedAt.toString()),
+          createdAt: order.createdAt,
+          updatedAt: order.updatedAt,
           manager: order.manager,
           deliveryman: order.deliveryman,
           status: order.status.toLowerCase(),

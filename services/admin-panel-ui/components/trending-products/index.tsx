@@ -10,12 +10,10 @@ import { useGetDashboardTrends } from "@/query";
 export const TrendingProductsBar: FC = () => {
   const { searchParams } = useAppSearchParams();
 
-  const { data, isSuccess } = useGetDashboardTrends(
-    {
-      dateFrom: searchParams.get("dateFrom"),
-      dateTo: searchParams.get("dateTo"),
-    },
-  );
+  const { data, isSuccess } = useGetDashboardTrends({
+    dateFrom: searchParams.get("dateFrom"),
+    dateTo: searchParams.get("dateTo"),
+  });
 
   return (
     <Stack spacing={2} height={300}>

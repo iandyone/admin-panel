@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { $axios } from '@/configs'
-import { DEFAULT_ROWS_PER_PAGE, FetchTags, START_PAGE } from '@/constants'
+import { API_PATH, DEFAULT_ROWS_PER_PAGE, FetchTags, START_PAGE } from '@/constants'
 import { UsersFilter, UsersResponse } from '@/types'
 
 export const useGetUsersQuery = (page = START_PAGE, perPage = DEFAULT_ROWS_PER_PAGE, filters?: UsersFilter) => {
@@ -9,7 +9,7 @@ export const useGetUsersQuery = (page = START_PAGE, perPage = DEFAULT_ROWS_PER_P
     queryKey: [FetchTags.USERS, page, perPage, filters],
     queryFn: async () => {
       try {
-        const response = await $axios.get<UsersResponse>(`/users`, {
+        const response = await $axios.get<UsersResponse>(API_PATH.USERS, {
           params: {
             page,
             perPage,

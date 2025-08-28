@@ -1,19 +1,9 @@
-"use client";
-
 import { Card, Stack, Typography } from "@mui/material";
-import { useRouter } from "next/navigation";
 import { FC } from "react";
 
-import { ERoutes } from "@/constants";
-import { SignInForm } from '@/forms';
+import { SignInForm } from "@/forms";
 
 export const Authorization: FC = () => {
-  const router = useRouter();
-
-  const handleOnSubmit = () => {
-    router.push(ERoutes.DASHBOARD);
-  };
-
   return (
     <Stack alignItems="center" sx={{ height: "100%" }}>
       <Card
@@ -28,11 +18,10 @@ export const Authorization: FC = () => {
       >
         <Stack direction="column" spacing={2}>
           <Typography align="center" variant="h4">
-            Sign Up
+            Sign In
           </Typography>
 
-          <SignInForm handleOnSubmit={handleOnSubmit} />
-          {/* <SignUpForm handleOnSubmit={handleOnSubmit} /> */}
+          <SignInForm />
         </Stack>
       </Card>
     </Stack>

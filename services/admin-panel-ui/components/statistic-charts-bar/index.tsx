@@ -56,7 +56,7 @@ export const StatisticChartsBar: FC = () => {
   return (
     <Stack direction="row" justifyContent="space-between">
       <Stack>
-        <Typography textAlign="center">Orders by statuses, %</Typography>
+        <Typography textAlign="center">Orders by status, %</Typography>
         {/* TODO: loader */}
         {isFetching ? (
           <div>1</div>
@@ -82,7 +82,7 @@ export const StatisticChartsBar: FC = () => {
       </Stack>
       <Stack>
         <Typography textAlign="center">
-          Sold categories (completed), %
+          Products categories (completed orders), %
         </Typography>
         {/* TODO: loader */}
         <PieChart

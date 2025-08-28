@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { $axios } from '@/configs';
-import { FetchTags } from '@/constants';
+import { API_PATH, FetchTags } from '@/constants';
 import { EmployeeResponse } from '@/types';
 
 export const useGetEmployeeQuery = () => (
@@ -9,7 +9,7 @@ export const useGetEmployeeQuery = () => (
     queryKey: [FetchTags.EMPLOYEE],
     queryFn: async () => {
       try {
-        const response = await $axios.get<EmployeeResponse>('employee');
+        const response = await $axios.get<EmployeeResponse>(API_PATH.EMPLOYEE);
 
         return response.data;
       } catch (error) {

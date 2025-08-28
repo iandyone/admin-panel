@@ -30,3 +30,14 @@ export interface Employee {
   name: string;
   role: EUserRoles;
 }
+
+export interface UserAuthData {
+  id: number;
+  email: string;
+  role: EUserRoles;
+  firstName: string;
+  lastName: string;
+  isActive: boolean;
+  iat: number;
+  exp: number;
+}

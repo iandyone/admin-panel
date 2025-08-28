@@ -4,11 +4,13 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
+import { unauthorized } from 'next/navigation';
 
 import { prefetchEmployees, prefetchProducts } from "@/actions";
 import { prefetchOrders } from "@/actions/orders.actions";
 import { OrdersHeader } from "@/components/orders-header";
 import { OrdersTable } from "@/components/orders-table";
+import { auth } from '@/configs';
 import {
   DEFAULT_ROWS_PER_PAGE,
   FetchTags,
@@ -18,11 +20,15 @@ import {
 
 const { ORDERS, EMPLOYEE, PRODUCTS } = FetchTags;
 
-const queryClient = new QueryClient({defaultOptions: {
-  
-}});
+const queryClient = new QueryClient({ defaultOptions: {} });
 
 export default async function Page() {
+  const session = await auth();
+
+  if (!session) {
+    unauthorized();
+  }
+
   await queryClient.prefetchQuery({
     queryKey: [
       ORDERS,

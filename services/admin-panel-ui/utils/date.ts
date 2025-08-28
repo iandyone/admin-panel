@@ -1,5 +1,3 @@
-import moment from "moment";
-
 export function getShortMonthName(monthIndex: number) {
   const shortMonths = [
     "Jan",
@@ -17,10 +15,6 @@ export function getShortMonthName(monthIndex: number) {
   ];
 
   return shortMonths[monthIndex] ?? null;
-}
-
-export function getFormattedDate(date: string | number) {
-  return moment(date).format("DD.MM.YYYY");
 }
 
 

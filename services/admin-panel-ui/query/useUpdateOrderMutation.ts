@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { $axios } from '@/configs';
-import { FetchTags } from '@/constants';
+import { API_PATH, FetchTags } from '@/constants';
 import { UpdateOrderPayload } from '@/types'
 
 export const useUpdateOrderMutation = () => {
@@ -9,7 +9,7 @@ export const useUpdateOrderMutation = () => {
 
   return useMutation({
     mutationFn: async ({ id, ...orderData }: UpdateOrderPayload) => {
-      const response = await $axios.patch(`/orders/${id}`, { ...orderData },);
+      const response = await $axios.patch(`${API_PATH.ORDERS}/${id}`, { ...orderData },);
 
       return response.data;
     },

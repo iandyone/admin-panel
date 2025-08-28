@@ -128,4 +128,13 @@ export const customizedComponents: Components<Theme> = {
       }),
     },
   },
+
+  MuiTooltip: {
+    defaultProps: {
+      arrow: true,
+      disableFocusListener: true,
+      disableTouchListener: true,
+      enterDelay: 500
+    },
+  }
 };

@@ -10,7 +10,7 @@ import { usePagination, useUsersTable } from "@/hooks";
 import { useGetUsersQuery } from "@/query";
 import { DataGridConfig, User } from "@/types";
 import { UsersFilter } from "@/types/orders";
-import { getFormattedDate, getSortedData } from "@/utils";
+import { getSortedData } from "@/utils";
 
 import styles from "./styles.module.css";
 
@@ -46,7 +46,7 @@ export const UsersTable: FC = () => {
             ...rowData,
             phone,
             role: role.toLowerCase(),
-            lastActivity: lastActivity ? getFormattedDate(lastActivity) : "—",
+            lastActivity: lastActivity ?? "—",
             orders: orders ?? "—",
             isActive,
           };

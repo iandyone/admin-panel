@@ -1,7 +1,7 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 
 import { $axios } from '@/configs'
-import { FetchTags } from '@/constants'
+import { API_PATH, FetchTags } from '@/constants'
 import { DashboardFilter, DashboardProducts } from '@/types'
 
 export const useGetDashboardProducts = (filters?: DashboardFilter) => {
@@ -9,7 +9,7 @@ export const useGetDashboardProducts = (filters?: DashboardFilter) => {
     queryKey: [FetchTags.DASHBOARD_PRODUCTS, filters],
     queryFn: async () => {
       try {
-        const response = await $axios.get<DashboardProducts[]>('/dashboard/products', {
+        const response = await $axios.get<DashboardProducts[]>(API_PATH.DASHBOARD_PRODUCTS, {
           params: {
             ...filters
           }
