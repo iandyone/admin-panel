@@ -11,6 +11,7 @@ interface Props {
   subtitle: string;
   buttonText?: string;
   redirectTo?: ERoutes;
+  withSignOut?: boolean;
 }
 
 export const ErrorPlaceholder: FC<Props> = ({
@@ -18,6 +19,7 @@ export const ErrorPlaceholder: FC<Props> = ({
   subtitle,
   buttonText,
   redirectTo,
+  withSignOut
 }) => {
   return (
     <Stack
@@ -25,6 +27,7 @@ export const ErrorPlaceholder: FC<Props> = ({
       alignItems="center"
       margin={{ xs: 0, sm: 12 }}
       marginTop={{ xs: 8 }}
+      padding={2}
       sx={{
         height: "100%",
       }}
@@ -35,13 +38,13 @@ export const ErrorPlaceholder: FC<Props> = ({
 
       <ErrorAnimation />
 
-      <Typography variant="h6" textAlign="center">
+      <Typography variant="h6" textAlign="center" maxWidth={500}>
         {subtitle}
       </Typography>
 
 
       {buttonText && redirectTo && (
-        <RedirectButton title={buttonText} redirectTo={redirectTo} />
+        <RedirectButton title={buttonText} redirectTo={redirectTo} withSignOut={withSignOut} />
       )}
     </Stack>
   );
