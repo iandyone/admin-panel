@@ -16,17 +16,10 @@ export const TrendingProductsBar: FC = () => {
   });
 
   return (
-    <Stack spacing={2} height={300}>
-      <Stack>
-        <Typography
-          component="h2"
-          variant="body1"
-          fontSize={18}
-          fontWeight="700"
-        >
-          Trending Products
-        </Typography>
-      </Stack>
+    <Stack spacing={2}>
+      <Typography component="h2" variant="body1" fontSize={18} fontWeight="700">
+        Trending Products
+      </Typography>
       {isSuccess && (
         <Stack spacing={1}>
           {data.map((trendItem, index) => (

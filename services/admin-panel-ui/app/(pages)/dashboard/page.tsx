@@ -5,7 +5,6 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import { forbidden, unauthorized } from "next/navigation";
-import { Suspense } from "react";
 
 import {
   getDashboardStats,
@@ -13,9 +12,10 @@ import {
   getTrandingTrends,
   getDashboardProducts,
 } from "@/actions";
+import { OrdersChart } from "@/components/charts/orders-chart";
+import { ProductsGroupChart } from "@/components/charts/products-chart";
 import { DashboardFilter } from "@/components/dashboard-filter";
 import { DashboardStatistics } from "@/components/dashboard-statistics";
-import { StatisticChartsBar } from "@/components/statistic-charts-bar";
 import { TrendingProductsBar } from "@/components/trending-products";
 import { Card } from "@/components/ui/card";
 import { auth } from "@/configs";
@@ -77,16 +77,19 @@ export default async function Page() {
         <Grid container columns={{ md: 2, xs: 1 }} spacing={{ md: 3, xs: 2 }}>
           <Grid size={1}>
             <Card>
-              <StatisticChartsBar />
+              <OrdersChart />
             </Card>
           </Grid>
           <Grid size={1}>
             <Card>
-              <Suspense fallback={<div>loading</div>}>
-                <TrendingProductsBar />
-              </Suspense>
+              <ProductsGroupChart />
             </Card>
           </Grid>
+        </Grid>
+        <Grid size={1}>
+          <Card>
+            <TrendingProductsBar />
+          </Card>
         </Grid>
       </Stack>
     </HydrationBoundary>

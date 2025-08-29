@@ -21,7 +21,7 @@ export default function PagesLayout({ children }: PropsWithChildren) {
       }}
     >
       <LocalizationProvider dateAdapter={AdapterMoment}>
-        <Container maxWidth={false} sx={{ pt: 2, pb: 2, height: "100%" }}>
+        <Container maxWidth={false} sx={{ pt: 2, pb: 2 }}>
           {children}
         </Container>
       </LocalizationProvider>

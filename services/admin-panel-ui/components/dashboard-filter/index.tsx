@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Stack } from "@mui/material";
+import { Button, Grid, Stack } from "@mui/material";
 import { PickerValue } from "@mui/x-date-pickers/internals";
 import { FC, useState } from "react";
 
@@ -39,31 +39,42 @@ export const DashboardFilter: FC = () => {
   };
 
   return (
-    <Stack direction='row' spacing={3}>
-      <PeriodFilter
-        containerProps={{
-          spacing: { md: 2, xs: 2 },
-          columns: { md: 2, xs: 2 },
-          sx: {
-            width: "49%",
-          },
-        }}
-        valueTo={dateTo || ""}
-        valueFrom={dateFrom || ""}
-        onChangeDateFrom={handleOnChangeDateFrom}
-        onChangeDateTo={handleOnChangeDateTo}
-      />
-      <Button
-        // disabled={disabled}
-        type="submit"
-        variant="contained"
-        color="info"
-        size="small"
-        onClick={handleOnClickApply}
-        sx={{ width: 80 }}
-      >
-        Apply
-      </Button>
-    </Stack>
+    <Grid
+      container
+      direction="row"
+      columns={{ xs: 2, md: 2 }}
+      spacing={3}
+      rowSpacing={2}
+    >
+      <Grid size={{ md: 1, xs: 2 }}>
+        <PeriodFilter
+          containerProps={{
+            spacing: { md: 2, xs: 2 },
+            columns: { sm: 2, xs: 1 },
+            sx: {
+              width: "100%",
+            },
+          }}
+          valueTo={dateTo || ""}
+          valueFrom={dateFrom || ""}
+          onChangeDateFrom={handleOnChangeDateFrom}
+          onChangeDateTo={handleOnChangeDateTo}
+        />
+      </Grid>
+      <Grid size={{ md: 1, xs: 2 }}>
+        <Stack alignItems={{ md: "flex-start", sm: 'flex-end', xs: "center" }}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="info"
+            size="small"
+            onClick={handleOnClickApply}
+            sx={{ minWidth: 80, height: 40 }}
+          >
+            Apply
+          </Button>
+        </Stack>
+      </Grid>
+    </Grid>
   );
 };

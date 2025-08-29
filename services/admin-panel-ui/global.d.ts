@@ -39,3 +39,14 @@ declare module "next-auth/jwt" {
     accessTokenExpires?: number;
   }
 }
+
+declare module '@mui/material/styles' {
+  interface BreakpointOverrides {
+    xs: false; // removes the `xs` breakpoint
+    xsl: false;
+    sm: false;
+    md: false;
+    lg: false;
+    xl: false;
+  }
+}
