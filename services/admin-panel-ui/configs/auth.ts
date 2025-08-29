@@ -30,7 +30,8 @@ export const authConfig: NextAuthConfig = {
             role: user.role,
             firstName: user.firstName,
             lastName: user.lastName,
-            isActive: user.isActive
+            isActive: user.isActive,
+            isNewUser: user.isNewUser
           };
 
         } catch {
@@ -53,6 +54,7 @@ export const authConfig: NextAuthConfig = {
         token.firstName = user.firstName;
         token.lastName = user.lastName
         token.isActive = user.isActive;
+        token.isNewUser = user.isNewUser;
       }
 
       return token;
@@ -65,6 +67,7 @@ export const authConfig: NextAuthConfig = {
       session.user.email = (token.email as string) || session.user.email;
       (session.user as any).role = token.role as string | undefined;
       (session as any).accessToken = token.accessToken;
+      (session as any).isNewUser = token.isNewUser;
 
       (session.user as any).firstName = token.firstName;
       (session.user as any).lastName = token.lastName;

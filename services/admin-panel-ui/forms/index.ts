@@ -1,6 +1,6 @@
 export * from './create-order'
 export * from '../modals/remove-order'
 export * from './sign-in'
-export * from './sign-up'
+export * from './create-user'
 export * from './update-order'
 export * from './update-user'

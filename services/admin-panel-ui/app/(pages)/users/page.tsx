@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import {
   dehydrate,
   HydrationBoundary,
@@ -8,6 +8,7 @@ import { forbidden, unauthorized } from "next/navigation";
 import { Suspense } from "react";
 
 import { prefetchUsers } from "@/actions";
+import { UsersHeader } from "@/components/users-header";
 import { UsersTable } from "@/components/users-table";
 import { auth } from "@/configs";
 import {
@@ -46,9 +47,7 @@ export default async function Page() {
 
   return (
     <Stack gap={3} sx={{ mt: 0 }}>
-      <Typography component="h2" variant="h6">
-        Users
-      </Typography>
+      <UsersHeader />
 
       <Suspense fallback="Fetching users data">
         <HydrationBoundary state={dehydrate(queryClient)}>

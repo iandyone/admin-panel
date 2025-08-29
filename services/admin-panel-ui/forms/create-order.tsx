@@ -19,21 +19,21 @@ interface Props {
   onCancel: () => void;
 }
 
+const initialValues = {
+  order: "",
+  customer: "",
+  location: "",
+  status: "",
+  deliveryman: {} as Employee,
+  manager: {} as Employee,
+};
+
 export const CreateOrderForm: FC<Props> = ({ onCancel, onSubmit }) => {
   const { data: employees } = useGetEmployeeQuery();
   const { data: products } = useGetProductsQuery();
 
   const { mutateAsync: createOrder, isPending: isSubmitting } =
     useCreateOrderMutation();
-
-  const initialValues = {
-    order: "",
-    customer: "",
-    location: "",
-    status: "",
-    deliveryman: {} as Employee,
-    manager: {} as Employee,
-  };
 
   const deliverymanOptions = useMemo(
     () => employees?.deliveryman.map(({ name }) => name) || [],

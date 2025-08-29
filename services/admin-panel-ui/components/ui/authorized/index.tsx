@@ -19,7 +19,7 @@ export const Authorized: FC = () => {
 
       <Typography variant="h5">You are already logged in</Typography>
 
-      <Button variant='contained' color='info' onClick={handleOnClickButton}>Go to main page</Button>
+      <Button variant='contained' color='info' onClick={handleOnClickButton}>Go to the main page</Button>
     </Stack>
   );
 };

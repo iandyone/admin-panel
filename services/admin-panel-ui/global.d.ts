@@ -21,6 +21,7 @@ declare module "next-auth" {
     firstName: string;
     lastName: string;
     isActive: boolean;
+    isNewUser: boolean;
     role: EUserRoles;
     accessToken?: string;
     accessTokenExpires?: number;

@@ -1,6 +1,6 @@
 import { EOrderStatuses, Order } from './orders';
 import { ProductCategory } from './products';
-import { Employee, UpdateUserDto, User } from './user';
+import { Employee, EUserRoles, UpdateUserDto, User } from './user';
 
 export interface OrdersResponse {
   orders: Array<Omit<Order, 'order'> & { order: string[] }>;
@@ -23,6 +23,14 @@ export interface CreateOrderPayload {
   status: EOrderStatuses;
   deliverymanId?: number;
   managerId?: number;
+}
+export interface CreateUserPayload {
+  firstName: string,
+  lastName: string,
+  email: string;
+  role: EUserRoles,
+  phone: string,
+  isActive: boolean,
 }
 
 export interface UpdateOrderPayload extends CreateOrderPayload {

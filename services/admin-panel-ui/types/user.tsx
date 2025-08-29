@@ -38,6 +38,7 @@ export interface UserAuthData {
   firstName: string;
   lastName: string;
   isActive: boolean;
+  isNewUser: boolean;
   iat: number;
   exp: number;
 }
