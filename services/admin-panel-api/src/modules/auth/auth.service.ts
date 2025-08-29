@@ -16,19 +16,37 @@ export class AuthService {
 
   async signIn({ email, password }: SignInDto) {
     const {
-      User: { firstName, lastName, isActive },
+      User: {
+        id,
+        firstName,
+        lastName,
+        isActive,
+        phone,
+        Credentials: { role },
+      },
       ...userCredentials
     } = await this.usersService.findByEmail(email);
 
-    const isCredentialsValid = await bcrypt.compare(
-      password,
-      userCredentials.password,
-    );
-
-    if (!isCredentialsValid) {
-      throw new UnauthorizedException({
-        message: `Wrong password`,
+    if (!userCredentials.password) {
+      this.usersService.update(id, {
+        firstName,
+        lastName,
+        isActive,
+        phone,
+        password,
+        role,
       });
+    } else {
+      const isCredentialsValid = await bcrypt.compare(
+        password,
+        userCredentials.password,
+      );
+
+      if (!isCredentialsValid) {
+        throw new UnauthorizedException({
+          message: `Wrong password`,
+        });
+      }
     }
 
     const userAuthDto = new UserAuthDto({
@@ -36,6 +54,7 @@ export class AuthService {
       firstName,
       lastName,
       isActive,
+      isNewUser: !Boolean(userCredentials.password),
     });
 
     const access_token = await this.jwtService.signAsync(

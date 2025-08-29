@@ -125,9 +125,16 @@ export class DatabaseService {
       include: {
         User: {
           select: {
+            id: true,
             firstName: true,
             lastName: true,
+            phone: true,
             isActive: true,
+            Credentials: {
+              select: {
+                role: true,
+              },
+            },
           },
         },
       },
@@ -144,7 +151,10 @@ export class DatabaseService {
   }
 
   async createUser(createUserDto: CreateUserDto) {
-    const { firstName, lastName, phone, email, password } = createUserDto;
+    const { firstName, lastName, phone, email, role } = createUserDto;
+    console.group();
+    console.log({ createUserDto });
+    console.groupEnd();
 
     const userData = await this.prisma.user.create({
       data: {
@@ -154,7 +164,7 @@ export class DatabaseService {
         Credentials: {
           create: {
             email,
-            password: await bcrypt.hash(password, 5),
+            role: $Enums.Role[role.toUpperCase()],
           },
         },
       },
@@ -176,19 +186,32 @@ export class DatabaseService {
 
   async updateUser(id: number, user: UpdateUserDto) {
     const { id: userId } = await this.getUser(id);
-    const { role, ...updateUserData } = user;
+    const { role, password, ...updateUserData } = user;
 
     const updatedUser = await this.prisma.user.update({
       where: { id: userId },
       data: {
         ...updateUserData,
-        Credentials: { update: { role: $Enums.Role[role] } },
+        Credentials: { update: { role: $Enums.Role[role.toUpperCase()] } },
       },
       omit: {
         updatedAt: true,
         createdAt: true,
       },
     });
+
+    if (password) {
+      const hash = await bcrypt.hash(user.password, 5);
+
+      await this.prisma.credentials.update({
+        where: {
+          userId,
+        },
+        data: {
+          password: hash,
+        },
+      });
+    }
 
     return updatedUser;
   }

@@ -1,4 +1,5 @@
-import { $Enums, Credentials, User } from '@prisma/client';
+import { $Enums } from '@prisma/client';
+import { UserAuthDtoProps } from 'src/types';
 
 export class UserAuthDto {
   id: number;
@@ -7,6 +8,7 @@ export class UserAuthDto {
   lastName: string;
   isActive: boolean;
   role: $Enums.Role;
+  isNewUser?: boolean;
 
   constructor({
     userId,
@@ -15,12 +17,14 @@ export class UserAuthDto {
     isActive,
     email,
     role,
-  }: Credentials & Pick<User, 'firstName' | 'lastName' | 'isActive'>) {
+    isNewUser,
+  }: UserAuthDtoProps) {
     this.id = userId;
     this.firstName = firstName;
     this.lastName = lastName;
     this.isActive = isActive;
     this.email = email;
     this.role = role;
+    this.isNewUser = isNewUser;
   }
 }

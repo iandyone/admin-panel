@@ -4,6 +4,7 @@ import { $Enums } from '@prisma/client';
 import {
   NAME_MAX_LENGTH,
   NAME_MIN_LENGTH,
+  PASSWORD_MIN_LENGTH,
   PHONE_MIN_LENGTH,
 } from '../../../constants';
 
@@ -28,4 +29,7 @@ export class UpdateUserDto {
 
   @ApiPropertyOptional()
   isActive: boolean;
+
+  @ApiPropertyOptional({ minLength: PASSWORD_MIN_LENGTH })
+  password: string;
 }

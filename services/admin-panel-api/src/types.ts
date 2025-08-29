@@ -77,3 +77,8 @@ export interface OrdersFindAllProps {
   manager?: string;
   status?: string;
 }
+
+export type UserAuthDtoProps = Credentials &
+  Pick<User, 'firstName' | 'lastName' | 'isActive'> & {
+    isNewUser?: boolean;
+  };

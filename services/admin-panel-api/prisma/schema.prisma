@@ -8,11 +8,11 @@ datasource db {
 }
 
 model Credentials {
-  id       Int    @id @unique @default(autoincrement())
-  userId   Int    @unique @map("user_id")
-  email    String @unique
-  password String
-  role     Role?  @default(DELIVERY)
+  id       Int     @id @unique @default(autoincrement())
+  userId   Int     @unique @map("user_id")
+  email    String  @unique
+  password String?
+  role     Role?   @default(DELIVERY)
 
   User User? @relation(fields: [userId], references: [id])
 
@@ -24,7 +24,7 @@ model User {
   firstName    String    @map("first_name")
   lastName     String    @map("last_name")
   phone        String    @unique
-  isActive     Boolean   @default(true) @map("is_active")
+  isActive     Boolean   @default(false) @map("is_active")
   lastActivity DateTime? @map("last_activity")
   updatedAt    DateTime? @updatedAt() @map("updated_at")
   createdAt    DateTime? @default(now()) @map("created_at")
