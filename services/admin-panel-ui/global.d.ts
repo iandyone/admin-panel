@@ -22,7 +22,7 @@ declare module "next-auth" {
     lastName: string;
     isActive: boolean;
     isNewUser: boolean;
-    role: EUserRoles;
+    role: string;
     accessToken?: string;
     accessTokenExpires?: number;
   }

@@ -6,7 +6,9 @@ import { FC, useMemo } from "react";
 
 import { FormControls } from "@/components/form-controls";
 import { InputField } from "@/components/ui/input-field";
-import { orderStatusesMap } from "@/constants";
+import { ORDER_STATUSES_OPTIONS_MAP } from "@/configs";
+import { EPermissions, orderStatusesMap } from "@/constants";
+import { usePermissions } from "@/hooks";
 import { useGetProductsQuery, useUpdateOrderMutation } from "@/query";
 import { useGetEmployeeQuery } from "@/query/useGetEmployeeQuery";
 import { Order, UpdateOrderPayload } from "@/types";
@@ -19,6 +21,8 @@ interface Props {
   onCancel: () => void;
 }
 
+const { EDIT_ORDER } = EPermissions;
+
 export const UpdateOrderForm: FC<Props> = ({
   data: { id, order, customer, location, status, deliveryman, manager },
   onCancel,
@@ -28,6 +32,8 @@ export const UpdateOrderForm: FC<Props> = ({
   const { data: products } = useGetProductsQuery();
   const { mutateAsync: updateOrder, isPending: isSubmitting } =
     useUpdateOrderMutation();
+
+  const { role, checkPermission } = usePermissions();
 
   const initialValues = {
     order,
@@ -39,6 +45,10 @@ export const UpdateOrderForm: FC<Props> = ({
     ),
     manager: employees?.managers.find(({ name }) => name === manager),
   };
+
+  const disableMainOrderFields = !checkPermission(EDIT_ORDER);
+
+  const availableRolesOptions = role ? ORDER_STATUSES_OPTIONS_MAP[role] : [];
 
   const deliverymanOptions = useMemo(
     () => employees?.deliveryman.map(({ name }) => name) || [],
@@ -95,6 +105,7 @@ export const UpdateOrderForm: FC<Props> = ({
                 multiple
                 options={productsOptions}
                 value={values.order ? values.order.split(", ") : []}
+                disabled={disableMainOrderFields}
                 onChange={(_, newValue) => {
                   setFieldValue("order", newValue.join(", "));
                 }}
@@ -113,6 +124,7 @@ export const UpdateOrderForm: FC<Props> = ({
                 label="Customer"
                 type="text"
                 size="medium"
+                disabled={disableMainOrderFields}
                 error={Boolean(touched.customer && errors.customer)}
               />
 
@@ -121,7 +133,32 @@ export const UpdateOrderForm: FC<Props> = ({
                 label="Location"
                 type="text"
                 size="medium"
+                disabled={disableMainOrderFields}
                 error={Boolean(touched.location && errors.location)}
+              />
+
+              <Autocomplete
+                options={managersOptions}
+                value={values.manager?.name || ""}
+                disabled={disableMainOrderFields}
+                onChange={(_, newValue) => {
+                  setFieldValue(
+                    "manager",
+                    newValue
+                      ? employees?.managers.find(
+                          ({ name }) => name === newValue,
+                        )
+                      : "",
+                  );
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    name="manager"
+                    label="Manager"
+                    error={Boolean(touched.manager && errors.manager)}
+                  />
+                )}
               />
 
               <Autocomplete
@@ -148,30 +185,7 @@ export const UpdateOrderForm: FC<Props> = ({
               />
 
               <Autocomplete
-                options={managersOptions}
-                value={values.manager?.name || ""}
-                onChange={(_, newValue) => {
-                  setFieldValue(
-                    "manager",
-                    newValue
-                      ? employees?.managers.find(
-                          ({ name }) => name === newValue,
-                        )
-                      : "",
-                  );
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    name="manager"
-                    label="Manager"
-                    error={Boolean(touched.manager && errors.manager)}
-                  />
-                )}
-              />
-
-              <Autocomplete
-                options={Object.values(EOrderStatuses)}
+                options={availableRolesOptions}
                 value={values.status}
                 onChange={(_, newValue) => {
                   setFieldValue("status", newValue);

@@ -4,7 +4,7 @@ import { ERoutes } from "@/constants";
 export default function Unauthorized() {
   return (
     <ErrorPlaceholder
-      title="Forbidden"
+      title="Access denied"
       subtitle="You have no permissions for this page"
       buttonText="Go to the main page"
       redirectTo={ERoutes.ORDERS}

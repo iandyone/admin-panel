@@ -4,10 +4,13 @@ import { Button, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 
 import { FormModalWrapper } from "@/components/form-modal-wrapper";
-import { CreateUserForm } from '@/forms/create-user';
+import { EPermissions } from "@/constants";
+import { CreateUserForm } from "@/forms/create-user";
+import { usePermissions } from "@/hooks";
 
 export const UsersHeader: FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { checkPermission } = usePermissions();
 
   const handleOnClickAddButton = () => {
     setIsOpen(true);
@@ -20,15 +23,18 @@ export const UsersHeader: FC = () => {
       <Typography component="h2" variant="h6">
         Users
       </Typography>
-      <Button
-        variant="contained"
-        color="warning"
-        onClick={handleOnClickAddButton}
-      >
-        Add user
-      </Button>
+      {checkPermission(EPermissions.ADD_USER) && (
+        <Button
+          variant="contained"
+          color="warning"
+          onClick={handleOnClickAddButton}
+        >
+          Add user
+        </Button>
+      )}
+
       <FormModalWrapper open={isOpen} onClose={onClose} title={`New user`}>
-        <CreateUserForm onCancel={onClose} onSubmit={onClose}/>
+        <CreateUserForm onCancel={onClose} onSubmit={onClose} />
       </FormModalWrapper>
     </Stack>
   );

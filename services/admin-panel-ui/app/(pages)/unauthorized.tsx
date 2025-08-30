@@ -4,8 +4,8 @@ import { ERoutes } from "@/constants";
 export default function Unauthorized() {
   return (
     <ErrorPlaceholder
-      title="You are not authorized"
-      subtitle="Please, sign in and try again"
+      title="Not authorized"
+      subtitle="You are not authorized. Please, sign in and try again"
       buttonText="Sign in"
       redirectTo={ERoutes.SIGN_IN}
     />

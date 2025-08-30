@@ -30,14 +30,7 @@ export const CreateUserForm: FC<Props> = ({ onCancel, onSubmit }) => {
   const { mutateAsync: createUser } = useCreateUserMutation();
 
   const handleOnSubmit = async (userData: CreateUserPayload) => {
-    // await updateUser({ id, userData });
-
-    const result = await createUser(userData);
-
-    console.group();
-    console.log({ result });
-    console.groupEnd();
-
+    await createUser(userData);
     onSubmit();
   };
 

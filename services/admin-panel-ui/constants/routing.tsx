@@ -14,18 +14,20 @@ export enum ERoutes {
   SIGN_IN = "signin",
 }
 
-export const navigation: Record<string, Navigation> = {
-  ADMIN: [
+export const navigation: Record<EUserRoles, Navigation> = {
+  admin: [
     { title: "Dashboard", segment: ERoutes.DASHBOARD, icon: <DashboardIcon /> },
     { title: "Orders", segment: ERoutes.ORDERS, icon: <ShoppingCartIcon /> },
     { kind: "divider" },
     { title: "Users", segment: ERoutes.USERS, icon: <PersonIcon /> },
   ],
-  MANAGER: [
+  manager: [
     { title: "Dashboard", segment: ERoutes.DASHBOARD, icon: <DashboardIcon /> },
     { title: "Orders", segment: ERoutes.ORDERS, icon: <ShoppingCartIcon /> },
+    { kind: "divider" },
+    { title: "Users", segment: ERoutes.USERS, icon: <PersonIcon /> },
   ],
-  DELIVERY: [
+  delivery: [
     { title: "Orders", segment: ERoutes.ORDERS, icon: <ShoppingCartIcon /> },
   ],
 };
@@ -33,6 +35,6 @@ export const navigation: Record<string, Navigation> = {
 export const PAGES_ACCESSING_MAP: Record<ERoutes, EUserRoles[] | null> = {
   dashboard: [ADMIN, MANAGER],
   orders: [ADMIN, MANAGER, DELIVERY],
-  users: [ADMIN],
+  users: [ADMIN, MANAGER],
   signin: null,
 };

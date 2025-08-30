@@ -27,7 +27,7 @@ export const authConfig: NextAuthConfig = {
           return {
             id: user.id,
             email: user.email,
-            role: user.role,
+            role: user.role.toLowerCase(),
             firstName: user.firstName,
             lastName: user.lastName,
             isActive: user.isActive,

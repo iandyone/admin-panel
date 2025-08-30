@@ -16,6 +16,8 @@ export const metadata: Metadata = {
 
 const inter = Inter({ subsets: ["latin", "cyrillic"], weight: ["400", "700"] });
 
+/* TODO: Redux can be removed from app  */
+
 export default function RootLayout({
   children,
 }: Readonly<{

@@ -6,8 +6,11 @@ import { FC } from "react";
 
 import { FormControls } from "@/components/form-controls";
 import { InputField } from "@/components/ui/input-field";
+import { USER_ROLES_OPTIONS_MAP } from "@/configs";
+import { EPermissions } from "@/constants";
+import { usePermissions } from "@/hooks";
 import { useUpdateUserMutation } from "@/query/useUpdateUserMutation";
-import { EUserRoles, EUserStatuses, User } from "@/types";
+import { EUserStatuses, User } from "@/types";
 import { UpdateUserDto } from "@/types/user";
 import { updateUserSchema } from "@/validations";
 
@@ -18,6 +21,7 @@ interface Props {
 }
 
 const { ACTIVE, INACTIVE } = EUserStatuses;
+const { DEACTIVATE_USERS, EDIT_USER_ROLE } = EPermissions;
 
 export const UpdateUserForm: FC<Props> = ({
   data: { firstName, lastName, role, phone, isActive, id },
@@ -25,6 +29,11 @@ export const UpdateUserForm: FC<Props> = ({
   onSubmit,
 }) => {
   const { mutateAsync: updateUser } = useUpdateUserMutation();
+  const { role: currentUserRole, checkPermission } = usePermissions();
+
+  const availableRolesOptions = currentUserRole
+    ? USER_ROLES_OPTIONS_MAP[currentUserRole]
+    : [];
 
   const initialValues: UpdateUserDto = {
     firstName,
@@ -75,8 +84,9 @@ export const UpdateUserForm: FC<Props> = ({
               />
 
               <Autocomplete
-                options={Object.values(EUserRoles)}
+                options={availableRolesOptions}
                 value={values.role}
+                disabled={!checkPermission(EDIT_USER_ROLE)}
                 onChange={(_, newValue) => {
                   setFieldValue("role", newValue);
                 }}
@@ -92,6 +102,7 @@ export const UpdateUserForm: FC<Props> = ({
               <Autocomplete
                 options={Object.values(EUserStatuses)}
                 value={values.isActive ? ACTIVE : INACTIVE}
+                disabled={!checkPermission(DEACTIVATE_USERS)}
                 onChange={(_, newValue) => {
                   setFieldValue("isActive", newValue === ACTIVE);
                 }}

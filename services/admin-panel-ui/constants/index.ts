@@ -3,6 +3,7 @@ export * from "./routing";
 export * from "./filters";
 export * from "./query";
 export * from "./table";
+export * from "./auth";
 export * from "./api";
 
 

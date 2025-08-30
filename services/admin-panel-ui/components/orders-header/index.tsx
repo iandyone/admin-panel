@@ -4,10 +4,13 @@ import { Button, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 
 import { FormModalWrapper } from "@/components/form-modal-wrapper";
+import { EPermissions } from "@/constants";
 import { CreateOrderForm } from "@/forms";
+import { usePermissions } from "@/hooks";
 
 export const OrdersHeader: FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { checkPermission } = usePermissions();
 
   const handleOnClickAddButton = () => {
     setIsOpen(true);
@@ -20,13 +23,17 @@ export const OrdersHeader: FC = () => {
       <Typography component="h2" variant="h6">
         Orders
       </Typography>
-      <Button
-        variant="contained"
-        color="warning"
-        onClick={handleOnClickAddButton}
-      >
-        Add order
-      </Button>
+
+      {checkPermission(EPermissions.ADD_ORDER_BUTTON) && (
+        <Button
+          variant="contained"
+          color="warning"
+          onClick={handleOnClickAddButton}
+        >
+          Add order
+        </Button>
+      )}
+
       <FormModalWrapper open={isOpen} onClose={onClose} title={`New order`}>
         <CreateOrderForm onCancel={onClose} onSubmit={onClose} />
       </FormModalWrapper>

@@ -7,13 +7,15 @@ import {
   TableRowProps,
   useTheme,
 } from "@mui/material";
-import { FC, useState } from "react";
+import { FC, useMemo, useState } from "react";
 
 import { FormModalWrapper } from "@/components/form-modal-wrapper";
+import { EPermissions } from "@/constants";
 import { ConfirmRemoveModal, UpdateOrderForm, UpdateUserForm } from "@/forms";
+import { usePermissions } from "@/hooks";
 import { CrossIcon, PenIcon } from "@/svg";
 import { Order, User } from "@/types";
-import { EUserStatuses } from "@/types/user";
+import { EUserRoles, EUserStatuses } from "@/types/user";
 import { isOrderData, isUserData } from "@/utils/guards";
 
 interface Props extends TableRowProps {
@@ -21,13 +23,29 @@ interface Props extends TableRowProps {
 }
 
 const { ACTIVE, INACTIVE } = EUserStatuses;
+const { ADMIN } = EUserRoles;
+const { EDIT_USER, REMOVE_ORDER } = EPermissions;
 
 export const TableRowItem: FC<Props> = ({ data, ...rowProps }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [modalType, setModalType] = useState<"edit" | "remove">("edit");
-  const isOrderModal = isOrderData(data);
-  const isUserModal = isUserData(data);
+  const { role, checkPermission } = usePermissions();
+
+  const isOrderTable = isOrderData(data);
+  const isUserTable = isUserData(data);
+
   const theme = useTheme();
+
+  const editUserPermission = useMemo(
+    () =>
+      isUserTable &&
+      (role === ADMIN || (checkPermission(EDIT_USER) && data.role !== ADMIN)),
+    [checkPermission, isUserTable, role, data],
+  );
+
+  const disableEditButton = isUserTable ? !editUserPermission : false;
+
+  const showRemoveButton = isOrderTable && checkPermission(REMOVE_ORDER);
 
   const handleOnClickEditButton = () => {
     setModalType("edit");
@@ -61,17 +79,25 @@ export const TableRowItem: FC<Props> = ({ data, ...rowProps }) => {
           </TableCell>
         );
       })}
+
       <TableCell size="small">
         <Button
           onClick={handleOnClickEditButton}
+          disabled={disableEditButton}
           variant="text"
           sx={{ width: "40px", minWidth: "auto" }}
         >
-          <PenIcon stroke={theme.palette.text.secondary} />
+          <PenIcon
+            stroke={
+              disableEditButton
+                ? theme.palette.text.disabled
+                : theme.palette.text.secondary
+            }
+          />
         </Button>
       </TableCell>
 
-      {isOrderModal && (
+      {showRemoveButton && (
         <TableCell size="small">
           <Button
             onClick={handleOnClickRemoveButton}
@@ -87,16 +113,16 @@ export const TableRowItem: FC<Props> = ({ data, ...rowProps }) => {
         <FormModalWrapper
           open={isOpen}
           onClose={handleOnCloseModal}
-          title={`Update ${isOrderModal ? "order" : `user`} #${data.id}`}
+          title={`Update ${isOrderTable ? "order" : `user`} #${data.id}`}
         >
-          {isOrderModal && (
+          {isOrderTable && (
             <UpdateOrderForm
               data={data}
               onCancel={handleOnCloseModal}
               onSubmit={handleOnCloseModal}
             />
           )}
-          {isUserModal && (
+          {isUserTable && (
             <UpdateUserForm
               data={data}
               onCancel={handleOnCloseModal}

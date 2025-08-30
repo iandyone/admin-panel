@@ -9,9 +9,12 @@ import {
 import { useCallback, useMemo, useState } from "react";
 
 import { ColumnFilter } from "@/components/column-filter";
+import { EPermissions } from "@/constants";
 import { OrdersTableHeaderConfig, SortOrder } from "@/types";
 import { OrderFilter } from "@/types/orders";
 import { getActionColumnConfig, getRemoveColumnConfig } from "@/types/table";
+
+import { usePermissions } from "./usePermissions";
 
 interface Props {
   config: OrdersTableHeaderConfig;
@@ -24,6 +27,7 @@ const REMOVE_COLUMN_CONFIG = getRemoveColumnConfig<OrderFilter>();
 export const useOrdersTable = ({ config }: Props) => {
   const [sortKey, setSortKey] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<SortOrder>(DEFAULT_ORDER);
+  const { checkPermission } = usePermissions();
   const theme = useTheme();
 
   const handleOnClickSortLabel = useCallback(
@@ -34,8 +38,16 @@ export const useOrdersTable = ({ config }: Props) => {
     [sortOrder],
   );
 
+  const actionColumns = useMemo(
+    () =>
+      checkPermission(EPermissions.REMOVE_ORDER)
+        ? [EDIT_COLUMN_CONFIG, REMOVE_COLUMN_CONFIG]
+        : [EDIT_COLUMN_CONFIG],
+    [checkPermission],
+  );
+
   const headers = useMemo(() => {
-    const headers = config.concat(EDIT_COLUMN_CONFIG, REMOVE_COLUMN_CONFIG);
+    const headers = config.concat(actionColumns);
 
     return headers.map(
       ({ title, hideSortIcon, key, withFilter = true, width = "auto" }) => (
@@ -91,7 +103,14 @@ export const useOrdersTable = ({ config }: Props) => {
         </TableCell>
       ),
     );
-  }, [config, sortKey, sortOrder, theme, handleOnClickSortLabel]);
+  }, [
+    config,
+    sortKey,
+    sortOrder,
+    theme,
+    handleOnClickSortLabel,
+    actionColumns,
+  ]);
 
   return {
     sortKey,
