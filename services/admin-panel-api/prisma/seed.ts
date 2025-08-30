@@ -16,11 +16,12 @@ async function seedUsers() {
         update: {
           firstName: u.firstName,
           lastName: u.lastName,
-          isActive: true,
+          isActive: u.isActive,
         },
         create: {
           firstName: u.firstName,
           lastName: u.lastName,
+          isActive: u.isActive,
           phone: u.phone,
         },
         select: { id: true },

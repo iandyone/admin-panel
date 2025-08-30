@@ -22,7 +22,7 @@ export const idSchema = joi.number().required();
 export const passwordSchema = joi
   .string()
   .min(PASSWORD_MIN_LENGTH)
-  .pattern(new RegExp('^[a-zA-Z0-9]{6,30}$'));
+  .pattern(/^[a-zA-Z0-9!@#$%^&*()_\-+=\[{\]};:,.<>/?\\|~]{6,30}$/);
 
 export const customerSchema = joi
   .string()

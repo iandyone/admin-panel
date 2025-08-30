@@ -2,6 +2,7 @@ import * as yup from "yup";
 
 import {
   EValidationMessages,
+  getMaxLengthErrorMessage,
   getMinLengthErrorMessage,
   getPleaseEnterAValidFieldErrorMessage,
 } from "@/constants";
@@ -17,6 +18,11 @@ export const signInValidationSchema = yup.object({
   password: yup
     .string()
     .trim()
-    .min(4, getMinLengthErrorMessage(4))
+    .min(6, getMinLengthErrorMessage(6))
+    .max(30, getMaxLengthErrorMessage(30))
+    .matches(
+      /^[a-zA-Z0-9!@#$%^&*()_\-+=\[{\]};:<>/?\\|~]{6,30}$/,
+      "Password contains unsupported symbols",
+    )
     .required(REQUIRED),
 });

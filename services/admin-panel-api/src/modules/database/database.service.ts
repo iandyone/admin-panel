@@ -151,16 +151,14 @@ export class DatabaseService {
   }
 
   async createUser(createUserDto: CreateUserDto) {
-    const { firstName, lastName, phone, email, role } = createUserDto;
-    console.group();
-    console.log({ createUserDto });
-    console.groupEnd();
+    const { firstName, lastName, phone, email, role, isActive } = createUserDto;
 
     const userData = await this.prisma.user.create({
       data: {
         firstName,
         lastName,
         phone,
+        isActive,
         Credentials: {
           create: {
             email,
