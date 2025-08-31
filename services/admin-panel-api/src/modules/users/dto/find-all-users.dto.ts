@@ -35,6 +35,9 @@ export class FindAllUsersDto {
   @ApiPropertyOptional()
   role?: string;
 
+  @ApiPropertyOptional()
+  email?: string;
+
   @ApiPropertyOptional({ description: 'timestamp' })
   dateFrom?: number;
 

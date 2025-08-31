@@ -12,6 +12,7 @@ export interface UserResponse {
   firstName: string;
   lastName: string;
   role: $Enums.Role;
+  email: string;
   phone: string;
   lastActivity: string | null;
   orders: number;

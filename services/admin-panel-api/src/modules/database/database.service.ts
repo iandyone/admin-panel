@@ -35,12 +35,20 @@ export class DatabaseService {
           ? { equals: filterValue }
           : { startsWith: filterValue, mode: 'insensitive' };
 
-      if (key === 'role') {
+      if (key === 'role' || key === 'email') {
+        const current = (acc as any).Credentials?.is ?? {};
+
+        if (key === 'role' && filters.role) {
+          current.role = $Enums.Role[filters.role.toUpperCase()];
+        }
+
+        if (key === 'email' && filterValue) {
+          current.email = { startsWith: filterValue, mode: 'insensitive' };
+        }
+
         return {
           ...acc,
-          Credentials: {
-            role: $Enums.Role[filters.role.toLocaleUpperCase()],
-          },
+          Credentials: { is: current },
         };
       }
 

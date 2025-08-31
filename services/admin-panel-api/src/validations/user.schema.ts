@@ -34,6 +34,7 @@ export const findAllUsersSchema = joi.object({
   firstName: nameSchema.min(1).optional(),
   lastName: nameSchema.min(1).optional(),
   phone: phoneSchema.min(1).optional(),
+  email: joi.string().min(1).optional(),
   role: userRoleSchema.optional(),
   isActive: joi.bool().optional(),
   orders: joi.number().min(0).optional(),
