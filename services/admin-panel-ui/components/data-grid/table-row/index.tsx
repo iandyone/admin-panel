@@ -70,11 +70,7 @@ export const TableRowItem: FC<Props> = ({ data, ...rowProps }) => {
           key === "isActive" ? (value ? ACTIVE : INACTIVE) : value;
 
         return (
-          <TableCell
-            size="small"
-            key={index}
-            sx={{ textTransform: "capitalize" }}
-          >
+          <TableCell size="small" key={index}>
             {ceilValue}
           </TableCell>
         );

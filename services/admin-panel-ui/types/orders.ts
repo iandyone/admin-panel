@@ -48,6 +48,7 @@ export interface UsersFilter {
   lastName?: string;
   role?: string;
   phone?: string;
+  email?: string;
   lastActivity?: string;
   orders?: string;
   isActive?: string;

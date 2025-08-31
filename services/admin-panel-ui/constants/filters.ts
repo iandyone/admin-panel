@@ -5,6 +5,7 @@ export const USERS_SEARCH_FILTERS = [
   "firstName",
   "lastName",
   "role",
+  "email",
   "phone",
   "lastActivity",
   "orders",
