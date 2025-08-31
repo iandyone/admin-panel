@@ -1,8 +1,10 @@
 import { Box, Chip, Stack, Typography } from "@mui/material";
 import { FC, ReactNode } from "react";
 
+import { StatisticCardLoader } from '@/components/loaders/statistic-card-loader';
 import { SparkLine } from "@/components/ui/spark-line";
 import { StatisticDatasetItem } from "@/types";
+
 
 interface Props extends StatisticDatasetItem {
   title: string;
@@ -20,9 +22,12 @@ export const StatisticCard: FC<Props> = ({
   chip,
   data,
   days,
-  // isLoading
+  isLoading,
 }) => {
-  // TODO: loader
+  if (isLoading) {
+    return <StatisticCardLoader />;
+  }
+
   return (
     <Stack direction="column" gap={1} padding={2}>
       <Typography component="h2" variant="subtitle2" gutterBottom>

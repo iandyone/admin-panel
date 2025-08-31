@@ -10,12 +10,13 @@ import { theme } from "@/theme";
 
 export const MaterialUIProvider = ({ children }: PropsWithChildren) => {
   const { data } = useSession();
+  const role = data?.user.role;
 
   return (
     <AppRouterCacheProvider>
       <Suspense>
         <NextAppProvider
-          navigation={navigation[data?.user.role || "delivery"]}
+          navigation={role ? navigation[data?.user.role] : []}
           theme={theme}
           branding={{ title: "Admin Panel" }}
         >

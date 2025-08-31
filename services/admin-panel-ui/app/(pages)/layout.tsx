@@ -12,6 +12,7 @@ import { SidebarFooter } from "@/components/sidebar-footer";
 
 export default function PagesLayout({ children }: PropsWithChildren) {
   const session = useSession();
+  const hideNavigation = !session.data && session.status !== "loading";
 
   useEffect(() => {
     if (session.data?.user.isActive === false) {
@@ -23,7 +24,7 @@ export default function PagesLayout({ children }: PropsWithChildren) {
   return (
     <DashboardLayout
       defaultSidebarCollapsed
-      hideNavigation={!session.data}
+      hideNavigation={hideNavigation}
       slots={{
         sidebarFooter: SidebarFooter,
       }}

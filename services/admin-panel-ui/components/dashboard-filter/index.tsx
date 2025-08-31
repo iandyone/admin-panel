@@ -62,7 +62,7 @@ export const DashboardFilter: FC = () => {
         />
       </Grid>
       <Grid size={{ md: 1, xs: 2 }}>
-        <Stack alignItems={{ md: "flex-start", sm: 'flex-end', xs: "center" }}>
+        <Stack alignItems={{ md: "flex-start", sm: 'flex-end', }}>
           <Button
             type="submit"
             variant="contained"

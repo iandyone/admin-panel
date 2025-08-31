@@ -1,9 +1,10 @@
 "use client";
 
-import { Stack, Typography } from "@mui/material";
+import { Card, Stack, Typography } from "@mui/material";
 import { PieChart, PieValueType } from "@mui/x-charts";
 import { FC, useMemo } from "react";
 
+import { DashboardPieChartLoader } from "@/components/loaders/dashboard-pie-charts-loader";
 import { PieChartDefaultSettings } from "@/configs";
 import { useAppSearchParams } from "@/hooks";
 import { useGetDashboardOrders } from "@/query";
@@ -31,14 +32,15 @@ export const OrdersChart: FC = () => {
     [orders, isOrdersFetchingSuccess],
   );
 
+  if (isFetching) {
+    return <DashboardPieChartLoader />;
+  }
+
   return (
-    <Stack justifyContent="space-between">
-      <Stack>
-        <Typography textAlign="center">Orders by status, %</Typography>
-        {/* TODO: loader */}
-        {isFetching ? (
-          <div>1</div>
-        ) : (
+    <Card sx={{ padding: 2 }}>
+      <Stack justifyContent="space-between">
+        <Stack>
+          <Typography textAlign="center">Orders by status, %</Typography>
           <PieChart
             series={[
               {
@@ -57,8 +59,8 @@ export const OrdersChart: FC = () => {
             ]}
             {...PieChartDefaultSettings}
           />
-        )}
+        </Stack>
       </Stack>
-    </Stack>
+    </Card>
   );
 };

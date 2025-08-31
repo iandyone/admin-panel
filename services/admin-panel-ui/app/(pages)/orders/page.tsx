@@ -4,13 +4,13 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
-import { unauthorized } from 'next/navigation';
+import { unauthorized } from "next/navigation";
 
 import { prefetchEmployees, prefetchProducts } from "@/actions";
 import { prefetchOrders } from "@/actions/orders.actions";
 import { OrdersHeader } from "@/components/orders-header";
 import { OrdersTable } from "@/components/orders-table";
-import { auth } from '@/configs';
+import { auth } from "@/configs";
 import {
   DEFAULT_ROWS_PER_PAGE,
   FetchTags,
@@ -52,10 +52,8 @@ export default async function Page() {
 
   return (
     <Stack gap={3} sx={{ mt: 0 }}>
-      <OrdersHeader />
-
-      {/* TODO: susspence? */}
       <HydrationBoundary state={dehydrate(queryClient)}>
+        <OrdersHeader />
         <OrdersTable />
       </HydrationBoundary>
     </Stack>

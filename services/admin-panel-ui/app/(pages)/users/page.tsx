@@ -5,7 +5,6 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import { forbidden, unauthorized } from "next/navigation";
-import { Suspense } from "react";
 
 import { prefetchUsers } from "@/actions";
 import { UsersHeader } from "@/components/users-header";
@@ -47,13 +46,10 @@ export default async function Page() {
 
   return (
     <Stack gap={3} sx={{ mt: 0 }}>
-      <UsersHeader />
-
-      <Suspense fallback="Fetching users data">
-        <HydrationBoundary state={dehydrate(queryClient)}>
-          <UsersTable />;
-        </HydrationBoundary>
-      </Suspense>
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <UsersHeader />
+        <UsersTable />;
+      </HydrationBoundary>
     </Stack>
   );
 }

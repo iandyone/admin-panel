@@ -12,9 +12,11 @@ import {
 import { SidebarFooterProps } from "@toolpad/core";
 import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
-import { FC } from "react";
+import { FC, Fragment } from "react";
 
 import { SignOutIcon } from "@/svg";
+
+import { SkeletonLoader } from "../loaders/skeleton-loader";
 
 export const SidebarFooter: FC<SidebarFooterProps> = ({ mini }) => {
   const session = useSession();
@@ -28,6 +30,7 @@ export const SidebarFooter: FC<SidebarFooterProps> = ({ mini }) => {
     await signOut({ redirect: false });
     router.push("/signin");
   };
+  const isLoading = session.status === "loading";
 
   return (
     <Stack padding={2} gap={1}>
@@ -52,12 +55,16 @@ export const SidebarFooter: FC<SidebarFooterProps> = ({ mini }) => {
               bgcolor: theme.palette.primary.dark,
             }}
           >
-            <Typography
-              fontSize={18}
-              sx={{ color: theme.palette.common.white }}
-            >
-              {firstName[0].toUpperCase()}
-            </Typography>
+            {isLoading ? (
+              <SkeletonLoader variant="circular" width={48} height={48} />
+            ) : (
+              <Typography
+                fontSize={18}
+                sx={{ color: theme.palette.common.white }}
+              >
+                {firstName[0].toUpperCase()}
+              </Typography>
+            )}
           </Stack>
         </Tooltip>
 
@@ -68,13 +75,22 @@ export const SidebarFooter: FC<SidebarFooterProps> = ({ mini }) => {
             justifyContent="space-between"
             width="100%"
           >
-            <Stack>
-              <Typography>
-                {firstName} {lastName}
-              </Typography>
-              <Typography variant="subtitle2" color="textDisabled">
-                {session.data?.user.email}
-              </Typography>
+            <Stack width={"100%"}>
+              {isLoading ? (
+                <Fragment>
+                  <SkeletonLoader variant="text" />
+                  <SkeletonLoader variant="text" />
+                </Fragment>
+              ) : (
+                <Fragment>
+                  <Typography>
+                    {firstName} {lastName}
+                  </Typography>
+                  <Typography variant="subtitle2" color="textDisabled">
+                    {session.data?.user.email}
+                  </Typography>
+                </Fragment>
+              )}
             </Stack>
             <Tooltip
               title="Sign out"
@@ -82,13 +98,22 @@ export const SidebarFooter: FC<SidebarFooterProps> = ({ mini }) => {
                 transition: Fade,
               }}
             >
-              <Button
-                onClick={handleOnClickSignOutButton}
-                variant="text"
-                sx={{ width: "42px", minWidth: "auto" }}
-              >
-                <SignOutIcon fill={theme.palette.primary.main} />
-              </Button>
+              {isLoading ? (
+                <SkeletonLoader
+                  variant="rounded"
+                  width={42}
+                  height={44}
+                  sx={{ marginLeft: 2, bgcolor: "grey.200" }}
+                />
+              ) : (
+                <Button
+                  onClick={handleOnClickSignOutButton}
+                  variant="text"
+                  sx={{ width: "42px", minWidth: "auto" }}
+                >
+                  <SignOutIcon fill={theme.palette.primary.main} />
+                </Button>
+              )}
             </Tooltip>
           </Stack>
         )}

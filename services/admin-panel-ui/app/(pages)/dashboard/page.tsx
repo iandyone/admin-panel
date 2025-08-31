@@ -17,7 +17,6 @@ import { ProductsGroupChart } from "@/components/charts/products-chart";
 import { DashboardFilter } from "@/components/dashboard-filter";
 import { DashboardStatistics } from "@/components/dashboard-statistics";
 import { TrendingProductsBar } from "@/components/trending-products";
-import { Card } from "@/components/ui/card";
 import { auth } from "@/configs";
 import {
   DASHBOARD_DEFAULT_FILTER,
@@ -76,20 +75,14 @@ export default async function Page() {
 
         <Grid container columns={{ md: 2, xs: 1 }} spacing={{ md: 3, xs: 2 }}>
           <Grid size={1}>
-            <Card>
-              <OrdersChart />
-            </Card>
+            <OrdersChart />
           </Grid>
           <Grid size={1}>
-            <Card>
-              <ProductsGroupChart />
-            </Card>
+            <ProductsGroupChart />
           </Grid>
         </Grid>
         <Grid size={1}>
-          <Card>
-            <TrendingProductsBar />
-          </Card>
+          <TrendingProductsBar />
         </Grid>
       </Stack>
     </HydrationBoundary>
