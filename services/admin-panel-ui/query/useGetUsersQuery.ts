@@ -5,6 +5,8 @@ import { API_PATH, DEFAULT_ROWS_PER_PAGE, FetchTags, START_PAGE } from '@/consta
 import { UsersFilter, UsersResponse } from '@/types'
 
 export const useGetUsersQuery = (page = START_PAGE, perPage = DEFAULT_ROWS_PER_PAGE, filters?: UsersFilter) => {
+
+
   return useQuery({
     queryKey: [FetchTags.USERS, page, perPage, filters],
     queryFn: async () => {
@@ -14,9 +16,9 @@ export const useGetUsersQuery = (page = START_PAGE, perPage = DEFAULT_ROWS_PER_P
             page,
             perPage,
             ...filters
-          }
-        });
+          },
 
+        });
 
         return response.data;
       } catch (error) {

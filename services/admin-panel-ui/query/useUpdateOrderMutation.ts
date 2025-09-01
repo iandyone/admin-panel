@@ -16,6 +16,7 @@ export const useUpdateOrderMutation = () => {
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [FetchTags.ORDERS], })
+      queryClient.invalidateQueries({ queryKey: [FetchTags.USERS], })
     },
 
     onError: (error) => {

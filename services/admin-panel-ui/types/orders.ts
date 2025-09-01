@@ -15,7 +15,7 @@ export interface Order {
   status: string
 }
 
-export enum EOrderStatuses {  
+export enum EOrderStatuses {
   CREATED = 'Created',
   COMPLETED = 'Completed',
   PROCESSING = 'Processing',
@@ -33,8 +33,10 @@ export interface OrderFilter {
   location: string;
   customer: string;
   date: string;
-  dateFrom: string | number;
-  dateTo: string | number;
+  dateFromCreated: string | number;
+  dateToCreated: string | number;
+  dateFromUpdated: string | number;
+  dateToUpdated: string | number;
   manager: string;
   status: string;
   createdAt: string;

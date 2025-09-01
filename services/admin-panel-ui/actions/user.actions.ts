@@ -10,7 +10,6 @@ const { USERS, EMPLOYEE } = API_PATH;
 export const prefetchUsers = async (page = START_PAGE, perPage = DEFAULT_ROWS_PER_PAGE, filters = USERS_DEFAULT_FILTER) => {
   const session = await auth();
 
-
   try {
     const response = await $axios_server.get<UsersResponse>(USERS, {
       params: {
@@ -20,11 +19,11 @@ export const prefetchUsers = async (page = START_PAGE, perPage = DEFAULT_ROWS_PE
       },
       headers: {
         Authorization: `Bearer ${session?.accessToken}`
-      }
+      },
     });
-    const usersData = response.data;
 
-    return usersData;
+    return response.data;
+
   } catch (error) {
     console.log(error);
 
@@ -38,7 +37,13 @@ export const prefetchUsers = async (page = START_PAGE, perPage = DEFAULT_ROWS_PE
 
 export const prefetchEmployees = async () => {
   try {
-    const response = await $axios_server.get<EmployeeResponse>(EMPLOYEE)
+    const session = await auth();
+
+    const response = await $axios_server.get<EmployeeResponse>(EMPLOYEE, {
+      headers: {
+        Authorization: `Bearer ${session?.accessToken}`
+      },
+    })
 
     return response.data;
   } catch (error) {
