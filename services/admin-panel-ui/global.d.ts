@@ -13,6 +13,7 @@ declare module "next-auth" {
       lastName: string;
       isActive: boolean;
     };
+    accessToken?: string;
   }
 
   interface User extends DefaultUser {

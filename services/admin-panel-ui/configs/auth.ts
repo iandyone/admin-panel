@@ -4,7 +4,8 @@ import NextAuth, { NextAuthConfig, NextAuthResult } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials'
 
 import { signInAction } from '@/actions';
-import { UserAuthData } from '@/types';
+import { EUserRoles, UserAuthData } from '@/types';
+
 
 export const authConfig: NextAuthConfig = {
   providers: [
@@ -20,9 +21,9 @@ export const authConfig: NextAuthConfig = {
             return null;
           }
 
-          const response = await signInAction(credentials.email as string, credentials.password as string)
+          const accessToken = await signInAction(credentials.email as string, credentials.password as string)
+          const user = jwtDecode<UserAuthData>(accessToken);
 
-          const user = jwtDecode<UserAuthData>(response);
 
           return {
             id: user.id,
@@ -31,7 +32,8 @@ export const authConfig: NextAuthConfig = {
             firstName: user.firstName,
             lastName: user.lastName,
             isActive: user.isActive,
-            isNewUser: user.isNewUser
+            isNewUser: user.isNewUser,
+            accessToken
           };
 
         } catch {
@@ -63,15 +65,16 @@ export const authConfig: NextAuthConfig = {
     async session({ session, token }) {
       if (!session.user) session.user = {} as any;
 
-      (session.user as any).id = token.userId as string;
-      session.user.email = (token.email as string) || session.user.email;
-      (session.user as any).role = token.role as string | undefined;
       (session as any).accessToken = token.accessToken;
       (session as any).isNewUser = token.isNewUser;
+      (session as any).accessToken = token.accessToken;
 
-      (session.user as any).firstName = token.firstName;
-      (session.user as any).lastName = token.lastName;
-      (session.user as any).isActive = token.isActive;
+      session.user.id = token.userId as string;
+      session.user.email = (token.email as string) || session.user.email;
+      session.user.role = token.role as EUserRoles;
+      session.user.firstName = token.firstName as string;
+      session.user.lastName = token.lastName as string;
+      session.user.isActive = token.isActive as boolean;
 
       return session;
     },

@@ -9,7 +9,7 @@ import { forbidden, unauthorized } from "next/navigation";
 import {
   getDashboardStats,
   getDashboardOrders,
-  getTrandingTrends,
+  getProductTrends,
   getDashboardProducts,
 } from "@/actions";
 import { OrdersChart } from "@/components/charts/orders-chart";
@@ -49,7 +49,7 @@ export default async function Page() {
 
   await queryClient.prefetchQuery({
     queryKey: [TRENDS, DASHBOARD_DEFAULT_FILTER],
-    queryFn: async () => await getTrandingTrends(DASHBOARD_DEFAULT_FILTER),
+    queryFn: async () => await getProductTrends(DASHBOARD_DEFAULT_FILTER),
   });
 
   await queryClient.prefetchQuery({
