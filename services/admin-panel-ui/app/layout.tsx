@@ -5,7 +5,6 @@ import "./globals.css";
 import {
   AuthProvider,
   MaterialUIProvider,
-  ReduxProvider,
   TanstackQueryProvider,
 } from "@/providers";
 
@@ -15,8 +14,6 @@ export const metadata: Metadata = {
 };
 
 const inter = Inter({ subsets: ["latin", "cyrillic"], weight: ["400", "700"] });
-
-/* TODO: Redux can be removed from app  */
 
 export default function RootLayout({
   children,
@@ -28,9 +25,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <AuthProvider>
           <TanstackQueryProvider>
-            <ReduxProvider>
-              <MaterialUIProvider>{children}</MaterialUIProvider>
-            </ReduxProvider>
+            <MaterialUIProvider>{children}</MaterialUIProvider>
           </TanstackQueryProvider>
         </AuthProvider>
       </body>
