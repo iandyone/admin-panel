@@ -83,7 +83,7 @@ export const SidebarFooter: FC<SidebarFooterProps> = ({ mini }) => {
                 </Fragment>
               ) : (
                 <Fragment>
-                  <Typography>
+                  <Typography sx={{whiteSpace: 'nowrap'}} >
                     {firstName} {lastName}
                   </Typography>
                   <Typography variant="subtitle2" color="textDisabled">

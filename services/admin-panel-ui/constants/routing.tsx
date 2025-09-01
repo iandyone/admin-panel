@@ -12,6 +12,7 @@ export enum ERoutes {
   ORDERS = "orders",
   USERS = "users",
   SIGN_IN = "signin",
+  DEACTIVATED = "deactivated",
 }
 
 export const navigation: Record<EUserRoles, Navigation> = {
@@ -37,4 +38,5 @@ export const PAGES_ACCESSING_MAP: Record<ERoutes, EUserRoles[] | null> = {
   orders: [ADMIN, MANAGER, DELIVERY],
   users: [ADMIN, MANAGER],
   signin: null,
+  deactivated: null,
 };

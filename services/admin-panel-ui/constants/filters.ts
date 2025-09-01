@@ -23,15 +23,15 @@ export const ORDERS_SEARCH_FILTERS = [
   'location',
   'customer',
   'deliveryman',
-  "date",
-  'dateFrom',
-  'dateTo',
+  'date',
   'manager',
   'status',
-  "dateFromCreated",
-  "dateToCreated",
-  "dateFromUpdated",
-  "dateToUpdated",
+  'dateFromCreated',
+  'dateToCreated',
+  'dateFromUpdated',
+  'dateToUpdated',
+  'createdAt',
+  'updatedAt',
 ]
 
 export const DASHBOARD_SEARCH_FILTERS = [

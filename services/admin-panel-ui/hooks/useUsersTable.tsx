@@ -50,6 +50,7 @@ export const useUsersTable = ({ config }: Props) => {
               backgroundColor: theme.palette.primary.dark,
             },
             color: theme.palette.common.white,
+            whiteSpace: 'nowrap'
           }}
         >
           {title && (

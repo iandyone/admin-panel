@@ -10,6 +10,9 @@ import { PropsWithChildren, useEffect, useLayoutEffect } from "react";
 
 import { SidebarFooter } from "@/components/sidebar-footer";
 import { $axios } from "@/configs";
+import { ERoutes } from "@/constants";
+
+const { DEACTIVATED } = ERoutes;
 
 export default function PagesLayout({ children }: PropsWithChildren) {
   const session = useSession();
@@ -18,7 +21,7 @@ export default function PagesLayout({ children }: PropsWithChildren) {
   useEffect(() => {
     if (session.data?.user.isActive === false) {
       signOut({ redirect: false });
-      redirect("/deactivated");
+      redirect(DEACTIVATED);
     }
   }, [session]);
 

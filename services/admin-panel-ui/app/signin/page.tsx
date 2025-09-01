@@ -1,14 +1,16 @@
 import { Stack } from "@mui/material";
+import { redirect, RedirectType } from 'next/navigation';
 
 import { Authorization } from "@/components/authorization";
-import { Authorized } from "@/components/ui/authorized";
 import { auth } from "@/configs";
+import { ERoutes } from '@/constants';
+
 
 export default async function Page() {
   const session = await auth();
 
   if (session?.user.id) {
-    return <Authorized />;
+    redirect(ERoutes.ORDERS, RedirectType.replace)
   }
 
   return (

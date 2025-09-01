@@ -8,7 +8,6 @@ import { EmployeeResponse, UsersResponse } from '@/types';
 const { USERS, EMPLOYEE } = API_PATH;
 
 export const prefetchUsers = async (page = START_PAGE, perPage = DEFAULT_ROWS_PER_PAGE, filters = USERS_DEFAULT_FILTER) => {
-  const session = await auth();
 
   try {
     const response = await $axios_server.get<UsersResponse>(USERS, {
@@ -16,10 +15,7 @@ export const prefetchUsers = async (page = START_PAGE, perPage = DEFAULT_ROWS_PE
         page,
         perPage,
         ...filters
-      },
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`
-      },
+      }
     });
 
     return response.data;

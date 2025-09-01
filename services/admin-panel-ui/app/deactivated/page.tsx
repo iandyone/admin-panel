@@ -1,13 +1,24 @@
+import { redirect } from "next/navigation";
+
 import { ErrorPlaceholder } from "@/components/ui/error-placeholder";
+import { auth } from "@/configs";
 import { ERoutes } from "@/constants";
 
-export default function Page() {
+const { SIGN_IN, ORDERS } = ERoutes;
+
+export default async function Page() {
+  const session = await auth();
+
+  if (session?.user.isActive) {
+    redirect(ORDERS);
+  }
+
   return (
     <ErrorPlaceholder
       title="Deactivated"
       subtitle="Your account has been deactivated. Contact your manager or administrator"
       buttonText="Sign out"
-      redirectTo={ERoutes.SIGN_IN}
+      redirectTo={SIGN_IN}
     />
   );
 }
