@@ -8,7 +8,11 @@ const nextConfig: NextConfig = {
     },
   },
   experimental: {
-    authInterrupts: true
+    authInterrupts: true,
+    staleTimes: {
+      dynamic: 60,
+      static: 180,
+    },
   },
   redirects: async () => {
     return [

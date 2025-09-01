@@ -48,7 +48,7 @@ export default async function Page() {
     <Stack gap={3} sx={{ mt: 0 }}>
       <HydrationBoundary state={dehydrate(queryClient)}>
         <UsersHeader />
-        <UsersTable />;
+        <UsersTable />
       </HydrationBoundary>
     </Stack>
   );
