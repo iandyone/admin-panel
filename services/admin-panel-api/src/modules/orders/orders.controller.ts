@@ -16,7 +16,7 @@ import { FindAllOrdersDto } from './dto/find-all-orders.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { OrdersService } from './orders.service';
 
-import { UseId } from '../../decorators';
+import { Auth, Roles, UseId } from '../../decorators';
 import { JoiValidationPipe } from '../../pipes/joi-validation.pipe';
 import {
   idSchema,
@@ -25,6 +25,7 @@ import {
   findAllOrdersSchema,
 } from '../../validations';
 
+@Auth()
 @Controller('orders')
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
@@ -42,6 +43,7 @@ export class OrdersController {
   }
 
   @Post()
+  @Roles(['ADMIN', 'MANAGER'])
   @UsePipes(new JoiValidationPipe(createOrderSchema))
   create(@Body() orderData: CreateOrderDto) {
     return this.ordersService.create(orderData);
@@ -56,6 +58,7 @@ export class OrdersController {
   }
 
   @Delete(':id')
+  @Roles(['ADMIN', 'MANAGER'])
   @UseId()
   async remove(@Param('id') id: number) {
     return this.ordersService.remove(id);

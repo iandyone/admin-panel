@@ -1,5 +1,6 @@
 import { $Enums } from '@prisma/client';
-import { UserAuthDtoProps } from 'src/types';
+
+import { UserAuthDtoProps } from '../../../types';
 
 export class UserAuthDto {
   id: number;

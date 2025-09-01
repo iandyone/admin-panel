@@ -3,9 +3,11 @@ import { Controller, Get, Query, UsePipes } from '@nestjs/common';
 import { DashboardService } from './dashboard.service';
 import { DashboardStatisticDto } from './dto/get-statistic.dto';
 
+import { Auth } from '../../decorators';
 import { JoiValidationPipe } from '../../pipes/joi-validation.pipe';
 import { dashboardStatisticSchema } from '../../validations';
 
+@Auth(['ADMIN', 'MANAGER'])
 @Controller('dashboard')
 export class DashboardController {
   constructor(private readonly dashboardService: DashboardService) {}

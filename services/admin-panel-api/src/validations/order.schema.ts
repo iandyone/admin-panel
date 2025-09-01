@@ -31,8 +31,8 @@ export const createOrderSchema = joi.object({
 export const updateOrderSchema = joi.object({
   customer: customerSchema,
   location: locationSchema,
-  managerId: managerIdSchema,
-  productsIds: productsIdsSchema,
+  managerId: managerIdSchema.required(),
+  productsIds: productsIdsSchema.required(),
   status: joi.string().valid(...ORDER_STATUSES),
   deliverymanId: deliverymanIdSchema.optional(),
 });

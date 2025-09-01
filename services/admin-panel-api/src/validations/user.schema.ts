@@ -14,7 +14,7 @@ export const createUserSchema = joi.object({
   firstName: nameSchema.required(),
   lastName: nameSchema.required(),
   email: emailSchema.required(),
-  role: userRoleSchema.required(),
+  role: userRoleSchema.optional(),
   phone: phoneSchema.required(),
   isActive: joi.boolean().optional(),
 });
@@ -22,7 +22,7 @@ export const createUserSchema = joi.object({
 export const updateUserSchema = joi.object({
   firstName: nameSchema,
   lastName: nameSchema,
-  role: userRoleSchema,
+  role: userRoleSchema.required(),
   phone: phoneSchema,
   isActive: joi.bool(),
 });

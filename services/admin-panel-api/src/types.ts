@@ -3,6 +3,7 @@ import { Decimal } from '@prisma/client/runtime/library';
 
 export interface AppConfig {
   PORT_API: number;
+  JWT_SECRET: string;
 }
 
 export type UserData = User & Credentials;

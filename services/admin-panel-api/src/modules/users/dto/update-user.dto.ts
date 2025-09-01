@@ -1,4 +1,4 @@
-import { ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { $Enums } from '@prisma/client';
 
 import {
@@ -24,7 +24,7 @@ export class UpdateUserDto {
   @ApiPropertyOptional({ minLength: PHONE_MIN_LENGTH })
   phone: string;
 
-  @ApiPropertyOptional({ enum: $Enums.Role })
+  @ApiProperty({ enum: $Enums.Role })
   role: string;
 
   @ApiPropertyOptional()

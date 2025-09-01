@@ -1,4 +1,9 @@
-import { HttpStatus, HttpException, Injectable } from '@nestjs/common';
+import {
+  HttpStatus,
+  HttpException,
+  Injectable,
+  BadRequestException,
+} from '@nestjs/common';
 import { $Enums, OrderStatus } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
 import bcrypt from 'bcrypt';
@@ -161,6 +166,30 @@ export class DatabaseService {
   async createUser(createUserDto: CreateUserDto) {
     const { firstName, lastName, phone, email, role, isActive } = createUserDto;
 
+    const isPhoneNumberExists = await this.prisma.user.findUnique({
+      where: {
+        phone,
+      },
+    });
+
+    if (isPhoneNumberExists) {
+      throw new BadRequestException(
+        `User with phone number '${phone}' is already exists`,
+      );
+    }
+
+    const isEmailExists = await this.prisma.credentials.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (isEmailExists) {
+      throw new BadRequestException(
+        `User with email '${email}' is already exists`,
+      );
+    }
+
     const userData = await this.prisma.user.create({
       data: {
         firstName,
@@ -170,7 +199,7 @@ export class DatabaseService {
         Credentials: {
           create: {
             email,
-            role: $Enums.Role[role.toUpperCase()],
+            role: role ? $Enums.Role[role.toUpperCase()] : $Enums.Role.DELIVERY,
           },
         },
       },
