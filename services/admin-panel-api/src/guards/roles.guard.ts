@@ -29,14 +29,14 @@ export class RolesGuard implements CanActivate {
       return true;
     }
 
-    const isUserHasPermission = roles.includes(user.role);
+    const hasPermission = roles.includes(user.role);
 
-    if (!isUserHasPermission) {
+    if (!hasPermission) {
       throw new ForbiddenException(
         `Unavailable for users with '${user.role}' role`,
       );
     }
 
-    return isUserHasPermission;
+    return hasPermission;
   }
 }

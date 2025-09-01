@@ -3,9 +3,12 @@ import { Prisma } from '@prisma/client';
 
 import { CreateOrderDto } from './dto/create-order.dto';
 import { FindAllOrdersDto } from './dto/find-all-orders.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
 
-import { OrderResponse, OrdersResponse } from '../../types';
+import {
+  OrderResponse,
+  OrdersResponse,
+  UpdateOrderServiceProps,
+} from '../../types';
 import { formatDateISO } from '../../utils';
 import { DatabaseService } from '../database/database.service';
 
@@ -59,15 +62,15 @@ export class OrdersService {
     return await this.db.getOrder(id);
   }
 
-  async create(createOrderDto: CreateOrderDto) {
-    return await this.db.createOrder(createOrderDto);
+  async create(createOrderDto: CreateOrderDto, accountId: number) {
+    return await this.db.createOrder(createOrderDto, accountId);
   }
 
-  async update(id: number, updateOrderDto: UpdateOrderDto) {
-    return await this.db.updateOrder(id, updateOrderDto);
+  async update(updateOrderProps: UpdateOrderServiceProps) {
+    return await this.db.updateOrder(updateOrderProps);
   }
 
-  async remove(id: number) {
-    return await this.db.removeOrder(id);
+  async remove(id: number, accountId: number) {
+    return await this.db.removeOrder(id, accountId);
   }
 }

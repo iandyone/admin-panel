@@ -7,6 +7,7 @@ import {
 import { $Enums, OrderStatus } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
 import bcrypt from 'bcrypt';
+import { UpdateOrderServiceProps, UpdateUserServiceProps } from 'src/types';
 
 import { OrdersStatisticByStatus } from './entities/orders-statistic-by-status.entity';
 import { SoldProductStatistic } from './entities/sold-product.entity';
@@ -19,10 +20,8 @@ import { getOrderItemsFromProductsIds } from '../../utils';
 import { DashboardStatisticDto } from '../dashboard/dto/get-statistic.dto';
 import { CreateOrderDto } from '../orders/dto/create-order.dto';
 import { FindAllOrdersDto } from '../orders/dto/find-all-orders.dto';
-import { UpdateOrderDto } from '../orders/dto/update-order.dto';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { FindAllUsersDto } from '../users/dto/find-all-users.dto';
-import { UpdateUserDto } from '../users/dto/update-user.dto';
 
 @Injectable()
 export class DatabaseService {
@@ -163,7 +162,7 @@ export class DatabaseService {
     return user;
   }
 
-  async createUser(createUserDto: CreateUserDto) {
+  async createUser(createUserDto: CreateUserDto, accountId: number) {
     const { firstName, lastName, phone, email, role, isActive } = createUserDto;
 
     const isPhoneNumberExists = await this.prisma.user.findUnique({
@@ -190,53 +189,79 @@ export class DatabaseService {
       );
     }
 
-    const userData = await this.prisma.user.create({
-      data: {
-        firstName,
-        lastName,
-        phone,
-        isActive,
-        Credentials: {
-          create: {
-            email,
-            role: role ? $Enums.Role[role.toUpperCase()] : $Enums.Role.DELIVERY,
+    const [userData] = await this.prisma.$transaction([
+      this.prisma.user.create({
+        data: {
+          firstName,
+          lastName,
+          phone,
+          isActive,
+          Credentials: {
+            create: {
+              email,
+              role: role
+                ? $Enums.Role[role.toUpperCase()]
+                : $Enums.Role.DELIVERY,
+            },
           },
         },
-      },
-    });
+      }),
+
+      this.prisma.user.update({
+        where: { id: accountId },
+        data: {
+          lastActivity: new Date(),
+        },
+      }),
+    ]);
 
     return userData;
   }
 
-  async removeUser(id: number) {
+  async removeUser(id: number, accountId: number) {
     const { id: userId } = await this.getUser(id);
 
     const [userData] = await this.prisma.$transaction([
       this.prisma.credentials.delete({ where: { userId } }),
       this.prisma.user.delete({ where: { id: userId } }),
+      this.prisma.user.update({
+        where: { id: accountId },
+        data: {
+          lastActivity: new Date(),
+        },
+      }),
     ]);
 
     return userData.id;
   }
 
-  async updateUser(id: number, user: UpdateUserDto) {
+  async updateUser({ id, updateUserDto, accountId }: UpdateUserServiceProps) {
     const { id: userId } = await this.getUser(id);
-    const { role, password, ...updateUserData } = user;
+    const { role, password, ...updateUserData } = updateUserDto;
 
-    const updatedUser = await this.prisma.user.update({
-      where: { id: userId },
-      data: {
-        ...updateUserData,
-        Credentials: { update: { role: $Enums.Role[role.toUpperCase()] } },
-      },
-      omit: {
-        updatedAt: true,
-        createdAt: true,
-      },
-    });
+    const [updatedUser] = await this.prisma.$transaction([
+      this.prisma.user.update({
+        where: { id: userId },
+        data: {
+          ...updateUserData,
+          Credentials: { update: { role: $Enums.Role[role.toUpperCase()] } },
+        },
+        omit: {
+          updatedAt: true,
+          createdAt: true,
+        },
+      }),
+
+      this.prisma.user.update({
+        where: { id: accountId },
+        data: {
+          lastActivity: new Date(),
+        },
+      }),
+    ]);
 
     if (password) {
-      const hash = await bcrypt.hash(user.password, 5);
+      const hash = await bcrypt.hash(updateUserDto.password, 5);
 
       await this.prisma.credentials.update({
         where: {
@@ -401,7 +426,7 @@ export class DatabaseService {
     return user;
   }
 
-  async createOrder(createOrderDto: CreateOrderDto) {
+  async createOrder(createOrderDto: CreateOrderDto, accountId: number) {
     const {
       customer,
       location,
@@ -425,25 +450,39 @@ export class DatabaseService {
       config['Deliveryman'] = { connect: { id: deliverymanId } };
     }
 
-    const order = await this.prisma.order.create({
-      data: config,
-    });
+    const [order] = await this.prisma.$transaction([
+      this.prisma.order.create({
+        data: config,
+      }),
+      this.prisma.user.update({
+        where: { id: accountId },
+        data: {
+          lastActivity: new Date(),
+        },
+      }),
+    ]);
 
     return order;
   }
 
-  async removeOrder(id: number) {
+  async removeOrder(id: number, accountId: number) {
     const { id: orderId } = await this.getOrder(id);
 
     const [orderData, order] = await this.prisma.$transaction([
       this.prisma.ordersItems.deleteMany({ where: { orderId } }),
       this.prisma.order.delete({ where: { id: orderId } }),
+      this.prisma.user.update({
+        where: { id: accountId },
+        data: {
+          lastActivity: new Date(),
+        },
+      }),
     ]);
 
     return `Order: ${order.id} / Order items: ${orderData.count}`;
   }
 
-  async updateOrder(id: number, order: UpdateOrderDto) {
+  async updateOrder({ id, accountId, order }: UpdateOrderServiceProps) {
     const { id: orderId } = await this.getOrder(id);
     const {
       productsIds,
@@ -492,6 +531,12 @@ export class DatabaseService {
       }),
       this.prisma.ordersItems.createMany({
         data: orderItemsData,
+      }),
+      this.prisma.user.update({
+        where: { id: accountId },
+        data: {
+          lastActivity: new Date(),
+        },
       }),
     ]);
 

@@ -28,13 +28,19 @@ export class AuthService {
     } = await this.usersService.findByEmail(email);
 
     if (!userCredentials.password) {
-      this.usersService.update(id, {
+      const updateUserDto = {
         firstName,
         lastName,
         isActive,
         phone,
         password,
         role,
+      };
+
+      this.usersService.update({
+        id,
+        accountId: id,
+        updateUserDto,
       });
     } else {
       const isCredentialsValid = await bcrypt.compare(

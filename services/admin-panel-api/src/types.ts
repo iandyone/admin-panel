@@ -1,6 +1,9 @@
 import { $Enums, Credentials, User } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
 
+import { UpdateOrderDto } from './modules/orders/dto/update-order.dto';
+import { UpdateUserDto } from './modules/users/dto/update-user.dto';
+
 export interface AppConfig {
   PORT_API: number;
   JWT_SECRET: string;
@@ -84,3 +87,15 @@ export type UserAuthDtoProps = Credentials &
   Pick<User, 'firstName' | 'lastName' | 'isActive'> & {
     isNewUser?: boolean;
   };
+
+export interface UpdateUserServiceProps {
+  id: number;
+  updateUserDto: UpdateUserDto;
+  accountId: number;
+}
+
+export interface UpdateOrderServiceProps {
+  id: number;
+  order: UpdateOrderDto;
+  accountId: number;
+}
