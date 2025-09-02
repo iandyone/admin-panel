@@ -24,14 +24,18 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException();
     }
 
-    const token = authHeaderData.replace('Bearer ', '');
-    const user = this.jwtService.verify<UserAuthDtoProps>(token);
+    try {
+      const token = authHeaderData.replace('Bearer ', '');
+      const user = this.jwtService.verify<UserAuthDtoProps>(token);
 
-    if (!user.isActive) {
-      throw new ForbiddenException('Account is deactivated');
+      if (!user.isActive) {
+        throw new ForbiddenException('Account is deactivated');
+      }
+
+      request['user'] = user;
+    } catch (error) {
+      throw new UnauthorizedException('Token expired');
     }
-
-    request['user'] = user;
 
     return true;
   }
