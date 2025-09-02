@@ -17,7 +17,7 @@ export const DashboardStatistics: FC = () => {
   });
 
   const STATISTICS_DATA = useMemo(() => {
-    return [
+    return statistics?.total ? [
       {
         id: 1,
         title: "Total orders",
@@ -66,7 +66,7 @@ export const DashboardStatistics: FC = () => {
         data: statistics?.benefit.data || [],
         days: statistics?.benefit.days || [],
       },
-    ];
+    ]: [];
   }, [statistics]);
 
   return (

@@ -4,7 +4,7 @@ import { Container } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { DashboardLayout } from "@toolpad/core";
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation';
 import { signOut, useSession } from "next-auth/react";
 import { PropsWithChildren, useEffect, useLayoutEffect } from "react";
 
@@ -12,7 +12,7 @@ import { SidebarFooter } from "@/components/sidebar-footer";
 import { $axios } from "@/configs";
 import { ERoutes } from "@/constants";
 
-const { DEACTIVATED } = ERoutes;
+const { SIGN_IN, DEACTIVATED } = ERoutes;
 
 export default function PagesLayout({ children }: PropsWithChildren) {
   const session = useSession();
@@ -26,20 +26,27 @@ export default function PagesLayout({ children }: PropsWithChildren) {
   }, [session]);
 
   useLayoutEffect(() => {
-    const accessToken = session.data?.accessToken;
+    $axios.interceptors.request.use((config) => {
+      const token = session.data?.accessToken;
 
-    if (session.data?.accessToken) {
-      $axios.interceptors.request.use((config) => {
-        config.headers.Authorization = `Bearer ${accessToken}`;
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
 
-        return config;
-      });
-    } else {
-      $axios.interceptors.request.clear();
-    }
+      return config;
+    });
 
-    return () => $axios.interceptors.request.clear();
-  }, [session.data]);
+    $axios.interceptors.response.use(
+      (res) => res,
+      async (error) => {
+        if (error?.response?.status === 401) {
+          await signOut({ redirectTo: `/${SIGN_IN}` });
+        }
+
+        return Promise.reject(error);
+      },
+    );
+  }, [session.data?.accessToken]);
 
   return (
     <DashboardLayout

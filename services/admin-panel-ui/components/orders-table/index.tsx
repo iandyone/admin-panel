@@ -38,7 +38,7 @@ export const OrdersTable: FC = () => {
   );
 
   const data = useMemo(() => {
-    if (isOrdersFetched) {
+    if (isOrdersFetched && ordersData?.orders) {
       const visibleRows = ordersData?.orders.map((order) => {
         const result: Order = {
           id: order.id,
