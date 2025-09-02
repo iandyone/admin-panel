@@ -1,10 +1,13 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 
 import { $axios } from '@/configs'
-import { API_PATH, FetchTags } from '@/constants'
+import { API_PATH, ENotificationTypes, FetchTags } from '@/constants'
+import { useToast } from '@/hooks'
 import { DashboardFilter, TrendProduct } from '@/types'
 
 export const useGetDashboardTrends = (filters?: DashboardFilter) => {
+  const { sendNotification } = useToast();
+
   return useQuery({
     queryKey: [FetchTags.TRENDS, filters],
     queryFn: async () => {
@@ -15,9 +18,9 @@ export const useGetDashboardTrends = (filters?: DashboardFilter) => {
           }
         });
 
-
         return response.data;
       } catch (error) {
+        sendNotification(ENotificationTypes.DASHBOARD_TRENDS_FETCHING_ERROR);
         console.log({ error });
 
         return [] as TrendProduct[];

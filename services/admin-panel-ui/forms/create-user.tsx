@@ -23,11 +23,11 @@ const initialValues: CreateUserPayload = {
   email: "",
   role: "" as EUserRoles,
   phone: "",
-  isActive: false,
+  isActive: true,
 };
 
 export const CreateUserForm: FC<Props> = ({ onCancel, onSubmit }) => {
-  const { mutateAsync: createUser } = useCreateUserMutation();
+  const { mutateAsync: createUser, isPending } = useCreateUserMutation();
 
   const handleOnSubmit = async (userData: CreateUserPayload) => {
     await createUser(userData);
@@ -108,7 +108,7 @@ export const CreateUserForm: FC<Props> = ({ onCancel, onSubmit }) => {
                 )}
               />
 
-              <FormControls onClickReset={onCancel} resetLabel="Cancel" />
+              <FormControls onClickReset={onCancel} resetLabel="Cancel" disabled={isPending}/>
             </Stack>
           </Form>
         )}

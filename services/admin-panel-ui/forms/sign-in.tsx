@@ -1,13 +1,14 @@
 "use client";
 
 import { Button, Stack } from "@mui/material";
-import { Form, Formik, FormikHelpers } from "formik";
+import { Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { FC } from "react";
 
 import { InputField } from "@/components/ui/input-field";
-import { ERoutes } from "@/constants";
+import { ENotificationTypes, ERoutes } from "@/constants";
+import { useToast } from '@/hooks';
 import { signInValidationSchema } from "@/validations/signin-schema";
 
 const initialState = {
@@ -17,24 +18,26 @@ const initialState = {
 
 export const SignInForm: FC = () => {
   const router = useRouter();
+  const { sendNotification } = useToast();
 
-  const handleOnSubmit = async (
-    { email, password }: typeof initialState,
-    { setFieldError }: FormikHelpers<typeof initialState>,
-  ) => {
-    const data = await signIn("credentials", {
-      email,
-      password,
-      redirect: false,
-      redirectTo: `/${ERoutes.ORDERS}`,
-    });
+  const handleOnSubmit = async ({ email, password }: typeof initialState) => {
+    try {
+      const data = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+        redirectTo: `/${ERoutes.ORDERS}`,
+      });
 
-    if (data.code === "credentials") {
-      // TODO: toast notification
-      return setFieldError("password", "Wrong user email or password");
+      if (data.code === "credentials") {
+        return sendNotification(ENotificationTypes.SIGN_IN_WRONG_CREDENTIALS);
+      }
+
+      router.push(data.url!);
+    } catch (error) {
+      sendNotification(ENotificationTypes.SIGN_IN_ERROR);
+      console.log(error);
     }
-
-    router.push(data.url!);
   };
 
   return (
@@ -44,7 +47,7 @@ export const SignInForm: FC = () => {
       validationSchema={signInValidationSchema}
       onSubmit={handleOnSubmit}
     >
-      {({ touched, errors }) => (
+      {({ touched, errors, isSubmitting }) => (
         <Form>
           <Stack direction="column" spacing={2}>
             <InputField
@@ -60,7 +63,7 @@ export const SignInForm: FC = () => {
               error={Boolean(touched.password && errors.password)}
             />
 
-            <Button type="submit" variant="outlined">
+            <Button type="submit" variant="outlined" disabled={isSubmitting}>
               Submit
             </Button>
           </Stack>

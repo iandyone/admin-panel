@@ -16,13 +16,13 @@ export const FormModalWrapper: FC<Props> = ({
   open,
   onClose,
   title,
-  width = '40vw',
+  width = "40vw",
   children,
 }) => {
   return (
     <Modal open={open} onClose={onClose}>
       <Stack
-      spacing={3}
+        spacing={3}
         sx={{
           bgcolor: "background.paper",
           position: "absolute",
@@ -34,7 +34,7 @@ export const FormModalWrapper: FC<Props> = ({
           minWidth: 400,
         }}
       >
-        <Typography variant='h5'>{title}</Typography>
+        <Typography variant="h5">{title}</Typography>
         {children}
       </Stack>
     </Modal>

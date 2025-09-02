@@ -42,7 +42,7 @@ export const prefetchEmployees = async () => {
 
     const response = await $axios_server.get<EmployeeResponse>(EMPLOYEE, {
       headers: {
-        Authorization: `Bearer ${session?.accessToken}`
+        Authorization: session?.accessToken
       },
     })
 

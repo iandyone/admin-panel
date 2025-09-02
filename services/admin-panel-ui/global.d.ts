@@ -14,6 +14,7 @@ declare module "next-auth" {
       isActive: boolean;
     };
     accessToken?: string;
+    isNewUser: boolean;
   }
 
   interface User extends DefaultUser {
@@ -25,7 +26,6 @@ declare module "next-auth" {
     isNewUser: boolean;
     role: string;
     accessToken?: string;
-    accessTokenExpires?: number;
   }
 }
 

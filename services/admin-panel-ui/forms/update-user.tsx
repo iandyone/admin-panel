@@ -28,7 +28,7 @@ export const UpdateUserForm: FC<Props> = ({
   onCancel,
   onSubmit,
 }) => {
-  const { mutateAsync: updateUser } = useUpdateUserMutation();
+  const { mutateAsync: updateUser, isPending } = useUpdateUserMutation();
   const { role: currentUserRole, checkPermission } = usePermissions();
 
   const availableRolesOptions = currentUserRole
@@ -116,7 +116,7 @@ export const UpdateUserForm: FC<Props> = ({
                 )}
               />
 
-              <FormControls onClickReset={onCancel} resetLabel="Cancel" />
+              <FormControls onClickReset={onCancel} resetLabel="Cancel" disabled={isPending} />
             </Stack>
           </Form>
         )}

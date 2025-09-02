@@ -21,7 +21,7 @@ $axios_server.interceptors.request.use(async (config) => {
   const session = await auth();
   const token = session?.accessToken;
 
-  if (token) config.headers.Authorization = `Bearer ${token}`;
+  if (token) config.headers.Authorization = token;
 
   return config;
 });

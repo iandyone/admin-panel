@@ -75,7 +75,7 @@ export const CreateOrderForm: FC<Props> = ({ onCancel, onSubmit }) => {
   };
 
   return (
-    <Stack direction="column" spacing={2}>
+    <Stack direction="column" spacing={2} margin={2}>
       <Formik
         initialValues={initialValues}
         enableReinitialize

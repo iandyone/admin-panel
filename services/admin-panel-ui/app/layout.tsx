@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-
 import "./globals.css";
+import { ToastContainer } from "react-toastify/unstyled";
+import "react-toastify/ReactToastify.css";
+
+import { toastConfig } from "@/configs";
 import {
   AuthProvider,
   MaterialUIProvider,
@@ -26,6 +29,7 @@ export default function RootLayout({
         <AuthProvider>
           <TanstackQueryProvider>
             <MaterialUIProvider>{children}</MaterialUIProvider>
+            <ToastContainer {...toastConfig} />
           </TanstackQueryProvider>
         </AuthProvider>
       </body>
