@@ -68,6 +68,6 @@ export class AuthService {
       { expiresIn: '1d' },
     );
 
-    return access_token;
+    return `Bearer ${access_token}`;
   }
 }

@@ -13,6 +13,14 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Admin panel API')
     .setVersion('1.0')
+    .addBearerAuth({
+      description: `Please, make a "Sign in" request and pass the token here`,
+      name: 'Authorization',
+      bearerFormat: 'Bearer',
+      scheme: 'Bearer',
+      type: 'http',
+      in: 'Header',
+    })
     .build();
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);
