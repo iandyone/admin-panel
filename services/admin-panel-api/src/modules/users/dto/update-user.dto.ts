@@ -13,23 +13,23 @@ export class UpdateUserDto {
     minLength: NAME_MIN_LENGTH,
     maxLength: NAME_MAX_LENGTH,
   })
-  firstName: string;
+  firstName?: string;
 
   @ApiPropertyOptional({
     minLength: NAME_MIN_LENGTH,
     maxLength: NAME_MAX_LENGTH,
   })
-  lastName: string;
+  lastName?: string;
 
   @ApiPropertyOptional({ minLength: PHONE_MIN_LENGTH })
-  phone: string;
+  phone?: string;
 
   @ApiProperty({ enum: $Enums.Role })
   role: string;
 
   @ApiPropertyOptional()
-  isActive: boolean;
+  isActive?: boolean;
 
   @ApiPropertyOptional({ minLength: PASSWORD_MIN_LENGTH })
-  password: string;
+  password?: string;
 }

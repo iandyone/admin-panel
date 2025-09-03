@@ -68,6 +68,12 @@ export class AuthService {
       { expiresIn: '1d' },
     );
 
+    await this.usersService.update({
+      id,
+      updateUserDto: { role },
+      accountId: id,
+    });
+
     return `Bearer ${access_token}`;
   }
 }
