@@ -26,10 +26,12 @@ export const passwordSchema = joi
 
 export const customerSchema = joi
   .string()
+  .trim()
   .min(CUSTOMER_MIN_LENGTH)
   .max(CUSTOMER_MAX_LENGTH);
 export const locationSchema = joi
   .string()
+  .trim()
   .min(LOCATION_MIN_LENGTH)
   .max(LOCATION_MAX_LENGTH);
 export const productsIdsSchema = joi.array().items(joi.number().min(1));
@@ -37,10 +39,11 @@ export const deliverymanIdSchema = joi.number().min(1).optional();
 export const managerIdSchema = joi.number().min(1);
 export const nameSchema = joi
   .string()
+  .trim()
   .min(NAME_MIN_LENGTH)
   .max(NAME_MAX_LENGTH);
 export const phoneSchema = joi.string().min(PHONE_MIN_LENGTH).trim();
-export const emailSchema = joi.string().email({ minDomainSegments: 2 });
+export const emailSchema = joi.string().email({ minDomainSegments: 2 }).trim();
 
 export const pageSchema = joi.number().min(0);
 export const userRoleSchema = joi.string().valid(...ROLES);

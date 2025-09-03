@@ -43,7 +43,7 @@ export const findAllOrdersSchema = joi.object({
   id: idSchema.optional(),
   order: joi.string().min(STRING_FILTER_MIN_LENGTH).optional(),
   totalAmount: joi.number().min(0).optional(),
-  location: joi.string().min(STRING_FILTER_MIN_LENGTH).optional(),
+  location: locationSchema.min(STRING_FILTER_MIN_LENGTH).optional(),
   customer: customerSchema.optional(),
   deliveryman: customerSchema.optional(),
   dateFromCreated: joi.number().optional(),
