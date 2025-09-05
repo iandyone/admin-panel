@@ -1,4 +1,4 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { $Enums } from '@prisma/client';
 
 import {
@@ -22,7 +22,4 @@ export class CreateUserDto {
 
   @ApiProperty()
   email: string;
-
-  @ApiPropertyOptional()
-  isActive: boolean;
 }

@@ -16,7 +16,6 @@ export const createUserSchema = joi.object({
   email: emailSchema.required(),
   role: userRoleSchema.optional(),
   phone: phoneSchema.required(),
-  isActive: joi.boolean().optional(),
 });
 
 export const updateUserSchema = joi.object({

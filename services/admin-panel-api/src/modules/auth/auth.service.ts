@@ -27,11 +27,13 @@ export class AuthService {
       ...userCredentials
     } = await this.usersService.findByEmail(email);
 
-    if (!userCredentials.password) {
+    const isNewUser = !Boolean(userCredentials.password);
+
+    if (isNewUser) {
       const updateUserDto = {
         firstName,
         lastName,
-        isActive,
+        isActive: true,
         phone,
         password,
         role,
@@ -59,8 +61,8 @@ export class AuthService {
       ...userCredentials,
       firstName,
       lastName,
-      isActive,
-      isNewUser: !Boolean(userCredentials.password),
+      isActive: isNewUser ? true : isActive,
+      isNewUser,
     });
 
     const access_token = await this.jwtService.signAsync(

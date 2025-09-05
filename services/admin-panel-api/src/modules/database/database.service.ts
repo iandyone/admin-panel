@@ -163,7 +163,7 @@ export class DatabaseService {
   }
 
   async createUser(createUserDto: CreateUserDto, accountId: number) {
-    const { firstName, lastName, phone, email, role, isActive } = createUserDto;
+    const { firstName, lastName, phone, email, role } = createUserDto;
 
     const isPhoneNumberExists = await this.prisma.user.findUnique({
       where: {
@@ -195,7 +195,7 @@ export class DatabaseService {
           firstName,
           lastName,
           phone,
-          isActive,
+          isActive: false,
           Credentials: {
             create: {
               email,

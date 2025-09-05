@@ -14,7 +14,7 @@ async function bootstrap() {
     .setTitle('Admin panel API')
     .setVersion('1.0')
     .addBearerAuth({
-      description: `Please, make a "Sign in" request and pass the token here`,
+      description: `Please, make a "Sign in" request and pass the token here (with no 'Bearer' segment)`,
       name: 'Authorization',
       bearerFormat: 'Bearer',
       scheme: 'Bearer',

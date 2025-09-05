@@ -15,10 +15,6 @@ import { DatabaseService } from '../database/database.service';
 export class UsersService {
   constructor(private readonly db: DatabaseService) {}
 
-  async create(createUserDto: CreateUserDto, accountId: number) {
-    return await this.db.createUser(createUserDto, accountId);
-  }
-
   async findAll(findAllUserDto: FindAllUsersDto): Promise<UsersResponse> {
     const { users, total } = await this.db.getUsers(findAllUserDto);
 
@@ -54,6 +50,10 @@ export class UsersService {
 
   async findOne(id: number) {
     return await this.db.getUser(id);
+  }
+
+  async create(createUserDto: CreateUserDto, accountId: number) {
+    return await this.db.createUser(createUserDto, accountId);
   }
 
   async update({ id, updateUserDto, accountId }: UpdateUserServiceProps) {
