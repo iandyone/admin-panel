@@ -34,5 +34,4 @@ export const createUserSchema = yup.object({
       message: "Invalid format (example: +375291111111)",
     })
     .required(REQUIRED),
-  isActive: yup.string().trim().required(REQUIRED),
 });

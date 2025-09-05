@@ -8,7 +8,7 @@ import { usersTableHeaderConfig } from "@/configs";
 import { ROWS_PER_PAGE_OPTIONS, USERS_SEARCH_FILTERS } from "@/constants";
 import { usePagination, useUsersTable } from "@/hooks";
 import { useGetUsersQuery } from "@/query";
-import { DataGridConfig, User } from "@/types";
+import { DataGridConfig, EUserRoles, User } from "@/types";
 import { UsersFilter } from "@/types/orders";
 import { getSortedData } from "@/utils";
 
@@ -47,7 +47,7 @@ export const UsersTable: FC = () => {
             phone,
             role: role.toLowerCase(),
             lastActivity: lastActivity ?? "—",
-            orders: orders ?? "—",
+            orders: role.toLocaleLowerCase() === EUserRoles.DELIVERY ? orders : "—",
             isActive,
           };
 

@@ -5,7 +5,7 @@ export interface User {
   role: string;
   phone: string;
   lastActivity: number | string;
-  orders: number;
+  orders: number | string;
   isActive?: boolean;
 }
 

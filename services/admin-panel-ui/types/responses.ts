@@ -30,7 +30,6 @@ export interface CreateUserPayload {
   email: string;
   role: EUserRoles,
   phone: string,
-  isActive: boolean,
 }
 
 export interface UpdateOrderPayload extends CreateOrderPayload {

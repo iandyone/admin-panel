@@ -7,7 +7,7 @@ import { FC } from "react";
 import { FormControls } from "@/components/form-controls";
 import { InputField } from "@/components/ui/input-field";
 import { useCreateUserMutation } from "@/query/useCreateUserMutation";
-import { CreateUserPayload, EUserRoles, EUserStatuses } from "@/types";
+import { CreateUserPayload, EUserRoles } from "@/types";
 import { createUserSchema } from "@/validations";
 
 interface Props {
@@ -15,15 +15,12 @@ interface Props {
   onCancel: () => void;
 }
 
-const { ACTIVE, INACTIVE } = EUserStatuses;
-
 const initialValues: CreateUserPayload = {
   firstName: "",
   lastName: "",
   email: "",
   role: "" as EUserRoles,
   phone: "",
-  isActive: true,
 };
 
 export const CreateUserForm: FC<Props> = ({ onCancel, onSubmit }) => {
@@ -92,23 +89,11 @@ export const CreateUserForm: FC<Props> = ({ onCancel, onSubmit }) => {
                   />
                 )}
               />
-              <Autocomplete
-                options={Object.values(EUserStatuses)}
-                value={values.isActive ? ACTIVE : INACTIVE}
-                onChange={(_, newValue) => {
-                  setFieldValue("isActive", newValue === ACTIVE);
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    name="isActive"
-                    label="Status"
-                    error={Boolean(touched.isActive && errors.isActive)}
-                  />
-                )}
+              <FormControls
+                onClickReset={onCancel}
+                resetLabel="Cancel"
+                disabled={isPending}
               />
-
-              <FormControls onClickReset={onCancel} resetLabel="Cancel" disabled={isPending}/>
             </Stack>
           </Form>
         )}
