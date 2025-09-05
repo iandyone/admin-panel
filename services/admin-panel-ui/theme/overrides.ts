@@ -136,5 +136,14 @@ export const customizedComponents: Components<Theme> = {
       disableTouchListener: true,
       enterDelay: 500
     },
+  },
+
+  MuiTypography: {
+    defaultProps: {
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis'
+    }
   }
 };
+

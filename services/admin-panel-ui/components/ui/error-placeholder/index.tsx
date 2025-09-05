@@ -38,7 +38,9 @@ export const ErrorPlaceholder: FC<Props> = ({
 
       <ErrorAnimation />
 
-      <Typography variant="h6" textAlign="center" maxWidth={500}>
+      <Typography variant="h6" textAlign="center" maxWidth={500} sx={{
+        whiteSpace: 'wrap',
+      }}>
         {subtitle}
       </Typography>
 

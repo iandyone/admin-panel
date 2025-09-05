@@ -83,12 +83,32 @@ export const SidebarFooter: FC<SidebarFooterProps> = ({ mini }) => {
                 </Fragment>
               ) : (
                 <Fragment>
-                  <Typography sx={{whiteSpace: 'nowrap'}} >
-                    {firstName} {lastName}
-                  </Typography>
-                  <Typography variant="subtitle2" color="textDisabled">
-                    {session.data?.user.email}
-                  </Typography>
+                  <Tooltip
+                    title={`${firstName} ${lastName}`}
+                    placement="top"
+                    slots={{
+                      transition: Fade,
+                    }}
+                  >
+                    <Typography maxWidth={181}>
+                      {firstName} {lastName}
+                    </Typography>
+                  </Tooltip>
+                  <Tooltip
+                    title={`${session.data?.user.email}`}
+                    placement="top"
+                    slots={{
+                      transition: Fade,
+                    }}
+                  >
+                    <Typography
+                      variant="subtitle2"
+                      color="textDisabled"
+                      maxWidth={181}
+                    >
+                      {session.data?.user.email}
+                    </Typography>
+                  </Tooltip>
                 </Fragment>
               )}
             </Stack>
