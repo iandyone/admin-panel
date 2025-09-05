@@ -14,7 +14,4 @@
 node_modules
 **/.DS_Store
 
-assignment.md
-shared
-
 **/prisma/constants/*.json
