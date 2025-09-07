@@ -30,11 +30,10 @@ Aдмин‑панель ресторана (Next.js) и REST API (NestJS + Pris
 
 ## Стек
 
-- **Frontend**: Next.js 15 (App Router), Material UI, React Query, Next Auth, Formik, Yup, React Toastify, Axios, TypeScript
+- **Frontend**: Next.js 15 (App Router), Material UI, React Query, Next Auth, React Toastify, Formik, Yup, Axios
 - **Backend**: NestJS 10, Prisma ORM, Joi, Bcrypt
 - **Database**: PostgreSQL 16
-- **Infra**: Docker, Docker Compose, Yarn Workspaces
-- **Package manager**: Yarn 4.9.1
+- **Infra**: Node 18+, Yarn 4.9.1, Yarn Workspaces, Docker (+Compose), Lefthook, ESLint 9, Git
 
 ---
 
@@ -99,7 +98,7 @@ openssl rand -base64 32
 
 ### 1. Подготовка Yarn:
 
-Переключиться на `yarn@4.9.1` используя `corepack`:
+Установить версию `yarn@4.9.1` используя `corepack`:
 
 ```bash
 corepack enable && corepack prepare yarn@4.9.1 --activate
@@ -107,7 +106,7 @@ corepack enable && corepack prepare yarn@4.9.1 --activate
 
 ### 2. Подготовка Node:
 
-Переключиться на версию `Node` из `.nvmrc` используя `nvm`:
+Установить версию `Node` из `.nvmrc` используя `nvm`:
 
 ```bash
 nvm use
@@ -115,7 +114,7 @@ nvm use
 
 ### 3. Установка зависимостей:
 
-В приложении используется пакетный менеджер `yarn`. Скрипт для установки зависимостей
+В приложении используется пакетный менеджер `yarn`. Установка зависимостей:
 
 ```bash
 yarn
