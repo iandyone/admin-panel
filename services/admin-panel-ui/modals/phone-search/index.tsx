@@ -27,9 +27,7 @@ export const PhoneSearchModal: FC<TextModalProps> = ({
   } = useFilter(dataKey);
 
   const handleOnClickApplyButton = () => {
-    const phoneValue = encodeURIComponent(filterValue);
-
-    applySearchFilterHandler(phoneValue);
+    applySearchFilterHandler(filterValue);
     setIsActive(Boolean(filterValue));
     onClickControls();
   };
