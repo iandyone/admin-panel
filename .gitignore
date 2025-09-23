@@ -1,6 +1,8 @@
 .vscode
 .pnp.*
 .env
+.env.local
+.env.production
 
 .yarn/*
 !.yarn/patches
@@ -11,3 +13,5 @@
 
 node_modules
 **/.DS_Store
+
+**/prisma/constants/*.json

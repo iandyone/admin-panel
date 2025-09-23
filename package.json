@@ -18,9 +18,17 @@
     "build:api": "docker build -t admin-panel-api -f ./services/admin-panel-api/Dockerfile .",
     "run:ui": "docker run -dp 3000:3000 --rm --name admin-panel-ui admin-panel-ui",
     "run:api": "docker run -dp 8080:8080 --rm --name admin-panel-api admin-panel-api",
-    "start:prod": "docker compose -f compose.yml up -d --build",
-    "start:dev": "docker compose up -d --build",
-    "stop": "docker compose down"
+    "start:prod": "docker compose --env-file .env.local -f compose.yml up -d --build",
+    "start:dev": "docker compose --env-file .env.local up -d",
+    "start:init": "yarn start:dev && yarn db:migrate && yarn db:seed",
+    "stop": "docker compose down",
+    "db:migrate": "cross-env DB_HOST=localhost npx dotenv -e .env.local -- yarn workspace @services/admin-panel-api db:migrate",
+    "db:seed": "cross-env DB_HOST=localhost npx dotenv -e .env.local -- yarn workspace @services/admin-panel-api db:seed",
+    "db:studio": "cross-env DB_HOST=localhost npx dotenv -e .env.local -- yarn workspace @services/admin-panel-api run db:studio",
+    "db:push": "npx dotenv -e .env.local -- yarn workspace @services/admin-panel-api db:push",
+    "db:deploy": "npx dotenv -e .env.production -- yarn workspace @services/admin-panel-api db:deploy",
+    "db:migrate-prod": "npx dotenv -e .env.production -- npx prisma migrate deploy --schema services/admin-panel-api/prisma/schema.prisma",
+    "db:seed-prod": "npx dotenv -e .env.production -- yarn workspace @services/admin-panel-api db:seed"
   },
   "packageManager": "yarn@4.9.1",
   "workspaces": [
@@ -28,6 +36,8 @@
     "configs/*"
   ],
   "devDependencies": {
+    "cross-env": "^7.0.3",
+    "dotenv-cli": "^9.0.0",
     "lefthook": "^1.11.13"
   }
 }

@@ -1,10 +1,39 @@
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
-import { AppModule } from './app.module';
+import { AppModule } from './modules/app/app.module';
+import { AppConfig } from './types';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(8080);
+
+  const configService: ConfigService<AppConfig> = app.get(ConfigService);
+
+  const config = new DocumentBuilder()
+    .setTitle('Admin panel API')
+    .setVersion('1.0')
+    .addBearerAuth({
+      description: `Please, make a "Sign in" request and pass the token here (with no 'Bearer' segment)`,
+      name: 'Authorization',
+      bearerFormat: 'Bearer',
+      scheme: 'Bearer',
+      type: 'http',
+      in: 'Header',
+    })
+    .build();
+
+  const documentFactory = () => SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('swagger', app, documentFactory);
+
+  app.enableCors({
+    origin: process.env.ORIGINS.split(',') ?? [],
+    methods: 'GET,HEAD,PATCH,PUT,POST,DELETE,OPTIONS',
+    credentials: true,
+    allowedHeaders: 'Content-Type, Accept, Authorization',
+  });
+
+  await app.listen(configService.get('PORT_API') || process.env.PORT);
 }
 
 bootstrap();

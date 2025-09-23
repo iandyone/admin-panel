@@ -1,9 +1,11 @@
 {
   "extends": "@configs/typescript",
   "compilerOptions": {
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "module": "commonjs",
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": ".",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "incremental": true,
@@ -11,7 +13,6 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false,
-    
+    "noFallthroughCasesInSwitch": false
   }
 }

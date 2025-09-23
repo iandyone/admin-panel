@@ -1,8 +1,12 @@
 pre-commit:
   # parallel: true
   commands:
-    check-scripts:
+    linters:
       glob: "*.{js,ts,jsx,tsx,mts,mjs}"
       run: yarn workspaces foreach --all --topological --parallel run lint
+    check-ts-ui:
+      run: yarn workspace @services/admin-panel-ui exec tsc --noEmit 
+    check-ts-api:
+      run: yarn workspace @services/admin-panel-api exec tsc --noEmit 
     update-index:
       run: git update-index --again

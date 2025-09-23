@@ -1,0 +1,4 @@
+.table {
+  height: calc(100vh - 200px);
+  width: auto;
+}

@@ -1,0 +1,111 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Credentials {
+  id       Int     @id @unique @default(autoincrement())
+  userId   Int     @unique @map("user_id")
+  email    String  @unique
+  password String?
+  role     Role?   @default(DELIVERY)
+
+  User User? @relation(fields: [userId], references: [id])
+
+  @@map("credentials")
+}
+
+model User {
+  id           Int       @id @unique @default(autoincrement())
+  firstName    String    @map("first_name")
+  lastName     String    @map("last_name")
+  phone        String    @unique
+  isActive     Boolean   @default(true) @map("is_active")
+  lastActivity DateTime? @map("last_activity")
+  updatedAt    DateTime? @updatedAt() @map("updated_at")
+  createdAt    DateTime? @default(now()) @map("created_at")
+  orders       Int?
+
+  ManagedOrders   Order[]      @relation("ManagerOrders")
+  DeliveredOrders Order[]      @relation("DeliverymanOrders")
+  Credentials     Credentials?
+
+  @@map("users")
+}
+
+model Order {
+  id            Int         @id @unique @default(autoincrement())
+  location      String
+  customer      String
+  createdAt     DateTime?   @default(now()) @map("created_at")
+  updatedAt     DateTime?   @updatedAt() @map("updated_at")
+  managerId     Int?        @map("manager_id")
+  deliverymanId Int?        @map("deliveryman_id")
+  totalAmount   Decimal     @default(0) @map("total_amount") @db.Decimal(14, 2)
+  status        OrderStatus @default(CREATED)
+
+  Manager     User?         @relation("ManagerOrders", fields: [managerId], references: [id])
+  Deliveryman User?         @relation("DeliverymanOrders", fields: [deliverymanId], references: [id])
+  OrderItems  OrdersItems[]
+
+  @@map("orders")
+}
+
+model Product {
+  id       Int             @id @unique @default(autoincrement())
+  name     String          @unique
+  amount   Decimal         @default(0) @db.Decimal(14, 2)
+  category ProductCategory
+
+  createdAt DateTime? @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt() @map("updated_at")
+
+  OrderItems OrdersItems[]
+
+  @@map("products")
+}
+
+model OrdersItems {
+  id        Int @id @default(autoincrement())
+  orderId   Int @map("order_id")
+  productId Int @map("product_id")
+
+  quantity Int     @default(1)
+  amount   Decimal @default(0) @db.Decimal(14, 2)
+
+  Order   Order?   @relation(fields: [orderId], references: [id])
+  Product Product? @relation(fields: [productId], references: [id])
+
+  @@map("orders_items")
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+  DELIVERY
+}
+
+enum OrderStatus {
+  CREATED
+  COMPLETED
+  PROCESSING
+  HOLD
+  SHIPPED
+  DELIVERED
+  RETURNED
+  CANCELLED
+}
+
+enum ProductCategory {
+  APPETIZERS
+  SOUPS
+  SALADS
+  MAINS
+  DESSERTS
+  DRINKS
+  ALCOHOL
+}

@@ -1,0 +1,101 @@
+import { $Enums, Credentials, User } from '@prisma/client';
+import { Decimal } from '@prisma/client/runtime/library';
+
+import { UpdateOrderDto } from './modules/orders/dto/update-order.dto';
+import { UpdateUserDto } from './modules/users/dto/update-user.dto';
+
+export interface AppConfig {
+  PORT_API: number;
+  JWT_SECRET: string;
+}
+
+export type UserData = User & Credentials;
+
+export interface UserResponse {
+  id: number;
+  firstName: string;
+  lastName: string;
+  role: $Enums.Role;
+  email: string;
+  phone: string;
+  lastActivity: string | null;
+  orders: number;
+  isActive: boolean;
+}
+
+export interface OrderResponse {
+  id: number;
+  order: string[];
+  totalAmount: number | Decimal;
+  location: string;
+  customer: string;
+  createdAt: string;
+  updatedAt: string;
+  manager: string;
+  managerId: number;
+  deliveryman: string;
+  deliverymanId: number;
+  status: string;
+}
+
+export interface UsersResponse {
+  total: number;
+  users: UserResponse[];
+}
+
+export interface OrdersResponse {
+  orders: OrderResponse[];
+  total: number;
+}
+
+export interface PaginationProps {
+  page: number;
+  perPage: number;
+}
+
+export interface UsersFindAllProps {
+  page: string;
+  perPage: string;
+  id?: string;
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  role?: string;
+  dateFrom?: string;
+  dateTo?: string;
+  orders?: string;
+  isActive?: string;
+}
+export interface OrdersFindAllProps {
+  page: string;
+  perPage: string;
+  id?: string;
+  order?: string;
+  totalAmount?: string;
+  location?: string;
+  customer?: string;
+  deliveryman?: string;
+  dateFromCreated?: string;
+  dateToCreated?: string;
+  dateFromUpdated?: string;
+  dateToUpdated?: string;
+  manager?: string;
+  status?: string;
+}
+
+export type UserAuthDtoProps = Credentials &
+  Pick<User, 'firstName' | 'lastName' | 'isActive'> & {
+    isNewUser?: boolean;
+  };
+
+export interface UpdateUserServiceProps {
+  id: number;
+  updateUserDto: UpdateUserDto;
+  accountId: number;
+}
+
+export interface UpdateOrderServiceProps {
+  id: number;
+  order: UpdateOrderDto;
+  accountId: number;
+}
