@@ -2,7 +2,7 @@ import path from 'path';
 
 import { defineConfig, devices } from '@playwright/test';
 
-import { EPlaywrightProjects } from './playwright/constants';
+import { EPlaywrightProjects } from '@pw/constants';
 
 const { SETUP, AUTH, ADMIN, MANAGER, DELIVERY, DEACTIVATED } = EPlaywrightProjects;
 
