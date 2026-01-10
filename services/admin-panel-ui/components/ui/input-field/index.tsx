@@ -10,6 +10,7 @@ interface Props {
   label?: string;
   type?: string;
   error: boolean;
+  dataTestId?: string;
   size?: "small" | "medium";
 }
 
@@ -19,6 +20,7 @@ export const InputField: FC<Props> = ({
   type,
   size = "small",
   disabled,
+  dataTestId: dataTestId,
   error,
 }) => {
   return (
@@ -31,6 +33,7 @@ export const InputField: FC<Props> = ({
         disabled={disabled}
         as={TextField}
         error={error}
+        data-test-id={dataTestId}
       />
       <ErrorMessage name={name} component={ErrorLabel} />
     </Stack>

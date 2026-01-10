@@ -9,7 +9,11 @@ import { PieChartDefaultSettings } from "@/configs";
 import { useAppSearchParams } from "@/hooks";
 import { useGetDashboardProducts } from "@/query";
 
-export const ProductsGroupChart: FC = () => {
+interface Props {
+  testIdPrefix: string;
+}
+
+export const ProductsGroupChart: FC<Props> = ({ testIdPrefix }) => {
   const { searchParams } = useAppSearchParams();
 
   const {
@@ -37,7 +41,7 @@ export const ProductsGroupChart: FC = () => {
   }
 
   return (
-    <Card sx={{ padding: 2 }}>
+    <Card sx={{ padding: 2 }} data-test-id={testIdPrefix}>
       <Stack justifyContent="space-between">
         <Typography textAlign="center">
           Products categories (completed orders), %

@@ -34,7 +34,7 @@ export const FormModalWrapper: FC<Props> = ({
           minWidth: 400,
         }}
       >
-        <Typography variant="h5">{title}</Typography>
+        <Typography variant="h5" date-test-id='form-title'>{title}</Typography>
         {children}
       </Stack>
     </Modal>

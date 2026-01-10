@@ -33,8 +33,9 @@ export const SidebarFooter: FC<SidebarFooterProps> = ({ mini }) => {
   const isLoading = session.status === "loading";
 
   return (
-    <Stack padding={2} gap={1}>
+    <Stack padding={2} gap={1} data-test-id="navigation-profile">
       <Divider />
+
       <Stack direction="row" gap={2}>
         <Tooltip
           title={`${firstName} ${lastName}`}
@@ -61,6 +62,7 @@ export const SidebarFooter: FC<SidebarFooterProps> = ({ mini }) => {
               <Typography
                 fontSize={18}
                 sx={{ color: theme.palette.common.white }}
+                data-test-id="profile-username-label"
               >
                 {firstName[0].toUpperCase()}
               </Typography>
@@ -90,7 +92,7 @@ export const SidebarFooter: FC<SidebarFooterProps> = ({ mini }) => {
                       transition: Fade,
                     }}
                   >
-                    <Typography maxWidth={181}>
+                    <Typography maxWidth={181} data-test-id="profile-username">
                       {firstName} {lastName}
                     </Typography>
                   </Tooltip>
@@ -105,6 +107,7 @@ export const SidebarFooter: FC<SidebarFooterProps> = ({ mini }) => {
                       variant="subtitle2"
                       color="textDisabled"
                       maxWidth={181}
+                      data-test-id='profile-email'
                     >
                       {session.data?.user.email}
                     </Typography>
@@ -130,6 +133,7 @@ export const SidebarFooter: FC<SidebarFooterProps> = ({ mini }) => {
                   onClick={handleOnClickSignOutButton}
                   variant="text"
                   sx={{ width: "42px", minWidth: "auto" }}
+                  data-test-id='profile-sign-out-button'
                 >
                   <SignOutIcon fill={theme.palette.primary.main} />
                 </Button>

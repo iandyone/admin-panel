@@ -51,7 +51,7 @@ export default async function Page() {
   });
 
   return (
-    <Stack gap={3} sx={{ mt: 0 }}>
+    <Stack gap={3} sx={{ mt: 0 }} data-test-id='page-orders'>
       <HydrationBoundary state={dehydrate(queryClient)}>
         <OrdersHeader />
         <OrdersTable />

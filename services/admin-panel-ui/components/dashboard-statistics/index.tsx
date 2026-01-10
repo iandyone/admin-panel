@@ -74,6 +74,7 @@ export const DashboardStatistics: FC = () => {
       container
       spacing={{ md: 3, xs: 2 }}
       columns={{ md: 4, sm: 2, xs: 1 }}
+      data-test-id='dashboard-page-statistics-bar'
     >
       {STATISTICS_DATA.map(({ id, chip, data, days, title, value }) => (
         <Grid key={id} size={1}>
@@ -85,6 +86,7 @@ export const DashboardStatistics: FC = () => {
               title={title}
               value={value}
               isLoading={isFetching}
+              testIdPrefix='dashboard-page-statistics-card'
             />
           </Card>
         </Grid>

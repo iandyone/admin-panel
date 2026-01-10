@@ -53,6 +53,7 @@ export const TextSearchModal: FC<TextModalProps> = ({
         value={Boolean(filterValue) ? filterValue : ""}
         onChange={handleOnChangeFilter}
         type={LABELS_WITH_NUMERIC_FIELDS.includes(dataKey) ? "number" : "text"}
+        data-test-id="table-filter-input"
       />
 
       <FormControls

@@ -64,25 +64,25 @@ export default async function Page() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <Stack gap={3} sx={{ mt: 0 }}>
-        <Typography component="h2" variant="h6">
-          Overview
+      <Stack gap={3} sx={{ mt: 0 }} data-test-id='page-dashboard'>
+        <Typography component="h2" variant="h6" data-test-id='dashboard-page-header-title'>
+          Dashboard
         </Typography>
 
         <DashboardFilter />
 
         <DashboardStatistics />
 
-        <Grid container columns={{ md: 2, xs: 1 }} spacing={{ md: 3, xs: 2 }}>
+        <Grid container columns={{ md: 2, xs: 1 }} spacing={{ md: 3, xs: 2 }} data-test-id='page-dashboard-charts-bar'>
           <Grid size={1}>
-            <OrdersChart />
+            <OrdersChart testIdPrefix='dashboard-page-orders-chart' />
           </Grid>
           <Grid size={1}>
-            <ProductsGroupChart />
+            <ProductsGroupChart testIdPrefix='dashboard-page-products-chart'/>
           </Grid>
         </Grid>
         <Grid size={1}>
-          <TrendingProductsBar />
+          <TrendingProductsBar testIdPrefix='dashboard-page-trending-bar' />
         </Grid>
       </Stack>
     </HydrationBoundary>

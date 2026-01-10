@@ -69,7 +69,7 @@ export const AutocompleteSearchModal: FC<AutocompleteProps> = ({
           onChange={handleOnChange}
           size="small"
           renderInput={(params) => (
-            <TextField {...params} name={title} label={title} />
+            <TextField {...params} name={title} label={title} data-test-id='table-filter-input'/>
           )}
         />
 

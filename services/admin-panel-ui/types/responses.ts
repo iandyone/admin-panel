@@ -75,6 +75,7 @@ export interface TrendProduct {
   orderCount: number;
   totalQuantity: number;
   totalAmount: number;
+  testIdPrefix?: string;
 }
 
 

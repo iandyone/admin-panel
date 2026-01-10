@@ -89,5 +89,5 @@ export const OrdersTable: FC = () => {
     ],
   );
 
-  return <DataGrid config={config} tableClassName={styles.table} />;
+  return <DataGrid config={config} tableClassName={styles.table} testId='orders-table' />;
 };

@@ -64,7 +64,7 @@ export const TableRowItem: FC<Props> = ({ data, ...rowProps }) => {
   const handleOnConfirmRemoving = () => {};
 
   return (
-    <TableRow hover {...rowProps}>
+    <TableRow hover {...rowProps} data-test-id='data-grid-row'>
       {Object.entries(data).map(([key, value], index) => {
         const ceilValue =
           key === "isActive" ? (value ? ACTIVE : INACTIVE) : value;
@@ -82,6 +82,7 @@ export const TableRowItem: FC<Props> = ({ data, ...rowProps }) => {
           disabled={disableEditButton}
           variant="text"
           sx={{ width: "40px", minWidth: "auto" }}
+          data-test-id='table-edit-row-data-button'
         >
           <PenIcon
             stroke={
@@ -99,6 +100,7 @@ export const TableRowItem: FC<Props> = ({ data, ...rowProps }) => {
             onClick={handleOnClickRemoveButton}
             variant="text"
             sx={{ width: "40px", minWidth: "auto" }}
+            data-test-id='table-remove-row-data-button'
           >
             <CrossIcon stroke={theme.palette.text.secondary} />
           </Button>

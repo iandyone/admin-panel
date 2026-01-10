@@ -87,5 +87,5 @@ export const UsersTable: FC = () => {
     ],
   );
 
-  return <DataGrid config={config} tableClassName={styles.table} />;
+  return <DataGrid config={config} tableClassName={styles.table} testId='users-table'/>;
 };

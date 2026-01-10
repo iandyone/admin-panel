@@ -9,7 +9,11 @@ import { PieChartDefaultSettings } from "@/configs";
 import { useAppSearchParams } from "@/hooks";
 import { useGetDashboardOrders } from "@/query";
 
-export const OrdersChart: FC = () => {
+interface Props {
+  testIdPrefix: string;
+}
+
+export const OrdersChart: FC<Props> = ({ testIdPrefix }) => {
   const { searchParams } = useAppSearchParams();
 
   const {
@@ -37,10 +41,15 @@ export const OrdersChart: FC = () => {
   }
 
   return (
-    <Card sx={{ padding: 2 }}>
+    <Card sx={{ padding: 2 }} data-test-id={testIdPrefix}>
       <Stack justifyContent="space-between">
         <Stack>
-          <Typography textAlign="center">Orders by status, %</Typography>
+          <Typography
+            textAlign="center"
+            data-test-id="page-dashboard-charts-bar-chart-title"
+          >
+            Orders by status, %
+          </Typography>
           <PieChart
             series={[
               {

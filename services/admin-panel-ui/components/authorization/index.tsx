@@ -5,7 +5,7 @@ import { SignInForm } from "@/forms";
 
 export const Authorization: FC = () => {
   return (
-    <Stack alignItems="center" sx={{ height: "100%" }}>
+    <Stack alignItems="center" sx={{ height: "100%" }} data-test-id='sign-in'>
       <Card
         elevation={2}
         sx={{
@@ -17,7 +17,7 @@ export const Authorization: FC = () => {
         }}
       >
         <Stack direction="column" spacing={2}>
-          <Typography align="center" variant="h4">
+          <Typography align="center" variant="h4" data-test-id='sign-in-title'>
             Sign In
           </Typography>
 

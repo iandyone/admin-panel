@@ -24,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-toolpad-color-scheme="light">
+    <html lang="en" data-toolpad-color-scheme="light" id='admin-panel-app'>
       <body className={inter.className}>
         <AuthProvider>
           <TanstackQueryProvider>

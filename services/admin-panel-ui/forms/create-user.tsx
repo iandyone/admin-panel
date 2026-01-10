@@ -32,7 +32,7 @@ export const CreateUserForm: FC<Props> = ({ onCancel, onSubmit }) => {
   };
 
   return (
-    <Stack direction="column" spacing={2}>
+    <Stack direction="column" spacing={2} data-test-id='create-user-form'>
       <Formik
         initialValues={initialValues}
         enableReinitialize

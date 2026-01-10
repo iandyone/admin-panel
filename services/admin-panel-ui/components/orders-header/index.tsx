@@ -20,7 +20,7 @@ export const OrdersHeader: FC = () => {
 
   return (
     <Stack direction="row" justifyContent="space-between" alignItems="center">
-      <Typography component="h2" variant="h6">
+      <Typography component="h2" variant="h6" data-test-id='orders-page-header-title'>
         Orders
       </Typography>
 
@@ -29,6 +29,7 @@ export const OrdersHeader: FC = () => {
           variant="contained"
           color="warning"
           onClick={handleOnClickAddButton}
+          data-test-id='orders-page-header-add-order-button'
         >
           Add order
         </Button>

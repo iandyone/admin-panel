@@ -95,6 +95,8 @@ export const DateSearchModal: FC<AutocompleteProps> = ({
           valueFrom={valueFrom || ""}
           onChangeDateFrom={handleOnChangeDateFrom}
           onChangeDateTo={handleOnChangeDateTo}
+          inputFromTestId='table-filter-input'
+          inputToTestId='table-filter-input'
         />
 
         <FormControls
