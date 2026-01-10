@@ -39,7 +39,7 @@ export class AuthService {
         role,
       };
 
-      this.usersService.update({
+      await this.usersService.update({
         id,
         accountId: id,
         updateUserDto,

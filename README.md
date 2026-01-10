@@ -14,6 +14,7 @@ Aдмин‑панель ресторана (Next.js) и REST API (NestJS + Pris
 - [Пользователи и роли](#пользователи-и-роли)
 - [Prisma Studio](#prisma-studio)
 - [Swagger](#swagger)
+- [Тестирование](#тестирование)
 
 ---
 
@@ -33,7 +34,7 @@ Aдмин‑панель ресторана (Next.js) и REST API (NestJS + Pris
 - **Frontend**: Next.js 15 (App Router), Material UI, React Query, Next Auth, React Toastify, Formik, Yup, Axios
 - **Backend**: NestJS 10, Prisma ORM, Joi, Bcrypt
 - **Database**: PostgreSQL 16
-- **Infra**: Node 18+, Yarn 4.9.1, Yarn Workspaces, Docker (+Compose), Lefthook, ESLint 9, Git
+- **Infra**: Node 18+, Yarn 4.9.1, Yarn Workspaces, Docker (+Compose), Lefthook, ESLint 9, Git, Playwright
 
 ---
 
@@ -180,3 +181,26 @@ yarn db:studio
 
 Спецификация OpenAPI — это независимый от языка формат определения, используемый для описания RESTful API. В проект интегрирован модуль, позволяющий генерировать такую ​​спецификацию. Она доступна при запуске приложения по адресу backend-приложения на странице `/swagger`, например:
 http://localhost:8080/swagger
+
+## Тестирование
+
+Для end-to-end тестирования в клиентском приложении используется Playwright.
+
+1. Создайте файл `services/admin-panel-ui/playwright/.env.playwright` с учетными данными тестовых пользователей (см. [Учетные записи](#учетные-записи))
+
+   ```env
+   TEST_LOGIN_ADMIN=admin@gmail.com
+   TEST_LOGIN_MANAGER=manager@gmail.com
+   TEST_LOGIN_DELIVERY=delivery@gmail.com
+   TEST_LOGIN_DEACTIVATED=deactivated@gmail.com
+   TEST_PASS=demo_user
+   ```
+
+2. Запуск тестов из корня репозитория:
+
+   ```bash
+   yarn e2e:run   # все тесты в headless
+   yarn e2e:open  # UI-режим Playwright
+   ```
+
+Авторизационные состояния тестовых браузеров сохраняются в `services/admin-panel-ui/playwright/.auth`.
