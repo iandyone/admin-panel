@@ -7,9 +7,13 @@ import { TrendingRow } from "@/components/ui/trending-row";
 import { useAppSearchParams } from "@/hooks";
 import { useGetDashboardTrends } from "@/query";
 
-import { DashboardPieChartLoader } from '../loaders/dashboard-pie-charts-loader';
+import { DashboardPieChartLoader } from "../loaders/dashboard-pie-charts-loader";
 
-export const TrendingProductsBar: FC = () => {
+interface Props {
+  testIdPrefix: string;
+}
+
+export const TrendingProductsBar: FC<Props> = ({ testIdPrefix }) => {
   const { searchParams } = useAppSearchParams();
 
   const { data, isSuccess, isFetching } = useGetDashboardTrends({
@@ -22,13 +26,14 @@ export const TrendingProductsBar: FC = () => {
   }
 
   return (
-    <Card sx={{ padding: 2 }}>
+    <Card sx={{ padding: 2 }} data-test-id={testIdPrefix}>
       <Stack spacing={2}>
         <Typography
           component="h2"
           variant="body1"
           fontSize={18}
           fontWeight="700"
+          data-test-id={`${testIdPrefix}-title`}
         >
           Trending Products
         </Typography>
@@ -38,6 +43,7 @@ export const TrendingProductsBar: FC = () => {
               <TrendingRow
                 key={trendItem.productId}
                 index={index + 1}
+                testIdPrefix={`${testIdPrefix}-row`}
                 {...trendItem}
               />
             ))}

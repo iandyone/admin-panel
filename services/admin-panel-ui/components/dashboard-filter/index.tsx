@@ -45,6 +45,7 @@ export const DashboardFilter: FC = () => {
       columns={{ xs: 2, md: 2 }}
       spacing={3}
       rowSpacing={2}
+      data-test-id="dashboard-page-filter"
     >
       <Grid size={{ md: 1, xs: 2 }}>
         <PeriodFilter
@@ -59,6 +60,8 @@ export const DashboardFilter: FC = () => {
           valueFrom={dateFrom || ""}
           onChangeDateFrom={handleOnChangeDateFrom}
           onChangeDateTo={handleOnChangeDateTo}
+          inputFromTestId="dashboard-page-table-date-filter-from"
+          inputToTestId="dashboard-page-table-date-filter-to"
         />
       </Grid>
       <Grid size={{ md: 1, xs: 2 }}>

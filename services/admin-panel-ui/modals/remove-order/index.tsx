@@ -26,8 +26,8 @@ export const ConfirmRemoveModal = ({
   };
 
   return (
-    <Stack direction="column" spacing={4}>
-      <Typography>{message}</Typography>
+    <Stack direction="column" spacing={4} data-test-id='confirm-remove-modal'>
+      <Typography data-test-id='confirm-remove-modal-title'>{message}</Typography>
 
       <FormControls
         onClickApply={handleOnConfirmRemove}

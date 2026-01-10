@@ -6,7 +6,7 @@ export default function Loading() {
   return (
     <Stack gap={3} sx={{ mt: 0 }}>
       <Typography component="h2" variant="h6">
-        Overview
+        Dashboard
       </Typography>
       <DashboardLoader />
     </Stack>

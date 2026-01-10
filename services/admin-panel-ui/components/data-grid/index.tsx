@@ -15,13 +15,16 @@ import { DataGridConfig } from "@/types";
 interface Props {
   config: DataGridConfig;
   tableClassName?: string;
+  testId?: string;
 }
+
 export const DataGrid: FC<Props> = ({
   config: { data, headers, pagination, width },
   tableClassName,
+  testId,
 }) => {
   return (
-    <Box>
+    <Box data-test-id={testId}>
       <TableContainer className={tableClassName}>
         <Table stickyHeader aria-label="sticky table" sx={{ width }}>
           <TableHead>

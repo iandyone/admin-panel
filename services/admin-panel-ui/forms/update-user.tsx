@@ -49,7 +49,7 @@ export const UpdateUserForm: FC<Props> = ({
   };
 
   return (
-    <Stack direction="column" spacing={2}>
+    <Stack direction="column" spacing={2} data-test-id='update-user-form'>
       <Formik
         initialValues={initialValues}
         enableReinitialize

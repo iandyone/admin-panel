@@ -8,7 +8,7 @@ import { FC } from "react";
 
 import { InputField } from "@/components/ui/input-field";
 import { ENotificationTypes, ERoutes } from "@/constants";
-import { useToast } from '@/hooks';
+import { useToast } from "@/hooks";
 import { signInValidationSchema } from "@/validations/signin-schema";
 
 const initialState = {
@@ -48,22 +48,29 @@ export const SignInForm: FC = () => {
       onSubmit={handleOnSubmit}
     >
       {({ touched, errors, isSubmitting }) => (
-        <Form>
+        <Form data-test-id="sign-in-form">
           <Stack direction="column" spacing={2}>
             <InputField
               name="email"
               type="text"
               label="email"
               error={Boolean(touched.email && errors.email)}
+              dataTestId="sign-in-form-input-email"
             />
             <InputField
               name="password"
               type="password"
               label="password"
               error={Boolean(touched.password && errors.password)}
+              dataTestId="sign-in-form-input-password"
             />
 
-            <Button type="submit" variant="outlined" disabled={isSubmitting}>
+            <Button
+              type="submit"
+              variant="outlined"
+              disabled={isSubmitting}
+              data-test-id="sign-in-form-button-submit"
+            >
               Submit
             </Button>
           </Stack>

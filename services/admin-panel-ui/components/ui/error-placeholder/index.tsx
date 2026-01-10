@@ -31,14 +31,15 @@ export const ErrorPlaceholder: FC<Props> = ({
       sx={{
         height: "100%",
       }}
+      data-test-id='error-placeholder'
     >
-      <Typography variant="h4" textAlign="center">
+      <Typography variant="h4" textAlign="center" data-test-id='error-placeholder-title'>
         {title}
       </Typography>
 
       <ErrorAnimation />
 
-      <Typography variant="h6" textAlign="center" maxWidth={500} sx={{
+      <Typography variant="h6" textAlign="center" maxWidth={500} data-test-id='error-placeholder-subtitle'sx={{
         whiteSpace: 'wrap',
       }}>
         {subtitle}

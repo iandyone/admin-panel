@@ -24,7 +24,7 @@ export const RedirectButton: FC<Props> = ({ title, redirectTo, withSignOut }) =>
   };
 
   return (
-    <Button variant="contained" color="info" onClick={handleOnClick}>
+    <Button variant="contained" color="info" onClick={handleOnClick} data-test-id='redirect-button'>
       {title}
     </Button>
   );

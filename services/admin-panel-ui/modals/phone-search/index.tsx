@@ -52,6 +52,7 @@ export const PhoneSearchModal: FC<TextModalProps> = ({
         value={Boolean(filterValue) ? decodeURIComponent(filterValue) : ""}
         onChange={handleOnChangeFilter}
         type="text"
+        data-test-id='table-filter-input'
       />
 
       <FormControls

@@ -10,6 +10,7 @@ interface Props extends StatisticDatasetItem {
   title: string;
   value: number;
   isLoading: boolean;
+  testIdPrefix: string;
   chip?: {
     isPositive: boolean;
     value: ReactNode;
@@ -22,6 +23,7 @@ export const StatisticCard: FC<Props> = ({
   chip,
   data,
   days,
+  testIdPrefix,
   isLoading,
 }) => {
   if (isLoading) {
@@ -29,8 +31,8 @@ export const StatisticCard: FC<Props> = ({
   }
 
   return (
-    <Stack direction="column" gap={1} padding={2}>
-      <Typography component="h2" variant="subtitle2" gutterBottom>
+    <Stack direction="column" gap={1} padding={2} data-test-id={`${testIdPrefix}`}>
+      <Typography component="h2" variant="subtitle2" gutterBottom data-test-id={`${testIdPrefix}-title`}>
         {title}
       </Typography>
       <Stack
@@ -46,6 +48,7 @@ export const StatisticCard: FC<Props> = ({
               variant="h4"
               component="span"
               sx={{ fontSize: 24, fontWeight: 700 }}
+              data-test-id={`${testIdPrefix}-value`}
             >
               {value}
             </Typography>
@@ -54,6 +57,7 @@ export const StatisticCard: FC<Props> = ({
                 size="small"
                 color={chip.isPositive ? "success" : "error"}
                 label={`${chip.value}%`}
+                data-test-id={`${testIdPrefix}-chip`}
               />
             )}
           </Stack>
@@ -61,13 +65,14 @@ export const StatisticCard: FC<Props> = ({
 
         {data?.length && (
           <Box sx={{ height: "100%" }}>
-            <Typography variant="caption" sx={{ color: "text.secondary" }}>
+            <Typography variant="caption" sx={{ color: "text.secondary" }} data-test-id={`${testIdPrefix}-period-label`}>
               Current period
             </Typography>
 
             <Stack
               justifyContent="flex-start"
               sx={{ width: "100%", height: 50 }}
+              data-test-id={`${testIdPrefix}-chart`}
             >
               <SparkLine
                 value={value}

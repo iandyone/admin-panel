@@ -20,7 +20,7 @@ export const UsersHeader: FC = () => {
 
   return (
     <Stack direction="row" justifyContent="space-between" alignItems="center">
-      <Typography component="h2" variant="h6">
+      <Typography component="h2" variant="h6" data-test-id='users-page-header-title'>
         Users
       </Typography>
       {checkPermission(EPermissions.ADD_USER) && (
@@ -28,6 +28,7 @@ export const UsersHeader: FC = () => {
           variant="contained"
           color="warning"
           onClick={handleOnClickAddButton}
+          data-test-id='users-page-header-add-user-button'
         >
           Add user
         </Button>

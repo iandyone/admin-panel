@@ -12,6 +12,8 @@ interface Props {
   containerProps: GridProps;
   valueFrom?: number | string;
   valueTo?: number | string;
+  inputFromTestId?: string;
+  inputToTestId?: string;
   onChangeDateFrom?: (value: PickerValue) => void;
   onChangeDateTo?: (value: PickerValue) => void;
 }
@@ -22,11 +24,12 @@ export const PeriodFilter: FC<Props> = ({
   containerProps,
   onChangeDateFrom,
   onChangeDateTo,
+  inputFromTestId, inputToTestId
 }) => {
   return (
     <LocalizationProvider dateAdapter={AdapterMoment}>
       <Grid container {...containerProps}>
-        <Grid size={1}>
+        <Grid size={1} data-test-id={inputFromTestId}>
           <DatePicker
             sx={{ width: "100%" }}
             openTo="day"
@@ -40,7 +43,7 @@ export const PeriodFilter: FC<Props> = ({
             onChange={onChangeDateFrom}
           />
         </Grid>
-        <Grid size={1}>
+        <Grid size={1} data-test-id={inputToTestId}>
           <DatePicker
             sx={{ width: "100%" }}
             openTo="day"

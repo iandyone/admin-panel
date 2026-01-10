@@ -1,6 +1,7 @@
 {
   "extends": "@configs/typescript",
   "compilerOptions": {
+    "baseUrl": "./",
     "module": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "noEmit": true,
@@ -16,9 +17,21 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@pw/*": ["./playwright/*"],
+      "@pw/objects/*": ["./playwright/page-objects/*"],
+      "@pw/constants": ["./playwright/constants"],
+      "@pw/types": ["./playwright/types"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "**.d.ts", "app/(pages)/forbidden.tss"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "**.d.ts",
+    "app/(pages)/forbidden.ts",
+    "playwright/**/*.ts"
+  ],
   "exclude": ["node_modules"]
 }
