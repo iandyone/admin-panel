@@ -30,8 +30,7 @@
     "db:migrate-prod": "npx dotenv -e .env.production -- npx prisma migrate deploy --schema services/admin-panel-api/prisma/schema.prisma",
     "db:seed-prod": "npx dotenv -e .env.production -- yarn workspace @services/admin-panel-api db:seed",
     "e2e:open": "npx dotenv -e .env.local -- yarn workspace @services/admin-panel-ui e2e:open",
-    "e2e:run": "npx dotenv -e .env.local -- yarn workspace @services/admin-panel-ui e2e:run",
-    "prebuild": "npx prisma generate"
+    "e2e:run": "npx dotenv -e .env.local -- yarn workspace @services/admin-panel-ui e2e:run"
   },
   "packageManager": "yarn@4.9.1",
   "workspaces": [
