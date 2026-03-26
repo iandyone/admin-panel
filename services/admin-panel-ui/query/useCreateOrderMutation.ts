@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { $axios } from '@/configs';
 import { API_PATH, ENotificationTypes, FetchTags } from '@/constants';
 import { useToast } from '@/hooks';
 import { CreateOrderPayload } from '@/types'
@@ -11,9 +10,17 @@ export const useCreateOrderMutation = () => {
 
   return useMutation({
     mutationFn: async (orderData: CreateOrderPayload) => {
-      const response = await $axios.post(API_PATH.ORDERS, { ...orderData });
+      const response = await fetch(`/api${API_PATH.ORDERS}`, {
+        method: 'POST',
+        body: JSON.stringify(orderData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
 
-      return response.data;
+      const data = await response.json();
+
+      return data;
     },
 
     onSuccess: () => {

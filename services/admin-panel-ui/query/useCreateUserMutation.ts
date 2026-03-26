@@ -1,8 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { $axios } from '@/configs';
 import { API_PATH, ENotificationTypes, FetchTags } from '@/constants';
-import {  useToast } from '@/hooks';
+import { useToast } from '@/hooks';
 import { CreateUserPayload } from '@/types'
 
 
@@ -12,9 +11,14 @@ export const useCreateUserMutation = () => {
 
   return useMutation({
     mutationFn: async (userData: CreateUserPayload) => {
-      const response = await $axios.post(API_PATH.USERS, { ...userData });
+      const response = await fetch(`/api${API_PATH.USERS}`, {
+        method: 'POST',
+        body: JSON.stringify(userData),
+      })
 
-      return response.data;
+      const data = await response.json();
+
+      return data;
     },
 
     onSuccess: () => {

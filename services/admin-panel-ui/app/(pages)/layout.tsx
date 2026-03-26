@@ -9,7 +9,7 @@ import { signOut, useSession } from "next-auth/react";
 import { PropsWithChildren, useEffect, useLayoutEffect } from "react";
 
 import { SidebarFooter } from "@/components/sidebar-footer";
-import { $axios } from "@/configs";
+import { $axios } from "@/configs/axios";
 import { ENotificationTypes, ERoutes } from "@/constants";
 import { useToast } from "@/hooks";
 
@@ -58,7 +58,7 @@ export default function PagesLayout({ children }: PropsWithChildren) {
       },
     );
 
-    return () => $axios.interceptors.request.clear()
+    return () => $axios.interceptors.request.clear();
   }, [session.data?.accessToken]);
 
   return (

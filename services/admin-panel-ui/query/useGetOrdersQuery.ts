@@ -1,8 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { $axios } from '@/configs'
 import { API_PATH, DEFAULT_ROWS_PER_PAGE, ENotificationTypes, FetchTags, START_PAGE } from '@/constants'
-import {  useToast } from '@/hooks'
+import { useToast } from '@/hooks'
 import { OrderFilter, OrdersResponse } from '@/types'
 
 export const useGetOrdersQuery = (page = START_PAGE, perPage = DEFAULT_ROWS_PER_PAGE, filters?: OrderFilter) => {
@@ -12,15 +11,23 @@ export const useGetOrdersQuery = (page = START_PAGE, perPage = DEFAULT_ROWS_PER_
     queryKey: [FetchTags.ORDERS, page, perPage, filters],
     queryFn: async () => {
       try {
-        const response = await $axios.get<OrdersResponse>(API_PATH.ORDERS, {
-          params: {
-            page,
-            perPage,
-            ...filters
-          }
-        });
 
-        return response.data;
+        const searchParams = new URLSearchParams({
+          page: String(page),
+          perPage: String(perPage)
+        })
+
+        Object.entries(filters ?? {}).forEach(([queryKey, queryValue]) => {
+          if (queryValue) {
+            searchParams.set(queryKey, queryValue)
+          }
+        })
+
+        const response = await fetch(`/api${API_PATH.ORDERS}?${searchParams.toString()}`)
+
+        const data: OrdersResponse = await response.json();
+
+        return data;
       } catch (error) {
         console.log({ error });
         sendNotification(ENotificationTypes.ORDERS_FETCHING_ERROR);

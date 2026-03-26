@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { $axios } from '@/configs'
 import { API_PATH, ENotificationTypes, FetchTags } from '@/constants'
 import { useToast } from '@/hooks'
 import { UpdateUserPayload, User } from '@/types'
@@ -11,9 +10,21 @@ export const useUpdateUserMutation = () => {
 
   return useMutation({
     mutationFn: async ({ id, userData }: UpdateUserPayload) => {
-      const response = await $axios.patch<User>(`${API_PATH.USERS}/${id}`, { ...userData });
+      const response = await fetch(`/api${API_PATH.USERS}/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify(userData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
 
-      return response.data;
+      if (!response.ok) {
+        throw new Error(`Failed to update user: ${response.status}`);
+      }
+
+      const data: User = await response.json();
+
+      return data;
     },
 
 

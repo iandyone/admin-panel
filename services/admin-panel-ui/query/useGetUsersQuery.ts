@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { $axios } from '@/configs'
 import { API_PATH, DEFAULT_ROWS_PER_PAGE, ENotificationTypes, FetchTags, START_PAGE } from '@/constants'
 import { useToast } from '@/hooks'
 import { UsersFilter, UsersResponse } from '@/types'
@@ -12,16 +11,26 @@ export const useGetUsersQuery = (page = START_PAGE, perPage = DEFAULT_ROWS_PER_P
     queryKey: [FetchTags.USERS, page, perPage, filters],
     queryFn: async () => {
       try {
-        const response = await $axios.get<UsersResponse>(API_PATH.USERS, {
-          params: {
-            page,
-            perPage,
-            ...filters
-          },
-
+        const searchParams = new URLSearchParams({
+          page: String(page),
+          perPage: String(perPage),
         });
 
-        return response.data;
+        Object.entries(filters ?? {}).forEach(([queryKey, queryValue]) => {
+          if (queryValue) {
+            searchParams.set(queryKey, String(queryValue))
+          }
+        });
+
+        const response = await fetch(`/api${API_PATH.USERS}?${searchParams.toString()}`);
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch users: ${response.status}`);
+        }
+
+        const data: UsersResponse = await response.json();
+
+        return data;
       } catch (error) {
         console.log({ error });
         sendNotification(ENotificationTypes.USERS_FETCHING_ERROR);

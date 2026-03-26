@@ -1,10 +1,16 @@
-import { $axios_server } from '@/configs'
 import { API_PATH } from '@/constants'
+import { apiFetcher } from '@/server/lib'
 
 export const signInAction = async (email: string, password: string) => {
-  const response = await $axios_server.post(API_PATH.SIGN_IN, { email, password }, {
-    validateStatus: () => true,
-  })
+  const response = await apiFetcher({
+    path: API_PATH.SIGN_IN,
+    init: {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+    },
+  });
 
-  return response.data
-}
+  const data = await response.json().catch(() => null);
+
+  return data;
+};
