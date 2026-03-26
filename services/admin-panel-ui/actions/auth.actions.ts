@@ -10,7 +10,15 @@ export const signInAction = async (email: string, password: string) => {
     },
   });
 
-  const data = await response.json().catch(() => null);
+  const contentType = response.headers.get('content-type') ?? '';
 
-  return data;
+  const data = contentType.includes('application/json')
+    ? await response.json().catch(() => null)
+    : await response.text().catch(() => null);
+
+  return {
+    ok: response.ok,
+    status: response.status,
+    data,
+  };
 };

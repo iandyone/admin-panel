@@ -6,6 +6,28 @@ import Credentials from 'next-auth/providers/credentials'
 import { signInAction } from '@/actions';
 import { EUserRoles, UserAuthData } from '@/types';
 
+const extractAccessToken = (payload: unknown) => {
+  if (typeof payload === 'string') {
+    return payload;
+  }
+
+  if (!payload || typeof payload !== 'object') {
+    return null;
+  }
+
+  const tokenLike = payload as Record<string, unknown>;
+
+  const candidates = [
+    tokenLike.accessToken,
+    tokenLike.access_token,
+    tokenLike.token,
+  ];
+
+  const token = candidates.find((value) => typeof value === 'string');
+
+  return typeof token === 'string' ? token : null;
+};
+
 
 export const authConfig: NextAuthConfig = {
   providers: [
@@ -21,8 +43,25 @@ export const authConfig: NextAuthConfig = {
             return null;
           }
 
-          const accessToken = await signInAction(credentials.email as string, credentials.password as string)
-          const user = jwtDecode<UserAuthData>(accessToken);
+          const signInResult = await signInAction(
+            credentials.email as string,
+            credentials.password as string,
+          );
+
+          if (!signInResult.ok) {
+            return null;
+          }
+
+          const accessToken = extractAccessToken(signInResult.data);
+
+          if (!accessToken) {
+            return null;
+          }
+
+          const tokenForDecode = accessToken.startsWith('Bearer ')
+            ? accessToken.slice('Bearer '.length)
+            : accessToken;
+          const user = jwtDecode<UserAuthData>(tokenForDecode);
 
 
           return {
@@ -87,4 +126,3 @@ export const handlers: NextAuthResult['handlers'] = nextAuth.handlers;
 export const auth: NextAuthResult['auth'] = nextAuth.auth;
 export const signIn: NextAuthResult['signIn'] = nextAuth.signIn;
 export const signOut: NextAuthResult['signOut'] = nextAuth.signOut;
-
