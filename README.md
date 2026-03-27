@@ -31,7 +31,7 @@ Aдмин‑панель ресторана (Next.js) и REST API (NestJS + Pris
 
 ## Стек
 
-- **Frontend**: Next.js 15 (App Router), Material UI, React Query, Next Auth, React Toastify, Formik, Yup, Axios
+- **Frontend**: Next.js 15 (App Router), Material UI, React Query, Next Auth, React Toastify, Formik, Yup
 - **Backend**: NestJS 10, Prisma ORM, Joi, Bcrypt
 - **Database**: PostgreSQL 16
 - **Infra**: Node 18+, Yarn 4.9.1, Yarn Workspaces, Docker (+Compose), Lefthook, ESLint 9, Git, Playwright
@@ -78,7 +78,6 @@ API_CONTAINER_NAME=api
 API_BASE_PATH=http://${API_CONTAINER_NAME}:${PORT_API}
 
 NEXT_PUBLIC_UI_BASE_PATH=http://localhost:${PORT_UI}
-NEXT_PUBLIC_API_BASE_PATH=http://localhost:${PORT_API}
 
 JWT_SECRET=Vp5fhlYoqITEOJIpAmwuOeP8loFCCbzelehFJZPLjlE=
 AUTH_SECRET=GJ3g0Qerb0dZQMIApRw3T/trUkSUG+qaZmtZADGzGow=
