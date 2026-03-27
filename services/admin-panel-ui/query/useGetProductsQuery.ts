@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
+import { signOut } from 'next-auth/react';
 
-import { $axios } from '@/configs';
-import { API_PATH, ENotificationTypes, FetchTags } from '@/constants';
+import { API_PATH, ENotificationTypes, ERoutes, FetchTags } from '@/constants';
 import { useToast } from '@/hooks';
 import { Product } from '@/types';
 
+const { PRODUCTS_FETCHING_ERROR, SESSION_EXPIRED } = ENotificationTypes;
 
 export const useGetProductsQuery = () => {
   const { sendNotification } = useToast();
@@ -14,11 +15,19 @@ export const useGetProductsQuery = () => {
       queryKey: [FetchTags.PRODUCTS],
       queryFn: async () => {
         try {
-          const response = await $axios.get<Product[]>(API_PATH.PRODUCTS);
+          const response = await fetch(`/api${API_PATH.PRODUCTS}`);
 
-          return response.data;
+          const data: Product[] = await response.json();
+
+          return data;
         } catch (error) {
-          sendNotification(ENotificationTypes.PRODUCTS_FETCHING_ERROR);
+          if (error instanceof Error && error.message.startsWith('Unauthorized')) {
+            sendNotification(SESSION_EXPIRED);
+
+            return await signOut({ redirectTo: `/${ERoutes.SIGN_IN}` });
+          }
+
+          sendNotification(PRODUCTS_FETCHING_ERROR);
           console.log({ error });
 
           return []

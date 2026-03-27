@@ -1,79 +1,121 @@
+/* eslint-disable no-console */
 'use server';
 
-import { AxiosError } from 'axios';
+import { isRedirectError } from 'next/dist/client/components/redirect-error';
 import { redirect } from 'next/navigation';
 
-import { $axios_server } from '@/configs';
 import { API_PATH, DASHBOARD_DEFAULT_FILTER, ERoutes } from '@/constants';
+import { apiFetcher } from '@/server/lib';
 import { DashboardOrders, DashboardProducts, DashboardStatistic, TrendProduct } from '@/types';
 
 const { DASHBOARD, DASHBOARD_TRENDS, DASHBOARD_ORDERS, DASHBOARD_PRODUCTS } = API_PATH;
 
 export const getDashboardStats = async (filters = DASHBOARD_DEFAULT_FILTER) => {
   try {
-    const response = await $axios_server.get<DashboardStatistic>(DASHBOARD, {
-      params: {
-        ...filters
-      },
+    const response = await apiFetcher({
+      path: DASHBOARD,
+      init: {
+        params: {
+          ...filters
+        }
+      }
     });
 
-    return response.data
-  } catch (error) {
-    if (error instanceof AxiosError && error.response?.status === 401) {
+    if (response.status === 401) {
       redirect(ERoutes.SIGN_IN)
     }
+
+    const data: DashboardStatistic = await response.json();
+
+    return data;
+
+  } catch (error) {
+    if (isRedirectError(error)) {
+      throw error
+    }
+    console.log(error);
   }
 
 }
 
 export const getProductTrends = async (filters = DASHBOARD_DEFAULT_FILTER, limit?: number) => {
   try {
-    const response = await $axios_server.get<TrendProduct[]>(DASHBOARD_TRENDS, {
-      params: {
-        ...filters
-      },
+    const response = await apiFetcher({
+      path: DASHBOARD_TRENDS,
+      init: {
+        params: {
+          ...filters
+        }
+      }
     });
 
-    return limit ? response.data.splice(0, limit) : response.data;
-  } catch (error) {
-    if (error instanceof AxiosError && error.response?.status === 401) {
+    if (response.status === 401) {
       redirect(ERoutes.SIGN_IN)
     }
-  }
 
+    const data: TrendProduct[] = await response.json();
+
+    return limit ? data.splice(0, limit) : data;
+
+
+  } catch (error) {
+    if (isRedirectError(error)) {
+      throw error
+    }
+    
+    console.log(error);
+  }
 }
 
 export const getDashboardOrders = async (filters = DASHBOARD_DEFAULT_FILTER) => {
   try {
-    const response = await $axios_server.get<DashboardOrders[]>(DASHBOARD_ORDERS, {
-      params: {
-        ...filters
-      },
-    });
+    const response = await apiFetcher({
+      path: DASHBOARD_ORDERS,
+      init: {
+        params: {
+          ...filters
+        }
+      }
+    })
 
-    return response.data;
-  } catch (error) {
-    if (error instanceof AxiosError && error.response?.status === 401) {
+    if (response.status === 401) {
       redirect(ERoutes.SIGN_IN)
     }
+
+    const data: DashboardOrders[] = await response.json();
+
+    return data;
+  } catch (error) {
+    if (isRedirectError(error)) {
+      throw error
+    }
+
+    console.log(error);
   }
-
-
 }
 
 export const getDashboardProducts = async (filters = DASHBOARD_DEFAULT_FILTER) => {
   try {
-    const response = await $axios_server.get<DashboardProducts[]>(DASHBOARD_PRODUCTS, {
-      params: {
-        ...filters
-      },
-    });
+    const response = await apiFetcher({
+      path: DASHBOARD_PRODUCTS,
+      init: {
+        params: { ...filters }
+      }
+    })
 
-    return response.data;
-  } catch (error) {
-    if (error instanceof AxiosError && error.response?.status === 401) {
+    if (response.status === 401) {
       redirect(ERoutes.SIGN_IN)
     }
+
+    const data: DashboardProducts[] = await response.json();
+
+    return data;
+  } catch (error) {
+    if (isRedirectError(error)) {
+      throw error
+    }
+
+    console.log(error);
   }
 
 }

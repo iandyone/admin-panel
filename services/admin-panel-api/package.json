@@ -17,7 +17,8 @@
     "db:seed": "ts-node prisma/seed.ts",
     "db:studio": "npx prisma studio --schema prisma/schema.prisma",
     "db:push": "npx prisma db push",
-    "db:deploy": "npx prisma migrate deploy"
+    "db:deploy": "npx prisma migrate deploy",
+    "prebuild": "npx prisma generate"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

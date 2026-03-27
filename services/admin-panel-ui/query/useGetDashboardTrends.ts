@@ -1,9 +1,11 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
+import { signOut } from 'next-auth/react'
 
-import { $axios } from '@/configs'
-import { API_PATH, ENotificationTypes, FetchTags } from '@/constants'
+import { API_PATH, ENotificationTypes, ERoutes, FetchTags } from '@/constants'
 import { useToast } from '@/hooks'
 import { DashboardFilter, TrendProduct } from '@/types'
+
+const { DASHBOARD_TRENDS_FETCHING_ERROR, SESSION_EXPIRED } = ENotificationTypes;
 
 export const useGetDashboardTrends = (filters?: DashboardFilter) => {
   const { sendNotification } = useToast();
@@ -12,15 +14,32 @@ export const useGetDashboardTrends = (filters?: DashboardFilter) => {
     queryKey: [FetchTags.TRENDS, filters],
     queryFn: async () => {
       try {
-        const response = await $axios.get<TrendProduct[]>(API_PATH.DASHBOARD_TRENDS, {
-          params: {
-            ...filters
+        const searchParams = new URLSearchParams();
+
+        Object.entries(filters ?? {}).forEach(([queryKey, queryValue]) => {
+          if (queryValue) {
+            searchParams.set(queryKey, queryValue)
           }
         });
 
-        return response.data;
+        const response = await fetch(`/api${API_PATH.DASHBOARD_TRENDS}?${searchParams.toString()}`);
+
+        if (!response.ok) {
+          throw new Error(response.statusText, { cause: response });
+        }
+
+        const data: TrendProduct[] = await response.json();
+
+        return data;
       } catch (error) {
-        sendNotification(ENotificationTypes.DASHBOARD_TRENDS_FETCHING_ERROR);
+        if (error instanceof Error && error.message.startsWith('Unauthorized')) {
+          sendNotification(SESSION_EXPIRED);
+
+          await signOut({ redirectTo: `/${ERoutes.SIGN_IN}` });
+
+          return [];
+        }
+        sendNotification(DASHBOARD_TRENDS_FETCHING_ERROR);
         console.log({ error });
 
         return [] as TrendProduct[];

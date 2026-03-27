@@ -1,9 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { signOut } from 'next-auth/react';
 
-import { $axios } from '@/configs';
-import { API_PATH, ENotificationTypes, FetchTags } from '@/constants';
+import { API_PATH, ENotificationTypes, ERoutes, FetchTags } from '@/constants';
 import { useToast } from '@/hooks';
 import { UpdateOrderPayload } from '@/types'
+
+const { SESSION_EXPIRED, ORDER_UPDATE_ERROR, ORDER_UPDATE_SUCCESS } = ENotificationTypes
 
 export const useUpdateOrderMutation = () => {
   const queryClient = useQueryClient();
@@ -11,20 +13,38 @@ export const useUpdateOrderMutation = () => {
 
   return useMutation({
     mutationFn: async ({ id, ...orderData }: UpdateOrderPayload) => {
-      const response = await $axios.patch(`${API_PATH.ORDERS}/${id}`, { ...orderData });
+      const response = await fetch(`/api${API_PATH.ORDERS}/${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData),
+      });
 
-      return response.data;
+      if (!response.ok) {
+        throw new Error(response.statusText, { cause: response });
+      }
+
+      const data = await response.json();
+
+      return data;
     },
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [FetchTags.ORDERS] });
       queryClient.invalidateQueries({ queryKey: [FetchTags.USERS] });
-      sendNotification(ENotificationTypes.ORDER_UPDATE_SUCCESS);
+      sendNotification(ORDER_UPDATE_SUCCESS);
     },
 
-    onError: (error) => {
-      sendNotification(ENotificationTypes.ORDER_UPDATE_ERROR);
-      console.log({ error })
+    onError: async (error) => {
+      if (error.message === 'Unauthorized') {
+        sendNotification(SESSION_EXPIRED);
+
+        return await signOut({ redirectTo: `/${ERoutes.SIGN_IN}` });
+      }
+
+      sendNotification(ORDER_UPDATE_ERROR);
+      console.log({ error, })
     },
   })
 }

@@ -1,9 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { signOut } from 'next-auth/react';
 
-import { $axios } from '@/configs';
-import { API_PATH, ENotificationTypes, FetchTags } from '@/constants';
+import { API_PATH, ENotificationTypes, ERoutes, FetchTags } from '@/constants';
 import { useToast } from '@/hooks';
 import { CreateOrderPayload } from '@/types'
+
+const { ORDER_CREATE_SUCCESS, ORDER_CREATE_ERROR, SESSION_EXPIRED } = ENotificationTypes;
 
 export const useCreateOrderMutation = () => {
   const queryClient = useQueryClient();
@@ -11,18 +13,36 @@ export const useCreateOrderMutation = () => {
 
   return useMutation({
     mutationFn: async (orderData: CreateOrderPayload) => {
-      const response = await $axios.post(API_PATH.ORDERS, { ...orderData });
+      const response = await fetch(`/api${API_PATH.ORDERS}`, {
+        method: 'POST',
+        body: JSON.stringify(orderData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
 
-      return response.data;
+      if (!response.ok) {
+        throw new Error(response.statusText, { cause: response });
+      }
+
+      const data = await response.json();
+
+      return data;
     },
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [FetchTags.ORDERS], })
-      sendNotification(ENotificationTypes.ORDER_CREATE_SUCCESS);
+      sendNotification(ORDER_CREATE_SUCCESS);
     },
 
-    onError: (error) => {
-      sendNotification(ENotificationTypes.ORDER_CREATE_ERROR);
+    onError: async (error) => {
+      if (error.message === 'Unauthorized') {
+        sendNotification(SESSION_EXPIRED);
+
+        return await signOut({ redirectTo: `/${ERoutes.SIGN_IN}` });
+      }
+
+      sendNotification(ORDER_CREATE_ERROR);
       console.log({ error })
     },
   })

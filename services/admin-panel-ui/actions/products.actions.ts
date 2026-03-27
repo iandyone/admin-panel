@@ -1,25 +1,32 @@
 'use server'
 
-import { AxiosError } from 'axios';
+import { isRedirectError } from 'next/dist/client/components/redirect-error';
 import { redirect } from 'next/navigation';
 
-import { $axios_server } from '@/configs';
 import { API_PATH, ERoutes } from '@/constants';
+import { apiFetcher } from '@/server/lib';
 import { Product } from '@/types';
 
 
 export const prefetchProducts = async () => {
-
   try {
-    const response = await $axios_server.get<Product[]>(API_PATH.PRODUCTS);
+    const response = await apiFetcher({
+      path: API_PATH.PRODUCTS
+    })
 
-    return response.data;
-  } catch (error) {
-    console.log({ error });
-
-    if (error instanceof AxiosError && error.response?.status === 401) {
+    if (response.status === 401) {
       redirect(ERoutes.SIGN_IN)
     }
+
+    const data: Product[] = await response.json();
+
+    return data;
+  } catch (error) {
+    if (isRedirectError(error)) {
+      throw error;
+    }
+    // eslint-disable-next-line no-console
+    console.log({ error });
 
     return []
   }
