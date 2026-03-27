@@ -47,7 +47,8 @@ export const UsersTable: FC = () => {
             phone,
             role: role.toLowerCase(),
             lastActivity: lastActivity ?? "—",
-            orders: role.toLocaleLowerCase() === EUserRoles.DELIVERY ? orders : "—",
+            orders:
+              role.toLocaleLowerCase() === EUserRoles.DELIVERY ? orders : "—",
             isActive,
           };
 
@@ -87,5 +88,11 @@ export const UsersTable: FC = () => {
     ],
   );
 
-  return <DataGrid config={config} tableClassName={styles.table} testId='users-table'/>;
+  return (
+    <DataGrid
+      config={config}
+      tableClassName={styles.table}
+      testId="users-table"
+    />
+  );
 };

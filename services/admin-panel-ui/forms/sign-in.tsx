@@ -29,11 +29,17 @@ export const SignInForm: FC = () => {
         redirectTo: `/${ERoutes.ORDERS}`,
       });
 
-      if (data.code === "credentials") {
+      if (!data || data.error === "CredentialsSignin") {
         return sendNotification(ENotificationTypes.SIGN_IN_WRONG_CREDENTIALS);
       }
 
-      router.push(data.url!);
+      if (data.error) {
+        return sendNotification(ENotificationTypes.SIGN_IN_ERROR);
+      }
+
+      if (data.url) {
+        router.push(data.url);
+      }
     } catch (error) {
       sendNotification(ENotificationTypes.SIGN_IN_ERROR);
       console.log(error);
