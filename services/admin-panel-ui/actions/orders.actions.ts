@@ -1,6 +1,7 @@
+/* eslint-disable no-console */
 'use server'
 
-import { AxiosError } from 'axios';
+import { isRedirectError } from 'next/dist/client/components/redirect-error';
 import { redirect } from 'next/navigation';
 
 import { API_PATH, ERoutes, ORDERS_DEFAULT_FILTER } from '@/constants';
@@ -22,13 +23,16 @@ export const prefetchOrders = async (page = START_PAGE, perPage = DEFAULT_ROWS_P
       }
     })
 
+    if (response.status === 401) {
+      redirect(ERoutes.SIGN_IN)
+    }
+
     const data: OrdersResponse = await response.json()
 
     return data;
   } catch (error) {
-    // TODO: больше не AxiosError
-    if (error instanceof AxiosError && error.response?.status === 401) {
-      redirect(ERoutes.SIGN_IN)
+    if (isRedirectError(error)) {
+      throw error
     }
 
     console.log(error);

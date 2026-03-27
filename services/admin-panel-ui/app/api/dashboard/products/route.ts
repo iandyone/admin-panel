@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server';
 
 import { API_PATH } from '@/constants';
 import { apiFetcher } from '@/server/lib';
+import { getNextResponse } from '@/server/lib/get-next-response';
 
 export async function GET(request: Request) {
   const params = Object.fromEntries(new URL(request.url).searchParams.entries());
@@ -13,7 +13,5 @@ export async function GET(request: Request) {
     }
   });
 
-  const data = await response.json();
-
-  return NextResponse.json(data, { status: response.status });
+  return getNextResponse(response);
 }

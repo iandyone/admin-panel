@@ -1,9 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
+import { signOut } from 'next-auth/react';
 
-import { API_PATH, ENotificationTypes, FetchTags } from '@/constants';
+import { API_PATH, ENotificationTypes, ERoutes, FetchTags } from '@/constants';
 import { useToast } from '@/hooks';
 import { Product } from '@/types';
 
+const { PRODUCTS_FETCHING_ERROR, SESSION_EXPIRED } = ENotificationTypes;
 
 export const useGetProductsQuery = () => {
   const { sendNotification } = useToast();
@@ -19,7 +21,13 @@ export const useGetProductsQuery = () => {
 
           return data;
         } catch (error) {
-          sendNotification(ENotificationTypes.PRODUCTS_FETCHING_ERROR);
+          if (error instanceof Error && error.message.startsWith('Unauthorized')) {
+            sendNotification(SESSION_EXPIRED);
+
+            return await signOut({ redirectTo: `/${ERoutes.SIGN_IN}` });
+          }
+
+          sendNotification(PRODUCTS_FETCHING_ERROR);
           console.log({ error });
 
           return []

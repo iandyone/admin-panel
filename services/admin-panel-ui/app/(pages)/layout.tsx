@@ -59,7 +59,7 @@ export default function PagesLayout({ children }: PropsWithChildren) {
     );
 
     return () => $axios.interceptors.request.clear();
-  }, [session.data?.accessToken]);
+  }, [session.data?.accessToken, sendNotification]);
 
   return (
     <DashboardLayout

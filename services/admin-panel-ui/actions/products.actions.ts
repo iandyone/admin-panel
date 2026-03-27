@@ -1,6 +1,6 @@
 'use server'
 
-import { AxiosError } from 'axios';
+import { isRedirectError } from 'next/dist/client/components/redirect-error';
 import { redirect } from 'next/navigation';
 
 import { API_PATH, ERoutes } from '@/constants';
@@ -14,15 +14,19 @@ export const prefetchProducts = async () => {
       path: API_PATH.PRODUCTS
     })
 
+    if (response.status === 401) {
+      redirect(ERoutes.SIGN_IN)
+    }
+
     const data: Product[] = await response.json();
 
     return data;
   } catch (error) {
-    console.log({ error });
-
-    if (error instanceof AxiosError && error.response?.status === 401) {
-      redirect(ERoutes.SIGN_IN)
+    if (isRedirectError(error)) {
+      throw error;
     }
+    // eslint-disable-next-line no-console
+    console.log({ error });
 
     return []
   }

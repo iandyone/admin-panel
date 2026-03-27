@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server';
 
 import { API_PATH } from '@/constants';
 import { apiFetcher } from '@/server/lib';
+import { getNextResponse } from '@/server/lib/get-next-response';
 
 const { USERS } = API_PATH;
 
@@ -26,7 +26,5 @@ export async function PATCH(request: Request, context: RouteContext) {
     }
   })
 
-  const data = await response.json();
-
-  return NextResponse.json(data, { status: response.status });
+  return getNextResponse(response);
 }

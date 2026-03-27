@@ -1,9 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { signOut } from 'next-auth/react';
 
-import { API_PATH, ENotificationTypes, FetchTags } from '@/constants';
+import { API_PATH, ENotificationTypes, ERoutes, FetchTags } from '@/constants';
 import { useToast } from '@/hooks';
 import { CreateUserPayload } from '@/types'
 
+const { USER_CREATE_SUCCESS, USER_CREATE_ERROR, SESSION_EXPIRED } = ENotificationTypes;
 
 export const useCreateUserMutation = () => {
   const queryClient = useQueryClient();
@@ -16,6 +18,10 @@ export const useCreateUserMutation = () => {
         body: JSON.stringify(userData),
       })
 
+      if (!response.ok) {
+        throw new Error(response.statusText, { cause: response });
+      }
+
       const data = await response.json();
 
       return data;
@@ -23,11 +29,17 @@ export const useCreateUserMutation = () => {
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [FetchTags.USERS] });
-      sendNotification(ENotificationTypes.USER_CREATE_SUCCESS);
+      sendNotification(USER_CREATE_SUCCESS);
     },
 
-    onError: (error) => {
-      sendNotification(ENotificationTypes.USER_CREATE_ERROR);
+    onError: async (error) => {
+      if (error.message === 'Unauthorized') {
+        sendNotification(SESSION_EXPIRED);
+
+        return await signOut({ redirectTo: `/${ERoutes.SIGN_IN}` });
+      }
+
+      sendNotification(USER_CREATE_ERROR);
       console.log({ error })
     },
   })
