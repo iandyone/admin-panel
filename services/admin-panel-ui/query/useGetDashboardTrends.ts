@@ -4,6 +4,7 @@ import { signOut } from 'next-auth/react'
 import { API_PATH, ENotificationTypes, ERoutes, FetchTags } from '@/constants'
 import { useToast } from '@/hooks'
 import { DashboardFilter, TrendProduct } from '@/types'
+import { isUnauthorizedError } from '@/utils';
 
 const { DASHBOARD_TRENDS_FETCHING_ERROR, SESSION_EXPIRED } = ENotificationTypes;
 
@@ -25,14 +26,14 @@ export const useGetDashboardTrends = (filters?: DashboardFilter) => {
         const response = await fetch(`/api${API_PATH.DASHBOARD_TRENDS}?${searchParams.toString()}`);
 
         if (!response.ok) {
-          throw new Error(response.statusText, { cause: response });
+          throw new Error('Request failed', { cause: response });
         }
 
         const data: TrendProduct[] = await response.json();
 
         return data;
       } catch (error) {
-        if (error instanceof Error && error.message.startsWith('Unauthorized')) {
+        if (isUnauthorizedError(error)) {
           sendNotification(SESSION_EXPIRED);
 
           await signOut({ redirectTo: `/${ERoutes.SIGN_IN}` });

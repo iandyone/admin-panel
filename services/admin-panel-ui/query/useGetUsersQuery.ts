@@ -4,6 +4,7 @@ import { signOut } from 'next-auth/react';
 import { API_PATH, DEFAULT_ROWS_PER_PAGE, ENotificationTypes, ERoutes, FetchTags, START_PAGE } from '@/constants'
 import { useToast } from '@/hooks'
 import { UsersFilter, UsersResponse } from '@/types'
+import { isUnauthorizedError } from '@/utils';
 
 const { USERS_FETCHING_ERROR, SESSION_EXPIRED } = ENotificationTypes;
 
@@ -29,7 +30,7 @@ export const useGetUsersQuery = (page = START_PAGE, perPage = DEFAULT_ROWS_PER_P
         const response = await fetch(`/api${API_PATH.USERS}?${searchParams.toString()}`);
 
         if (!response.ok) {
-          throw new Error(response.statusText, { cause: response });
+          throw new Error('Request failed', { cause: response });
         }
 
         const data: UsersResponse = await response.json();
@@ -41,7 +42,7 @@ export const useGetUsersQuery = (page = START_PAGE, perPage = DEFAULT_ROWS_PER_P
           users: []
         };
 
-        if (error instanceof Error && error.message.startsWith('Unauthorized')) {
+        if (isUnauthorizedError(error)) {
           sendNotification(SESSION_EXPIRED);
           await signOut({ redirectTo: `/${ERoutes.SIGN_IN}` });
 

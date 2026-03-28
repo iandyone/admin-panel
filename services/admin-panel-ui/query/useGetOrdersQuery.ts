@@ -4,6 +4,7 @@ import { signOut } from 'next-auth/react';
 import { API_PATH, DEFAULT_ROWS_PER_PAGE, ENotificationTypes, ERoutes, FetchTags, START_PAGE } from '@/constants'
 import { useToast } from '@/hooks'
 import { OrderFilter, OrdersResponse } from '@/types'
+import { isUnauthorizedError } from '@/utils';
 
 const { ORDERS_FETCHING_ERROR, SESSION_EXPIRED } = ENotificationTypes;;
 
@@ -28,14 +29,14 @@ export const useGetOrdersQuery = (page = START_PAGE, perPage = DEFAULT_ROWS_PER_
         const response = await fetch(`/api${API_PATH.ORDERS}?${searchParams.toString()}`);
 
         if (!response.ok) {
-          throw new Error(response.statusText, { cause: response });
+          throw new Error('Request failed', { cause: response });
         }
 
         const data: OrdersResponse = await response.json();
 
         return data;
       } catch (error) {
-        if (error instanceof Error && error.message.startsWith('Unauthorized')) {
+        if (isUnauthorizedError(error)) {
           sendNotification(SESSION_EXPIRED);
 
           return await signOut({ redirectTo: `/${ERoutes.SIGN_IN}` });

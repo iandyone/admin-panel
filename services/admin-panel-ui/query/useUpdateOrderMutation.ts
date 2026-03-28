@@ -4,6 +4,7 @@ import { signOut } from 'next-auth/react';
 import { API_PATH, ENotificationTypes, ERoutes, FetchTags } from '@/constants';
 import { useToast } from '@/hooks';
 import { UpdateOrderPayload } from '@/types'
+import { isUnauthorizedError } from '@/utils';
 
 const { SESSION_EXPIRED, ORDER_UPDATE_ERROR, ORDER_UPDATE_SUCCESS } = ENotificationTypes
 
@@ -22,7 +23,7 @@ export const useUpdateOrderMutation = () => {
       });
 
       if (!response.ok) {
-        throw new Error(response.statusText, { cause: response });
+        throw new Error('Request failed', { cause: response });
       }
 
       const data = await response.json();
@@ -37,7 +38,7 @@ export const useUpdateOrderMutation = () => {
     },
 
     onError: async (error) => {
-      if (error.message === 'Unauthorized') {
+      if (isUnauthorizedError(error)) {
         sendNotification(SESSION_EXPIRED);
 
         return await signOut({ redirectTo: `/${ERoutes.SIGN_IN}` });

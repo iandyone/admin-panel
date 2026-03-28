@@ -3,6 +3,7 @@ import { signOut } from 'next-auth/react';
 
 import { API_PATH, ENotificationTypes, ERoutes, FetchTags } from '@/constants';
 import { useToast } from '@/hooks';
+import { isUnauthorizedError } from '@/utils';
 
 const { ORDER_REMOVE_SUCCESS, SESSION_EXPIRED, ORDER_REMOVE_ERROR } = ENotificationTypes
 
@@ -16,7 +17,7 @@ export const useRemoveOrderMutation = () => {
       const response = await fetch(`/api${API_PATH.ORDERS}/${id}`, { method: 'DELETE' });
 
       if (!response.ok) {
-        throw new Error(response.statusText, { cause: response });
+        throw new Error('Request failed', { cause: response });
       }
 
       const data = await response.json();
@@ -30,7 +31,7 @@ export const useRemoveOrderMutation = () => {
     },
 
     onError: async (error) => {
-      if (error.message === 'Unauthorized') {
+      if (isUnauthorizedError(error)) {
         sendNotification(SESSION_EXPIRED);
 
         return await signOut({ redirectTo: `/${ERoutes.SIGN_IN}` });

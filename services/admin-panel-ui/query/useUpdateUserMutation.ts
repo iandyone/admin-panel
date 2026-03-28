@@ -4,6 +4,7 @@ import { signOut } from 'next-auth/react';
 import { API_PATH, ENotificationTypes, ERoutes, FetchTags } from '@/constants'
 import { useToast } from '@/hooks'
 import { UpdateUserPayload, User } from '@/types'
+import { isUnauthorizedError } from '@/utils';
 
 
 const { USER_UPDATE_SUCCESS, USER_UPDATE_ERROR, SESSION_EXPIRED } = ENotificationTypes;
@@ -23,7 +24,7 @@ export const useUpdateUserMutation = () => {
       })
 
       if (!response.ok) {
-        throw new Error(response.statusText, { cause: response });
+        throw new Error('Request failed', { cause: response });
       }
 
       const data: User = await response.json();
@@ -38,7 +39,7 @@ export const useUpdateUserMutation = () => {
     },
 
     onError: async (error) => {
-      if (error.message === 'Unauthorized') {
+      if (isUnauthorizedError(error)) {
         sendNotification(SESSION_EXPIRED);
 
         return await signOut({ redirectTo: `/${ERoutes.SIGN_IN}` });

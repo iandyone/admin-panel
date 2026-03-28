@@ -4,6 +4,7 @@ import { signOut } from 'next-auth/react';
 import { API_PATH, ENotificationTypes, ERoutes, FetchTags } from '@/constants';
 import { useToast } from '@/hooks';
 import { Product } from '@/types';
+import { isUnauthorizedError } from '@/utils';
 
 const { PRODUCTS_FETCHING_ERROR, SESSION_EXPIRED } = ENotificationTypes;
 
@@ -17,11 +18,15 @@ export const useGetProductsQuery = () => {
         try {
           const response = await fetch(`/api${API_PATH.PRODUCTS}`);
 
+          if (!response.ok) {
+            throw new Error('Request failed', { cause: response });
+          }
+
           const data: Product[] = await response.json();
 
           return data;
         } catch (error) {
-          if (error instanceof Error && error.message.startsWith('Unauthorized')) {
+          if (isUnauthorizedError(error)) {
             sendNotification(SESSION_EXPIRED);
 
             return await signOut({ redirectTo: `/${ERoutes.SIGN_IN}` });

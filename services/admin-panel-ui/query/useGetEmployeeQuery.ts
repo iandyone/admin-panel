@@ -4,6 +4,7 @@ import { signOut } from 'next-auth/react';
 import { API_PATH, ENotificationTypes, ERoutes, FetchTags } from '@/constants';
 import { useToast } from '@/hooks';
 import { EmployeeResponse } from '@/types';
+import { isUnauthorizedError } from '@/utils';
 
 const { EMPLOYEE_FETCHING_ERROR, SESSION_EXPIRED } = ENotificationTypes;
 
@@ -18,14 +19,14 @@ export const useGetEmployeeQuery = () => {
           const response = await fetch(`/api${API_PATH.EMPLOYEE}`);
 
           if (!response.ok) {
-            throw new Error(response.statusText, { cause: response });
+            throw new Error('Request failed', { cause: response });
           }
 
           const data: EmployeeResponse = await response.json();
 
           return data;
         } catch (error) {
-          if (error instanceof Error && error.message.startsWith('Unauthorized')) {
+          if (isUnauthorizedError(error)) {
             sendNotification(SESSION_EXPIRED);
 
             return await signOut({ redirectTo: `/${ERoutes.SIGN_IN}` });
