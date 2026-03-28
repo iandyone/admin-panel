@@ -1,9 +1,10 @@
+/* eslint-disable no-console */
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { signOut } from 'next-auth/react';
 
-import { API_PATH, ENotificationTypes, ERoutes, FetchTags } from '@/constants'
+import { API_PATH, ENotificationTypes, FetchTags } from '@/constants'
 import { useToast } from '@/hooks'
 import { UpdateUserPayload, User } from '@/types'
+import { isUnauthorizedError, signOutAndRedirect } from '@/utils';
 
 
 const { USER_UPDATE_SUCCESS, USER_UPDATE_ERROR, SESSION_EXPIRED } = ENotificationTypes;
@@ -23,7 +24,7 @@ export const useUpdateUserMutation = () => {
       })
 
       if (!response.ok) {
-        throw new Error(response.statusText, { cause: response });
+        throw new Error('Request failed', { cause: response });
       }
 
       const data: User = await response.json();
@@ -38,13 +39,12 @@ export const useUpdateUserMutation = () => {
     },
 
     onError: async (error) => {
-      if (error.message === 'Unauthorized') {
-        sendNotification(SESSION_EXPIRED);
+      console.log({ error });
 
-        return await signOut({ redirectTo: `/${ERoutes.SIGN_IN}` });
+      if (isUnauthorizedError(error)) {
+        return await signOutAndRedirect(() => sendNotification(SESSION_EXPIRED));
       }
 
-      console.log({ error })
       sendNotification(USER_UPDATE_ERROR);
     },
 

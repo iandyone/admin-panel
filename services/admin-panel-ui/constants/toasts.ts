@@ -162,7 +162,7 @@ export const NOTIFICATIONS: Record<ENotificationTypes, ToastPayload> = {
 
   [ENotificationTypes.SESSION_EXPIRED]: {
     title: "Session expired",
-    message: "Session expired. Signing out...",
+    message: "Current session has expired. Signing out...",
     severity: "info",
     options: { autoClose: false }
   },

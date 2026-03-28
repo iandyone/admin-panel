@@ -1,7 +1,6 @@
 
 import { API_PATH } from '@/constants';
-import { apiFetcher } from '@/server/lib';
-import { getNextResponse } from '@/server/lib/get-next-response';
+import { apiFetcher, getNextResponse } from '@/server/lib';
 
 export async function GET() {
   const response = await apiFetcher({
