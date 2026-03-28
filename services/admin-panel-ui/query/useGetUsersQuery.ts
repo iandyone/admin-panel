@@ -1,10 +1,10 @@
+/* eslint-disable no-console */
 import { useQuery } from '@tanstack/react-query'
-import { signOut } from 'next-auth/react';
 
-import { API_PATH, DEFAULT_ROWS_PER_PAGE, ENotificationTypes, ERoutes, FetchTags, START_PAGE } from '@/constants'
+import { API_PATH, DEFAULT_ROWS_PER_PAGE, ENotificationTypes, FetchTags, START_PAGE } from '@/constants'
 import { useToast } from '@/hooks'
 import { UsersFilter, UsersResponse } from '@/types'
-import { isUnauthorizedError } from '@/utils';
+import { isUnauthorizedError, signOutAndRedirect } from '@/utils';
 
 const { USERS_FETCHING_ERROR, SESSION_EXPIRED } = ENotificationTypes;
 
@@ -37,19 +37,19 @@ export const useGetUsersQuery = (page = START_PAGE, perPage = DEFAULT_ROWS_PER_P
 
         return data;
       } catch (error) {
+        console.log({ error });
+
         const EMPTY_USERS = {
           total: 0,
           users: []
         };
 
         if (isUnauthorizedError(error)) {
-          sendNotification(SESSION_EXPIRED);
-          await signOut({ redirectTo: `/${ERoutes.SIGN_IN}` });
+          await signOutAndRedirect(() => sendNotification(SESSION_EXPIRED));
 
           return EMPTY_USERS
         }
-        // eslint-disable-next-line no-console
-        console.log({ error });
+
         sendNotification(USERS_FETCHING_ERROR);
 
         return EMPTY_USERS
