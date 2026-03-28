@@ -1,10 +1,10 @@
+/* eslint-disable no-console */
 import { useQuery } from '@tanstack/react-query'
-import { signOut } from 'next-auth/react';
 
-import { API_PATH, DEFAULT_ROWS_PER_PAGE, ENotificationTypes, ERoutes, FetchTags, START_PAGE } from '@/constants'
+import { API_PATH, DEFAULT_ROWS_PER_PAGE, ENotificationTypes, FetchTags, START_PAGE } from '@/constants'
 import { useToast } from '@/hooks'
 import { OrderFilter, OrdersResponse } from '@/types'
-import { isUnauthorizedError } from '@/utils';
+import { isUnauthorizedError, signOutAndRedirect } from '@/utils';
 
 const { ORDERS_FETCHING_ERROR, SESSION_EXPIRED } = ENotificationTypes;;
 
@@ -36,13 +36,12 @@ export const useGetOrdersQuery = (page = START_PAGE, perPage = DEFAULT_ROWS_PER_
 
         return data;
       } catch (error) {
-        if (isUnauthorizedError(error)) {
-          sendNotification(SESSION_EXPIRED);
+        console.log({ error });
 
-          return await signOut({ redirectTo: `/${ERoutes.SIGN_IN}` });
+        if (isUnauthorizedError(error)) {
+          return await signOutAndRedirect(() => sendNotification(SESSION_EXPIRED));
         }
 
-        console.log({ error });
         sendNotification(ORDERS_FETCHING_ERROR);
 
         return {

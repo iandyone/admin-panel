@@ -1,9 +1,9 @@
+/* eslint-disable no-console */
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { signOut } from 'next-auth/react';
 
-import { API_PATH, ENotificationTypes, ERoutes, FetchTags } from '@/constants';
+import { API_PATH, ENotificationTypes, FetchTags } from '@/constants';
 import { useToast } from '@/hooks';
-import { isUnauthorizedError } from '@/utils';
+import { isUnauthorizedError, signOutAndRedirect } from '@/utils';
 
 const { ORDER_REMOVE_SUCCESS, SESSION_EXPIRED, ORDER_REMOVE_ERROR } = ENotificationTypes
 
@@ -31,14 +31,13 @@ export const useRemoveOrderMutation = () => {
     },
 
     onError: async (error) => {
+      console.log({ error })
+      
       if (isUnauthorizedError(error)) {
-        sendNotification(SESSION_EXPIRED);
-
-        return await signOut({ redirectTo: `/${ERoutes.SIGN_IN}` });
+        return await signOutAndRedirect(() => sendNotification(SESSION_EXPIRED));
       }
 
       sendNotification(ORDER_REMOVE_ERROR);
-      console.log({ error })
     },
   })
 }

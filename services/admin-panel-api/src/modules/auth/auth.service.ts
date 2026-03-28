@@ -67,7 +67,7 @@ export class AuthService {
 
     const access_token = await this.jwtService.signAsync(
       { ...userAuthDto },
-      { expiresIn: '1d' },
+      { expiresIn: '5s' },
     );
 
     await this.usersService.update({

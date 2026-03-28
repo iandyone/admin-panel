@@ -1,10 +1,10 @@
+/* eslint-disable no-console */
 import { useQuery } from '@tanstack/react-query';
-import { signOut } from 'next-auth/react';
 
-import { API_PATH, ENotificationTypes, ERoutes, FetchTags } from '@/constants';
+import { API_PATH, ENotificationTypes, FetchTags } from '@/constants';
 import { useToast } from '@/hooks';
 import { Product } from '@/types';
-import { isUnauthorizedError } from '@/utils';
+import { isUnauthorizedError, signOutAndRedirect } from '@/utils';
 
 const { PRODUCTS_FETCHING_ERROR, SESSION_EXPIRED } = ENotificationTypes;
 
@@ -26,14 +26,13 @@ export const useGetProductsQuery = () => {
 
           return data;
         } catch (error) {
-          if (isUnauthorizedError(error)) {
-            sendNotification(SESSION_EXPIRED);
+          console.log({ error });
 
-            return await signOut({ redirectTo: `/${ERoutes.SIGN_IN}` });
+          if (isUnauthorizedError(error)) {
+            return await signOutAndRedirect(() => sendNotification(SESSION_EXPIRED));
           }
 
           sendNotification(PRODUCTS_FETCHING_ERROR);
-          console.log({ error });
 
           return []
         }
