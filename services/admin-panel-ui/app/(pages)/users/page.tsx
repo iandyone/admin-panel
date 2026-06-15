@@ -34,15 +34,17 @@ export default async function Page() {
 
   const queryClient = new QueryClient();
 
+
   await queryClient.prefetchQuery({
     queryKey: [
       FetchTags.USERS,
       START_PAGE,
-      DEFAULT_ROWS_PER_PAGE,
       USERS_DEFAULT_FILTER,
+      DEFAULT_ROWS_PER_PAGE,
     ],
     queryFn: async () => await prefetchUsers(START_PAGE, DEFAULT_ROWS_PER_PAGE),
   });
+
 
   return (
     <Stack gap={3} sx={{ mt: 0 }} data-test-id='page-users'>
