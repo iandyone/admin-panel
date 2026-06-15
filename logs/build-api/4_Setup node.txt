@@ -1,0 +1,33 @@
+﻿2026-06-15T15:39:21.5503838Z ##[group]Run actions/setup-node@v6
+2026-06-15T15:39:21.5504240Z with:
+2026-06-15T15:39:21.5504498Z   node-version: 18.x
+2026-06-15T15:39:21.5504791Z   cache: yarn
+2026-06-15T15:39:21.5505109Z   check-latest: false
+2026-06-15T15:39:21.5508303Z   token: ***
+2026-06-15T15:39:21.5508588Z   package-manager-cache: true
+2026-06-15T15:39:21.5508885Z env:
+2026-06-15T15:39:21.5509154Z   UI_WORKSPACE_NAME: @services/admin-panel-ui
+2026-06-15T15:39:21.5509520Z   API_WORKSPACE_NAME: @services/admin-panel-api
+2026-06-15T15:39:21.5509861Z ##[endgroup]
+2026-06-15T15:39:21.7054042Z Attempting to download 18.x...
+2026-06-15T15:39:22.3102392Z Acquiring 18.20.8 - x64 from https://github.com/actions/node-versions/releases/download/18.20.8-14110393767/node-18.20.8-linux-x64.tar.gz
+2026-06-15T15:39:22.6551466Z Extracting ...
+2026-06-15T15:39:22.6646482Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/b3b67176-0a42-48d7-a14d-2c489cc9febb -f /home/runner/work/_temp/fce4fc98-694e-4d19-83de-925995d69961
+2026-06-15T15:39:23.5659982Z Adding to the cache ...
+2026-06-15T15:39:24.8311073Z ##[group]Environment details
+2026-06-15T15:39:25.1577362Z node: v18.20.8
+2026-06-15T15:39:25.1577880Z npm: 10.8.2
+2026-06-15T15:39:25.1578374Z yarn: 4.9.1
+2026-06-15T15:39:25.1579046Z ##[endgroup]
+2026-06-15T15:39:25.1595237Z [command]/usr/local/bin/yarn --version
+2026-06-15T15:39:25.3820568Z 4.9.1
+2026-06-15T15:39:25.4060469Z [command]/usr/local/bin/yarn config get cacheFolder
+2026-06-15T15:39:25.6329025Z /home/runner/.yarn/berry/cache
+2026-06-15T15:39:25.6683662Z [command]/usr/local/bin/yarn config get enableGlobalCache
+2026-06-15T15:39:25.8981125Z [33mtrue[39m
+2026-06-15T15:39:26.0422871Z Cache hit for: node-cache-Linux-x64-yarn-8b41ff6fcca9e4d2a4321cebd6d13ceba336eb7530455e4794d1caa7285591fa
+2026-06-15T15:39:26.9947577Z Received 109053253 of 109053253 (100.0%), 121.6 MBs/sec
+2026-06-15T15:39:26.9948662Z Cache Size: ~104 MB (109053253 B)
+2026-06-15T15:39:27.0012093Z [command]/usr/bin/tar -xf /home/runner/work/_temp/0bf2c1ef-9d03-495a-b803-6b13b1557689/cache.tzst -P -C /home/runner/work/admin-panel/admin-panel --use-compress-program unzstd
+2026-06-15T15:39:27.7487710Z Cache restored successfully
+2026-06-15T15:39:27.8931016Z Cache restored from key: node-cache-Linux-x64-yarn-8b41ff6fcca9e4d2a4321cebd6d13ceba336eb7530455e4794d1caa7285591fa

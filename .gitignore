@@ -17,3 +17,8 @@ node_modules
 **/playwright/**/.auth
 
 **/prisma/constants/*.json
+
+docs
+codex-skills
+.cursor
+.cursorignore

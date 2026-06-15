@@ -1,0 +1,8 @@
+﻿2026-06-15T15:39:18.6872965Z ##[group]Run corepack enable && corepack prepare yarn@4.9.1 --activate
+2026-06-15T15:39:18.6875523Z [36;1mcorepack enable && corepack prepare yarn@4.9.1 --activate[0m
+2026-06-15T15:39:18.6999853Z shell: /usr/bin/bash -e {0}
+2026-06-15T15:39:18.7001201Z env:
+2026-06-15T15:39:18.7002279Z   UI_WORKSPACE_NAME: @services/admin-panel-ui
+2026-06-15T15:39:18.7003864Z   API_WORKSPACE_NAME: @services/admin-panel-api
+2026-06-15T15:39:18.7005308Z ##[endgroup]
+2026-06-15T15:39:20.9525963Z Preparing yarn@4.9.1 for immediate activation...

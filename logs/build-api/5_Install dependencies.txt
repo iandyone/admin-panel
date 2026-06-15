@@ -1,0 +1,45 @@
+﻿2026-06-15T15:39:27.9076628Z ##[group]Run yarn workspaces focus @services/admin-panel-api
+2026-06-15T15:39:27.9077123Z [36;1myarn workspaces focus @services/admin-panel-api[0m
+2026-06-15T15:39:27.9101606Z shell: /usr/bin/bash -e {0}
+2026-06-15T15:39:27.9101915Z env:
+2026-06-15T15:39:27.9102174Z   UI_WORKSPACE_NAME: @services/admin-panel-ui
+2026-06-15T15:39:27.9102517Z   API_WORKSPACE_NAME: @services/admin-panel-api
+2026-06-15T15:39:27.9102817Z ##[endgroup]
+2026-06-15T15:39:28.2827776Z [94m➤[39m YN0000: · Yarn 4.9.1
+2026-06-15T15:39:28.2950655Z [94m➤[39m [90mYN0000[39m: ┌ Resolution step
+2026-06-15T15:39:28.2951686Z ##[group]Resolution step
+2026-06-15T15:39:28.6200182Z [94m➤[39m YN0085: │ [38;5;160m-[39m [38;5;166m@auth/[39m[38;5;173mcore[39m[38;5;111m@[39m[38;5;111mnpm:0.40.0[39m, [38;5;166m@babel/[39m[38;5;173mruntime[39m[38;5;111m@[39m[38;5;111mnpm:7.27.6[39m, [38;5;166m@babel/[39m[38;5;173mruntime[39m[38;5;111m@[39m[38;5;111mnpm:7.28.3[39m, [38;5;166m@emnapi/[39m[38;5;173mcore[39m[38;5;111m@[39m[38;5;111mnpm:1.4.3[39m, [38;5;166m@emnapi/[39m[38;5;173mruntime[39m[38;5;111m@[39m[38;5;111mnpm:1.4.3[39m, and [38;5;220m279[39m more.
+2026-06-15T15:39:28.6444181Z ##[endgroup]
+2026-06-15T15:39:28.6445480Z [94m➤[39m [90mYN0000[39m: └ Completed in 0s 350ms
+2026-06-15T15:39:28.6458291Z [94m➤[39m [90mYN0000[39m: ┌ Post-resolution validation
+2026-06-15T15:39:28.6459711Z ##[group]Post-resolution validation
+2026-06-15T15:39:28.6467522Z [93m➤[39m YN0060: │ [38;5;166m@nestjs/[39m[38;5;173mcommon[39m is listed by your project with version [38;5;111m10.4.17[39m ([38;5;111mp9ffb4[39m), which doesn't satisfy what [38;5;166m@nestjs/[39m[38;5;173mswagger[39m and other dependencies request ([91mbut they have non-overlapping ranges![39m).
+2026-06-15T15:39:28.6477278Z [93m➤[39m YN0060: │ [38;5;166m@nestjs/[39m[38;5;173mcore[39m is listed by your project with version [38;5;111m10.4.17[39m ([38;5;111mp6256b[39m), which doesn't satisfy what [38;5;166m@nestjs/[39m[38;5;173mswagger[39m and other dependencies request ([91mbut they have non-overlapping ranges![39m).
+2026-06-15T15:39:28.6482165Z [93m➤[39m YN0060: │ [38;5;173meslint[39m is listed by your project with version [38;5;111m9.26.0[39m ([38;5;111mp1651b[39m), which doesn't satisfy what [38;5;166m@typescript-eslint/[39m[38;5;173meslint-plugin[39m and other dependencies request ([91mbut they have non-overlapping ranges![39m).
+2026-06-15T15:39:28.6488142Z [93m➤[39m YN0002: │ [38;5;166m@configs/[39m[38;5;173meslint[39m[38;5;111m@[39m[38;5;111mworkspace:configs/eslint[39m doesn't provide [38;5;173meslint[39m ([38;5;111mpca5e3[39m), requested by [38;5;173meslint-plugin-import[39m.
+2026-06-15T15:39:28.6492020Z [93m➤[39m YN0002: │ [38;5;166m@services/[39m[38;5;173madmin-panel-api[39m[38;5;111m@[39m[38;5;111mworkspace:services/admin-panel-api[39m doesn't provide [38;5;173mwebpack[39m ([38;5;111mp634f9[39m), requested by [38;5;173mts-loader[39m.
+2026-06-15T15:39:28.6495826Z [93m➤[39m YN0086: │ Some peer dependencies are incorrectly met by your project; run [38;5;111myarn explain peer-requirements <hash>[39m for details, where [38;5;111m<hash>[39m is the six-letter p-prefixed code.
+2026-06-15T15:39:28.6517169Z [93m➤[39m YN0086: │ Some peer dependencies are incorrectly met by dependencies; run [38;5;111myarn explain peer-requirements[39m for details.
+2026-06-15T15:39:28.6518772Z ##[endgroup]
+2026-06-15T15:39:28.6519438Z [94m➤[39m [90mYN0000[39m: └ Completed
+2026-06-15T15:39:28.6520144Z [94m➤[39m [90mYN0000[39m: ┌ Fetch step
+2026-06-15T15:39:28.6520889Z ##[group]Fetch step
+2026-06-15T15:39:32.3323807Z [94m➤[39m YN0013: │ [38;5;220m493[39m packages were added to the project ([38;5;160m+ 210.33 MiB[39m).
+2026-06-15T15:39:32.3325054Z ##[endgroup]
+2026-06-15T15:39:32.3325744Z [94m➤[39m [90mYN0000[39m: └ Completed in 3s 686ms
+2026-06-15T15:39:32.3340044Z [94m➤[39m [90mYN0000[39m: ┌ Link step
+2026-06-15T15:39:32.3341117Z ##[group]Link step
+2026-06-15T15:39:37.1595086Z [94m➤[39m YN0007: │ [38;5;166m@nestjs/[39m[38;5;173mcore[39m[38;5;111m@[39m[38;5;111mnpm:10.4.17 [fe4c3][39m must be built because it never has been before or the last one failed
+2026-06-15T15:39:37.1606096Z [94m➤[39m YN0007: │ [38;5;173mbcrypt[39m[38;5;111m@[39m[38;5;111mnpm:6.0.0[39m must be built because it never has been before or the last one failed
+2026-06-15T15:39:37.1609142Z [94m➤[39m YN0007: │ [38;5;166m@prisma/[39m[38;5;173mengines[39m[38;5;111m@[39m[38;5;111mnpm:6.12.0[39m must be built because it never has been before or the last one failed
+2026-06-15T15:39:37.1611700Z [94m➤[39m YN0007: │ [38;5;166m@scarf/[39m[38;5;173mscarf[39m[38;5;111m@[39m[38;5;111mnpm:1.4.0[39m must be built because it never has been before or the last one failed
+2026-06-15T15:39:38.9018318Z [94m➤[39m YN0007: │ [38;5;173mprisma[39m[38;5;111m@[39m[38;5;111mnpm:6.12.0 [fe4c3][39m must be built because it never has been before or the last one failed
+2026-06-15T15:39:38.9844191Z [94m➤[39m YN0007: │ [38;5;166m@prisma/[39m[38;5;173mclient[39m[38;5;111m@[39m[38;5;111mnpm:6.12.0 [fe4c3][39m must be built because it never has been before or the last one failed
+2026-06-15T15:39:40.7225385Z [94m➤[39m [90mYN0000[39m: │ [38;5;166m@prisma/[39m[38;5;173mclient[39m[38;5;111m@[39m[38;5;111mnpm:6.12.0 [fe4c3][39m [31mSTDERR[39m prisma:warn We could not find your Prisma schema in the default locations (see: https://pris.ly/d/prisma-schema-location).
+2026-06-15T15:39:40.7228405Z [94m➤[39m [90mYN0000[39m: │ [38;5;166m@prisma/[39m[38;5;173mclient[39m[38;5;111m@[39m[38;5;111mnpm:6.12.0 [fe4c3][39m [31mSTDERR[39m If you have a Prisma schema file in a custom path, you will need to run
+2026-06-15T15:39:40.7230918Z [94m➤[39m [90mYN0000[39m: │ [38;5;166m@prisma/[39m[38;5;173mclient[39m[38;5;111m@[39m[38;5;111mnpm:6.12.0 [fe4c3][39m [31mSTDERR[39m `prisma generate --schema=./path/to/your/schema.prisma` to generate Prisma Client.
+2026-06-15T15:39:40.7233663Z [94m➤[39m [90mYN0000[39m: │ [38;5;166m@prisma/[39m[38;5;173mclient[39m[38;5;111m@[39m[38;5;111mnpm:6.12.0 [fe4c3][39m [31mSTDERR[39m If you do not have a Prisma schema file yet, you can ignore this message.
+2026-06-15T15:39:40.7235484Z [94m➤[39m [90mYN0000[39m: │ [38;5;166m@prisma/[39m[38;5;173mclient[39m[38;5;111m@[39m[38;5;111mnpm:6.12.0 [fe4c3][39m [32mSTDOUT[39m 
+2026-06-15T15:39:40.7371340Z ##[endgroup]
+2026-06-15T15:39:40.7372501Z [94m➤[39m [90mYN0000[39m: └ Completed in 8s 404ms
+2026-06-15T15:39:40.7968172Z [93m➤[39m YN0000: · Done with warnings in 12s 516ms

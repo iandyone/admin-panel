@@ -1,0 +1,78 @@
+name: "Build"
+
+run-name: "Build Next.js and Nest.js apps"
+
+on: [workflow_dispatch]
+
+env:
+  UI_WORKSPACE_NAME: "@services/admin-panel-ui"
+  API_WORKSPACE_NAME: "@services/admin-panel-api"
+
+jobs:
+  build-ui:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Cloning the repository"
+        uses: actions/checkout@v6
+
+      - name: "Prepare yarn version"
+        run: corepack enable && corepack prepare yarn@4.9.1 --activate
+
+      - name: "Setup node"
+        uses: actions/setup-node@v6
+        with:
+          node-version: "18.x"
+          cache: "yarn"
+
+      - name: "Install dependencies"
+        run: yarn workspaces focus ${{ env.UI_WORKSPACE_NAME }}
+
+      - name: "Lint"
+        run: yarn workspace ${{ env.UI_WORKSPACE_NAME }} lint
+
+      - name: "Check types"
+        run: yarn workspace ${{ env.UI_WORKSPACE_NAME }} exec tsc --noEmit
+
+      - name: "Install Playwright Browsers"
+        env:
+          PORT_UI: 3000
+        run: yarn workspace ${{ env.UI_WORKSPACE_NAME }} exec npx playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: yarn workspace ${{ env.UI_WORKSPACE_NAME }} e2e:run
+
+      - name: "Build"
+        run: yarn workspace ${{ env.UI_WORKSPACE_NAME }} build
+
+  build-api:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Cloning the repository"
+        uses: actions/checkout@v6
+
+      - name: "Prepare yarn version"
+        run: corepack enable && corepack prepare yarn@4.9.1 --activate
+
+      - name: "Setup node"
+        uses: actions/setup-node@v6
+        with:
+          node-version: "18.x"
+          cache: "yarn"
+
+      - name: "Install dependencies"
+        run: yarn workspaces focus ${{ env.API_WORKSPACE_NAME }}
+
+      - name: "Lint"
+        run: yarn workspace ${{ env.API_WORKSPACE_NAME }} lint
+
+      - name: "Format"
+        run: yarn workspace ${{ env.API_WORKSPACE_NAME }} format:check
+
+      - name: "Generate Prisma types"
+        run: yarn workspace ${{ env.API_WORKSPACE_NAME }} exec npx prisma generate
+
+      - name: "Check types"
+        run: yarn workspace ${{ env.API_WORKSPACE_NAME }} exec tsc --noEmit
+
+      - name: "Build"
+        run: yarn workspace ${{ env.API_WORKSPACE_NAME }} build

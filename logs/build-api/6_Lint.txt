@@ -1,0 +1,7 @@
+﻿2026-06-15T15:39:40.8838748Z ##[group]Run yarn workspace @services/admin-panel-api lint
+2026-06-15T15:39:40.8839202Z [36;1myarn workspace @services/admin-panel-api lint[0m
+2026-06-15T15:39:40.8860142Z shell: /usr/bin/bash -e {0}
+2026-06-15T15:39:40.8860444Z env:
+2026-06-15T15:39:40.8860685Z   UI_WORKSPACE_NAME: @services/admin-panel-ui
+2026-06-15T15:39:40.8861033Z   API_WORKSPACE_NAME: @services/admin-panel-api
+2026-06-15T15:39:40.8861329Z ##[endgroup]

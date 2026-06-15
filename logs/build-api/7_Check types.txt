@@ -1,0 +1,160 @@
+﻿2026-06-15T15:39:45.2341561Z ##[group]Run yarn workspace @services/admin-panel-api exec npx prisma generate && tsc --noEmit
+2026-06-15T15:39:45.2342224Z [36;1myarn workspace @services/admin-panel-api exec npx prisma generate && tsc --noEmit[0m
+2026-06-15T15:39:45.2362573Z shell: /usr/bin/bash -e {0}
+2026-06-15T15:39:45.2362845Z env:
+2026-06-15T15:39:45.2363106Z   UI_WORKSPACE_NAME: @services/admin-panel-ui
+2026-06-15T15:39:45.2363432Z   API_WORKSPACE_NAME: @services/admin-panel-api
+2026-06-15T15:39:45.2363717Z ##[endgroup]
+2026-06-15T15:39:46.8133338Z Prisma schema loaded from prisma/schema.prisma
+2026-06-15T15:39:47.0054028Z 
+2026-06-15T15:39:47.0056389Z ✔ Generated Prisma Client (v6.12.0) to ./../../node_modules/@prisma/client in 73ms
+2026-06-15T15:39:47.0056959Z 
+2026-06-15T15:39:47.0057800Z Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+2026-06-15T15:39:47.0058556Z 
+2026-06-15T15:39:47.0059287Z Tip: Need your database queries to be 1000x faster? Accelerate offers you that and more: https://pris.ly/tip-2-accelerate
+2026-06-15T15:39:47.0060066Z 
+2026-06-15T15:39:47.3305811Z Version 6.0.3
+2026-06-15T15:39:47.3328324Z tsc: The TypeScript Compiler - Version 6.0.3
+2026-06-15T15:39:47.3328719Z 
+2026-06-15T15:39:47.3329178Z COMMON COMMANDS
+2026-06-15T15:39:47.3329579Z 
+2026-06-15T15:39:47.3329887Z   tsc
+2026-06-15T15:39:47.3330817Z   Compiles the current project (tsconfig.json in the working directory.)
+2026-06-15T15:39:47.3331109Z 
+2026-06-15T15:39:47.3331213Z   tsc app.ts util.ts
+2026-06-15T15:39:47.3331678Z   Ignoring tsconfig.json, compiles the specified files with default compiler options.
+2026-06-15T15:39:47.3331996Z 
+2026-06-15T15:39:47.3332088Z   tsc -b
+2026-06-15T15:39:47.3332371Z   Build a composite project in the working directory.
+2026-06-15T15:39:47.3337312Z 
+2026-06-15T15:39:47.3338230Z   tsc --init
+2026-06-15T15:39:47.3338872Z   Creates a tsconfig.json with the recommended settings in the working directory.
+2026-06-15T15:39:47.3339402Z 
+2026-06-15T15:39:47.3339617Z   tsc -p ./path/to/tsconfig.json
+2026-06-15T15:39:47.3340149Z   Compiles the TypeScript project located at the specified path.
+2026-06-15T15:39:47.3340554Z 
+2026-06-15T15:39:47.3340701Z   tsc --help --all
+2026-06-15T15:39:47.3341295Z   An expanded version of this information, showing all possible compiler options
+2026-06-15T15:39:47.3341735Z 
+2026-06-15T15:39:47.3341882Z   tsc --noEmit
+2026-06-15T15:39:47.3342236Z   tsc --target esnext
+2026-06-15T15:39:47.3342725Z   Compiles the current project, with additional settings.
+2026-06-15T15:39:47.3343044Z 
+2026-06-15T15:39:47.3343210Z COMMAND LINE FLAGS
+2026-06-15T15:39:47.3343417Z 
+2026-06-15T15:39:47.3343573Z --help, -h
+2026-06-15T15:39:47.3343850Z Print this message.
+2026-06-15T15:39:47.3343979Z 
+2026-06-15T15:39:47.3344063Z --watch, -w
+2026-06-15T15:39:47.3344291Z Watch input files.
+2026-06-15T15:39:47.3344420Z 
+2026-06-15T15:39:47.3344534Z --all
+2026-06-15T15:39:47.3344745Z Show all compiler options.
+2026-06-15T15:39:47.3344897Z 
+2026-06-15T15:39:47.3344986Z --version, -v
+2026-06-15T15:39:47.3345231Z Print the compiler's version.
+2026-06-15T15:39:47.3345415Z 
+2026-06-15T15:39:47.3345504Z --init
+2026-06-15T15:39:47.3345857Z Initializes a TypeScript project and creates a tsconfig.json file.
+2026-06-15T15:39:47.3346124Z 
+2026-06-15T15:39:47.3346285Z --project, -p
+2026-06-15T15:39:47.3346760Z Compile the project given the path to its configuration file, or to a folder with a 'tsconfig.json'.
+2026-06-15T15:39:47.3347130Z 
+2026-06-15T15:39:47.3347216Z --showConfig
+2026-06-15T15:39:47.3347503Z Print the final configuration instead of building.
+2026-06-15T15:39:47.3347722Z 
+2026-06-15T15:39:47.3347819Z --ignoreConfig
+2026-06-15T15:39:47.3348467Z Ignore the tsconfig found and build with commandline options and files.
+2026-06-15T15:39:47.3348787Z 
+2026-06-15T15:39:47.3348959Z --build, -b
+2026-06-15T15:39:47.3349327Z Build one or more projects and their dependencies, if out of date
+2026-06-15T15:39:47.3349572Z 
+2026-06-15T15:39:47.3349689Z COMMON COMPILER OPTIONS
+2026-06-15T15:39:47.3349834Z 
+2026-06-15T15:39:47.3350273Z --pretty
+2026-06-15T15:39:47.3350716Z Enable color and formatting in TypeScript's output to make compiler errors easier to read.
+2026-06-15T15:39:47.3351142Z type: boolean
+2026-06-15T15:39:47.3351349Z default: true
+2026-06-15T15:39:47.3351475Z 
+2026-06-15T15:39:47.3351576Z --declaration, -d
+2026-06-15T15:39:47.3351984Z Generate .d.ts files from TypeScript and JavaScript files in your project.
+2026-06-15T15:39:47.3352350Z type: boolean
+2026-06-15T15:39:47.3352613Z default: `false`, unless `composite` is set
+2026-06-15T15:39:47.3352816Z 
+2026-06-15T15:39:47.3352916Z --declarationMap
+2026-06-15T15:39:47.3353176Z Create sourcemaps for d.ts files.
+2026-06-15T15:39:47.3353429Z type: boolean
+2026-06-15T15:39:47.3353685Z default: false
+2026-06-15T15:39:47.3354030Z 
+2026-06-15T15:39:47.3354212Z --emitDeclarationOnly
+2026-06-15T15:39:47.3354722Z Only output d.ts files and not JavaScript files.
+2026-06-15T15:39:47.3355197Z type: boolean
+2026-06-15T15:39:47.3355514Z default: false
+2026-06-15T15:39:47.3355766Z 
+2026-06-15T15:39:47.3355902Z --sourceMap
+2026-06-15T15:39:47.3356339Z Create source map files for emitted JavaScript files.
+2026-06-15T15:39:47.3356805Z type: boolean
+2026-06-15T15:39:47.3357106Z default: false
+2026-06-15T15:39:47.3357268Z 
+2026-06-15T15:39:47.3357397Z --noEmit
+2026-06-15T15:39:47.3357768Z Disable emitting files from a compilation.
+2026-06-15T15:39:47.3358312Z type: boolean
+2026-06-15T15:39:47.3358598Z default: false
+2026-06-15T15:39:47.3358766Z 
+2026-06-15T15:39:47.3358899Z --target, -t
+2026-06-15T15:39:47.3359656Z Set the JavaScript language version for emitted JavaScript and include compatible library declarations.
+2026-06-15T15:39:47.3360886Z one of: es6/es2015, es2016, es2017, es2018, es2019, es2020, es2021, es2022, es2023, es2024, es2025, esnext
+2026-06-15T15:39:47.3361614Z default: es2025
+2026-06-15T15:39:47.3361910Z 
+2026-06-15T15:39:47.3362034Z --module, -m
+2026-06-15T15:39:47.3362418Z Specify what module code is generated.
+2026-06-15T15:39:47.3363230Z one of: commonjs, es6/es2015, es2020, es2022, esnext, node16, node18, node20, nodenext, preserve
+2026-06-15T15:39:47.3363908Z default: undefined
+2026-06-15T15:39:47.3364100Z 
+2026-06-15T15:39:47.3364224Z --lib
+2026-06-15T15:39:47.3364939Z Specify a set of bundled library declaration files that describe the target runtime environment.
+2026-06-15T15:39:47.3376837Z one or more: es5, es6/es2015, es7/es2016, es2017, es2018, es2019, es2020, es2021, es2022, es2023, es2024, es2025, esnext, dom, dom.iterable, dom.asynciterable, webworker, webworker.importscripts, webworker.iterable, webworker.asynciterable, scripthost, es2015.core, es2015.collection, es2015.generator, es2015.iterable, es2015.promise, es2015.proxy, es2015.reflect, es2015.symbol, es2015.symbol.wellknown, es2016.array.include, es2016.intl, es2017.arraybuffer, es2017.date, es2017.object, es2017.sharedmemory, es2017.string, es2017.intl, es2017.typedarrays, es2018.asyncgenerator, es2018.asynciterable/esnext.asynciterable, es2018.intl, es2018.promise, es2018.regexp, es2019.array, es2019.object, es2019.string, es2019.symbol/esnext.symbol, es2019.intl, es2020.bigint/esnext.bigint, es2020.date, es2020.promise, es2020.sharedmemory, es2020.string, es2020.symbol.wellknown, es2020.intl, es2020.number, es2021.promise, es2021.string, es2021.weakref/esnext.weakref, es2021.intl, es2022.array, es2022.error, es2022.intl, es2022.object, es2022.string, es2022.regexp, es2023.array, es2023.collection, es2023.intl, es2024.arraybuffer, es2024.collection, es2024.object/esnext.object, es2024.promise, es2024.regexp/esnext.regexp, es2024.sharedmemory, es2024.string/esnext.string, es2025.collection, es2025.float16/esnext.float16, es2025.intl, es2025.iterator/esnext.iterator, es2025.promise/esnext.promise, es2025.regexp, esnext.array, esnext.collection, esnext.date, esnext.decorators, esnext.disposable, esnext.error, esnext.intl, esnext.sharedmemory, esnext.temporal, esnext.typedarrays, decorators, decorators.legacy
+2026-06-15T15:39:47.3386497Z default: undefined
+2026-06-15T15:39:47.3386740Z 
+2026-06-15T15:39:47.3387246Z --allowJs
+2026-06-15T15:39:47.3388194Z Allow JavaScript files to be a part of your program. Use the 'checkJs' option to get errors from these files.
+2026-06-15T15:39:47.3388919Z type: boolean
+2026-06-15T15:39:47.3389320Z default: `false`, unless `checkJs` is set
+2026-06-15T15:39:47.3389604Z 
+2026-06-15T15:39:47.3389733Z --checkJs
+2026-06-15T15:39:47.3390302Z Enable error reporting in type-checked JavaScript files.
+2026-06-15T15:39:47.3390875Z type: boolean
+2026-06-15T15:39:47.3391182Z default: false
+2026-06-15T15:39:47.3391359Z 
+2026-06-15T15:39:47.3391476Z --jsx
+2026-06-15T15:39:47.3391826Z Specify what JSX code is generated.
+2026-06-15T15:39:47.3392230Z one of: preserve, react, react-native, react-jsx, react-jsxdev
+2026-06-15T15:39:47.3392575Z default: undefined
+2026-06-15T15:39:47.3392836Z 
+2026-06-15T15:39:47.3392929Z --outFile
+2026-06-15T15:39:47.3393904Z Specify a file that bundles all outputs into one JavaScript file. If 'declaration' is true, also designates a file that bundles all .d.ts output.
+2026-06-15T15:39:47.3394831Z 
+2026-06-15T15:39:47.3394977Z --outDir
+2026-06-15T15:39:47.3395295Z Specify an output folder for all emitted files.
+2026-06-15T15:39:47.3395497Z 
+2026-06-15T15:39:47.3395612Z --removeComments
+2026-06-15T15:39:47.3395845Z Disable emitting comments.
+2026-06-15T15:39:47.3396080Z type: boolean
+2026-06-15T15:39:47.3396275Z default: false
+2026-06-15T15:39:47.3396392Z 
+2026-06-15T15:39:47.3396473Z --strict
+2026-06-15T15:39:47.3396728Z Enable all strict type-checking options.
+2026-06-15T15:39:47.3396996Z type: boolean
+2026-06-15T15:39:47.3397190Z default: true
+2026-06-15T15:39:47.3397305Z 
+2026-06-15T15:39:47.3397387Z --types
+2026-06-15T15:39:47.3397801Z Specify type package names to be included without being referenced in a source file.
+2026-06-15T15:39:47.3398315Z 
+2026-06-15T15:39:47.3398429Z --esModuleInterop
+2026-06-15T15:39:47.3399100Z Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility.
+2026-06-15T15:39:47.3399698Z type: boolean
+2026-06-15T15:39:47.3399895Z default: true
+2026-06-15T15:39:47.3400014Z 
+2026-06-15T15:39:47.3400274Z You can learn about all of the compiler options at https://aka.ms/tsc
+2026-06-15T15:39:47.3400550Z 
+2026-06-15T15:39:47.3411722Z ##[error]Process completed with exit code 1.

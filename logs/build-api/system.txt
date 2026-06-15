@@ -1,0 +1,8 @@
+2026-06-15T15:39:13.1330000Z Evaluating build-api.if
+2026-06-15T15:39:13.1330000Z Evaluating: success()
+2026-06-15T15:39:13.1330000Z Result: true
+2026-06-15T15:39:13.3950000Z Requested labels: ubuntu-latest
+2026-06-15T15:39:13.3950000Z Job defined at: iandyone/admin-panel/.github/workflows/build.yml@refs/heads/chore/cicd
+2026-06-15T15:39:13.3950000Z Waiting for a runner to pick up this job...
+2026-06-15T15:39:13.7560000Z Job is about to start running on the hosted runner: GitHub Actions 1000000245
+2026-06-15T15:39:13.7560000Z Job is waiting for a hosted runner to come online.
